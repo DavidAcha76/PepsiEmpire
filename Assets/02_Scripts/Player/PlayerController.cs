@@ -6,11 +6,13 @@ public class PlayerController : MonoBehaviour
 {
     private Player player;
     private IMovement movement;
+    private IJump jump;
 
     void Start()
     {
         player = ReInput.players.GetPlayer(0);
         movement = GetComponent<IMovement>();
+        jump = GetComponent<IJump>();
     }
 
     void Update()

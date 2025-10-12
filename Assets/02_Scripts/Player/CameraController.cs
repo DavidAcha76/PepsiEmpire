@@ -68,10 +68,12 @@ public class CameraController : MonoBehaviour
     void LateUpdate()
     {
         Vector3 direction = new Vector3(
-            Mathf.Cos(angle.x) * Mathf.Cos(angle.y),
-            -Mathf.Sin(angle.y),
-            -Mathf.Sin(angle.x) * Mathf.Cos(angle.y)
-        );
+        Mathf.Cos(angle.x) * Mathf.Cos(angle.y),
+        -Mathf.Sin(angle.y),
+        -Mathf.Sin(angle.x) * Mathf.Cos(angle.y)
+    );
+
+        int layerMask = ~LayerMask.GetMask("Player");
 
         RaycastHit hit;
         float distance = defaultDistance;
@@ -79,7 +81,7 @@ public class CameraController : MonoBehaviour
 
         foreach (Vector3 point in points)
         {
-            if (Physics.Raycast(point, direction, out hit, defaultDistance))
+            if (Physics.Raycast(point, direction, out hit, defaultDistance, layerMask))
             {
                 distance = Mathf.Min((hit.point - follow.position).magnitude, distance);
             }
