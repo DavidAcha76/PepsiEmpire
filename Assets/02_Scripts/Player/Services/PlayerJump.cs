@@ -13,13 +13,12 @@ public class PlayerJump : MonoBehaviour, IJump
     public LayerMask groundMask;
     public float groundCheckDistance = 0.6f;
 
-    [Header("Control en aire")]
-    public float airControlStrength = 3f;
-    public float maxAirSpeed = 4f;
+    [Header("Movimiento en aire")]
+    public float airMoveSpeed = 4f;
 
     private bool isGrounded = true;
     private bool jumpQueued = false;
-    private float coyoteTime = 0.15f; // tolerancia para saltar poco después de caer
+    private float coyoteTime = 0.15f;
     private float lastGroundedTime = 0f;
 
     private void Awake()
@@ -34,7 +33,6 @@ public class PlayerJump : MonoBehaviour, IJump
         if (isGrounded)
             lastGroundedTime = Time.time;
 
-        // Si se presiona salto, guarda la intención
         if (player.GetButtonDown("Jump"))
             jumpQueued = true;
     }
@@ -43,9 +41,7 @@ public class PlayerJump : MonoBehaviour, IJump
     {
         CheckGrounded();
 
-        // Permite salto dentro del margen de coyote time
         bool canJump = jumpQueued && (isGrounded || Time.time - lastGroundedTime <= coyoteTime);
-
         if (canJump)
         {
             jumpQueued = false;
@@ -53,51 +49,32 @@ public class PlayerJump : MonoBehaviour, IJump
         }
 
         if (!isGrounded)
-            AirControl();
+            AirMove();
     }
 
     private void CheckGrounded()
     {
-        isGrounded = Physics.Raycast(
-            transform.position + Vector3.up * 0.1f,
-            Vector3.down,
-            groundCheckDistance,
-            groundMask
-        );
-
+        isGrounded = Physics.Raycast(transform.position + Vector3.up * 0.1f, Vector3.down, groundCheckDistance, groundMask);
         animator.SetBool("IsGrounded", isGrounded);
+        animator.applyRootMotion = isGrounded;
 
         if (!isGrounded)
-            Falling();
+            animator.SetBool("IsJumping", false);
     }
 
     public void TryJump()
     {
         animator.SetBool("IsJumping", true);
+        animator.applyRootMotion = false;
 
-        // Reinicia velocidad vertical para consistencia
-        rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
-
-        float moveX = player.GetAxis("Move Horizontal");
-        float moveZ = player.GetAxis("Move Vertical");
-        bool isMoving = Mathf.Abs(moveX) > 0.1f || Mathf.Abs(moveZ) > 0.1f;
-
-        Vector3 jumpVel = Vector3.up * jumpForce;
-        if (isMoving)
-            jumpVel += transform.forward * forwardJumpForce;
-
-        // Asigna directamente la nueva velocidad (nuevo sistema Unity 6000)
+        Vector3 jumpVel = Vector3.up * jumpForce + transform.forward * forwardJumpForce;
+        rb.position += Vector3.up * 0.05f; // evitar colisión inmediata
         rb.linearVelocity = jumpVel;
 
-        isGrounded = false; // evita saltos consecutivos
+        isGrounded = false;
     }
 
-    private void Falling()
-    {
-        animator.SetBool("IsJumping", false);
-    }
-
-    private void AirControl()
+    private void AirMove()
     {
         float moveX = player.GetAxis("Move Horizontal");
         float moveZ = player.GetAxis("Move Vertical");
@@ -106,11 +83,20 @@ public class PlayerJump : MonoBehaviour, IJump
         if (inputDir.sqrMagnitude < 0.01f)
             return;
 
-        Vector3 desiredVelocity = transform.TransformDirection(inputDir) * maxAirSpeed;
-        Vector3 currentVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
+        Vector3 currentVelocity = rb.linearVelocity;
 
-        Vector3 velocityChange = (desiredVelocity - currentVelocity) * airControlStrength * Time.fixedDeltaTime;
+        Vector3 targetVelocity = new Vector3(
+            inputDir.x * airMoveSpeed,
+            currentVelocity.y, // mantenemos Y
+            inputDir.z * airMoveSpeed
+        );
 
-        rb.AddForce(velocityChange, ForceMode.VelocityChange);
+        Vector3 newVelocity = Vector3.Lerp(
+            new Vector3(currentVelocity.x, 0, currentVelocity.z),
+            new Vector3(targetVelocity.x, 0, targetVelocity.z),
+            0.1f 
+        );
+
+        rb.linearVelocity = new Vector3(newVelocity.x, currentVelocity.y, newVelocity.z);
     }
 }
