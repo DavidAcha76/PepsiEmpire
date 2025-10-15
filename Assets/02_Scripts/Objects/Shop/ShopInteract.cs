@@ -1,22 +1,28 @@
 using Rewired;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class ShopInteract : MonoBehaviour
 {
+    [Header("Referencias")]
     public GameObject rootUI;
     public GameObject panelShop;
+    public CinemachineBridgeCamera camera_;
 
     private Player player;
     private GameObject instancePanel;
 
+
+
     private void Update()
     {
-        if (player!=null)
+        if (player!=null && !instancePanel)
         {
             if (player.GetButtonDown("Interact"))
             {
                 instancePanel = Instantiate(panelShop);
                 instancePanel.transform.SetParent(rootUI.transform, false);
+                camera_.GetComponent<CinemachineCamera>().enabled = false;
             }
         }
     }
@@ -33,10 +39,10 @@ public class ShopInteract : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            player = null;
             Destroy(instancePanel);
             instancePanel = null;
-
+            player = null;
+            camera_.GetComponent<CinemachineCamera>().enabled = true;
         }
     }
 }
