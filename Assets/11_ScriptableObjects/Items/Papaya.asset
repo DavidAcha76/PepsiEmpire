@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0a3972b3232b5744a05547eb6eed2a8, type: 3}
+  m_Name: Papaya
+  m_EditorClassIdentifier: 
+  itemName: Papaya
+  icon: {fileID: 21300000, guid: 530ec1d8efdb9174c896bd9a5e02a480, type: 3}
+  price: 12
+  isStackable: 1
