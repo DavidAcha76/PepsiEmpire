@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17d7b3f80897ce142a648ea7a75fa861, type: 3}
+  m_Name: MixDatabase
+  m_EditorClassIdentifier: 
+  recipes:
+  - {fileID: 11400000, guid: 5b7369045a80b964da311c9133c28926, type: 2}

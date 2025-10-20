@@ -35,4 +35,11 @@ public class PlayerMovement : MonoBehaviour, IMovement
             transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
     }
+
+    public void Stop(bool hard = true)
+    {
+        // 1) Corta el BlendTree al instante (sin damp)
+        animator.SetFloat("Speed", 0f, 0f, 0f);
+
+    }
 }

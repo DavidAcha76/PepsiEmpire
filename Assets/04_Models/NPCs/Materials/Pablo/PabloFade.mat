@@ -99,13 +99,16 @@ Material:
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _Cull: 2
-    - _Cut_Edge: 0.45
+    - _Cut_Edge: -0.1
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _DstBlendAlpha: 0
-    - _EdgeWidth: 4
+    - _EdgeCore: 0
+    - _EdgeGain: 11.5
+    - _EdgePow: 4.26
+    - _EdgeWidth: 0.12
     - _EnvironmentReflections: 1
     - _Feather: 0.02
     - _GlossMapScale: 0

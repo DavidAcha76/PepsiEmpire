@@ -1,5 +1,6 @@
 using Rewired;
 using Unity.Cinemachine;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ShopInteract : MonoBehaviour
@@ -8,30 +9,67 @@ public class ShopInteract : MonoBehaviour
     public GameObject rootUI;
     public GameObject panelShop;
     public CinemachineBridgeCamera camera_;
+    public GameObject playerInstance;
 
     private Player player;
     private GameObject instancePanel;
+    private bool isPlayerCloser = false;
+    private bool shopOpen;
 
-
+    private void Awake()
+    {
+        player = ReInput.players.GetPlayer(0);
+    }
 
     private void Update()
     {
-        if (player!=null && !instancePanel)
+        if (isPlayerCloser && !shopOpen && player.GetButtonDown("Interact"))
         {
-            if (player.GetButtonDown("Interact"))
-            {
-                instancePanel = Instantiate(panelShop);
-                instancePanel.transform.SetParent(rootUI.transform, false);
-                camera_.GetComponent<CinemachineCamera>().enabled = false;
-            }
+            OpenShop();
         }
+
+        if (shopOpen && player.GetButtonDown("Close"))
+        {
+            CloseShop();
+        }
+    }
+
+    private void OpenShop()
+    {
+        // Instanciar UI
+        instancePanel = Instantiate(panelShop, rootUI.transform, false);
+
+        // Deshabilitar cámara/controles jugador
+        camera_.GetComponent<CinemachineCamera>().enabled = false;
+        playerInstance.GetComponent<PlayerController>().enabled = false;
+        playerInstance.GetComponent<PlayerJump>().enabled = false;
+        playerInstance.GetComponent<PlayerMovement>().Stop(true);
+
+
+        // 2) Cortar movimiento inmediatamente
+        //HardStopMovement();
+
+        shopOpen = true;
+    }
+
+    private void CloseShop()
+    {
+        if (instancePanel) Destroy(instancePanel);
+        instancePanel = null;
+
+        // Rehabilitar cámara/controles jugador
+        camera_.GetComponent<CinemachineCamera>().enabled = true;
+        playerInstance.GetComponent<PlayerController>().enabled = true;
+        playerInstance.GetComponent<PlayerJump>().enabled = true;
+
+        shopOpen = false;
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            player = ReInput.players.GetPlayer(0);
+            isPlayerCloser = true;
         }
     }
 
@@ -39,10 +77,7 @@ public class ShopInteract : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            Destroy(instancePanel);
-            instancePanel = null;
-            player = null;
-            camera_.GetComponent<CinemachineCamera>().enabled = true;
+            isPlayerCloser = false;
         }
     }
 }

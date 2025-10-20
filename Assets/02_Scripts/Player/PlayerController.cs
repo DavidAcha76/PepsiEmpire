@@ -22,5 +22,7 @@ public class PlayerController : MonoBehaviour
         bool isRunning = player.GetButton("Run");
 
         movement.Move(new Vector2(horizontal, vertical), isRunning);
+
+
     }
 }
