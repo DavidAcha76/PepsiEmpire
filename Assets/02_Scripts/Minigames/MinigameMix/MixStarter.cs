@@ -4,7 +4,7 @@ public class MixStarter : MonoBehaviour
 {
     public MixSlot slotLiquid;
     public MixSlot slotSolid;
-    public MixingMinigameController minigame; // el controller que ya tienes
+    public MixingMinigameController minigame; 
 
     public void OnClickStart()
     {

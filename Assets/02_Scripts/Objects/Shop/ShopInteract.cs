@@ -36,10 +36,10 @@ public class ShopInteract : MonoBehaviour
 
     private void OpenShop()
     {
-        // Instanciar UI
+
         instancePanel = Instantiate(panelShop, rootUI.transform, false);
 
-        // Deshabilitar cámara/controles jugador
+
         camera_.GetComponent<CinemachineCamera>().enabled = false;
         playerInstance.GetComponent<PlayerController>().enabled = false;
         playerInstance.GetComponent<PlayerJump>().enabled = false;
@@ -57,7 +57,6 @@ public class ShopInteract : MonoBehaviour
         if (instancePanel) Destroy(instancePanel);
         instancePanel = null;
 
-        // Rehabilitar cámara/controles jugador
         camera_.GetComponent<CinemachineCamera>().enabled = true;
         playerInstance.GetComponent<PlayerController>().enabled = true;
         playerInstance.GetComponent<PlayerJump>().enabled = true;
