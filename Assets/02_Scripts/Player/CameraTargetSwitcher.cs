@@ -7,6 +7,8 @@ public class CameraTargetSwitcher : MonoBehaviour
     public CinemachineCamera cineCam;    
     public Transform playerTarget;        // TPTarget del jugador
     public Transform otherTarget;         // punto u objeto a enfocar
+    [Tooltip("Sirve para poder desactivar temporalmente componentes")]
+    public PlayerComponentController playerController;
 
     [Header("Blend / Zoom")]
     [Tooltip("Tiempo total de transición de foco/zoom.")]
@@ -17,6 +19,8 @@ public class CameraTargetSwitcher : MonoBehaviour
 
     [Tooltip("FOV cuando miras el otro objetivo (más cerrado = más cerca).")]
     public float otherFOV = 35f;
+
+
 
     bool lookingElsewhere;
     Coroutine switchCo;
@@ -31,6 +35,7 @@ public class CameraTargetSwitcher : MonoBehaviour
         if (lookingElsewhere || otherTarget == null || cineCam == null) return;
         lookingElsewhere = true;
         StartSwitch(otherTarget, otherFOV);
+        playerController.DisableAll();
     }
 
     public void ReturnToPlayer()
@@ -38,6 +43,7 @@ public class CameraTargetSwitcher : MonoBehaviour
         if (!lookingElsewhere || cineCam == null) return;
         lookingElsewhere = false;
         StartSwitch(playerTarget, playerFOV);
+        playerController.EnableAll();
     }
 
     void StartSwitch(Transform newTarget, float targetFOV)
