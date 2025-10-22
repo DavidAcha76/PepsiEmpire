@@ -45,10 +45,6 @@ public class ShopInteract : MonoBehaviour
         playerInstance.GetComponent<PlayerJump>().enabled = false;
         playerInstance.GetComponent<PlayerMovement>().Stop(true);
 
-
-        // 2) Cortar movimiento inmediatamente
-        //HardStopMovement();
-
         shopOpen = true;
     }
 

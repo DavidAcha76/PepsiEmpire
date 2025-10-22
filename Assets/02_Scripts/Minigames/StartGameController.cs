@@ -3,11 +3,16 @@ using UnityEngine;
 
 public class StartGameController : MonoBehaviour
 {
+    [Header("Refs")]
     public CameraTargetSwitcher cameraSwicher;
+    public GameObject rootUI;
+    public GameObject panelMix;
+
 
     private Player player;
     private bool isPlayerCloser = false;
     private bool gameOpen = false;
+    private GameObject instancePanel;
     
 
     private void Awake()
@@ -21,11 +26,13 @@ public class StartGameController : MonoBehaviour
         {
             gameOpen = true;
             cameraSwicher.LookAtOtherTarget();
+            instancePanel = Instantiate(panelMix, rootUI.transform, false);
         }
         else if(gameOpen && player.GetButtonDown("Close"))
         {
             gameOpen = false;
             cameraSwicher.ReturnToPlayer();
+            if(instancePanel) Destroy(instancePanel);
         }
     }
 

@@ -27,6 +27,7 @@ public class MixSlot : MonoBehaviour, IDropHandler
         if (preview)
         {
             preview.sprite = data.icon;
+            preview.color = Color.white;
             preview.enabled = true;
         }
     }

@@ -5315,7 +5315,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 293ef5b227ed3aa4ab6eda31746fc87a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerMouse: {fileID: 0}
+  uiPointer: {fileID: 0}
   lockHardwareCursor: 1
 --- !u!1 &9120344292761936166
 GameObject:

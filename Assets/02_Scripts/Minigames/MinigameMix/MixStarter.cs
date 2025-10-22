@@ -4,7 +4,8 @@ public class MixStarter : MonoBehaviour
 {
     public MixSlot slotLiquid;
     public MixSlot slotSolid;
-    public MixingMinigameController minigame; 
+    public MixingMinigameController minigame;
+    public GameObject panelSlots;
 
     public void OnClickStart()
     {
@@ -15,5 +16,7 @@ public class MixStarter : MonoBehaviour
         }
 
         minigame.Begin(slotLiquid.currentItem, slotSolid.currentItem);
+
+        panelSlots.SetActive(false);
     }
 }

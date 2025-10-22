@@ -3,13 +3,19 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
+public enum SpinAxis { X, Y, Z }
+
 public class MixingMinigameController : MonoBehaviour
 {
+    [Header("Prefabs")]
+    public GameObject bowl;
+
     [Header("Referencias externas")]
     public MixDatabase database;
     public PlayerInventory inventory;   // tu inventario principal
     public MixSlot slotLiquid;
     public MixSlot slotSolid;
+    public GameObject rootTable;
 
     [Header("UI LinkBar")]
     public RectTransform linkBar;
@@ -17,6 +23,9 @@ public class MixingMinigameController : MonoBehaviour
     public RectTransform rightIcon;
     public Image linkFill;
     public TextMeshProUGUI hint;
+
+    [Header("Paneles")]
+    public GameObject panelMix;
 
     [Header("Knob")]
     public RectTransform knobRoot;
@@ -35,6 +44,12 @@ public class MixingMinigameController : MonoBehaviour
     [SerializeField] private bool autoRadius = true;                
     [SerializeField] private float radiusPadding = 6f;
 
+    [Header("Batidora 3D")]
+    public Transform mixerModel;
+    public float orbitRadius = 0.2f;
+    public float spinSpeed = 720f;
+    public float orbitSmooth = 10f;
+
     private MixRecipe currentRecipe;
     private float requiredDegrees;
     private float progress;
@@ -42,6 +57,9 @@ public class MixingMinigameController : MonoBehaviour
     private bool running;
     private bool dragging;
     private Vector2 lastDir;
+    private Vector3 mixerHomePos;
+    private float mixerSpinAngle;
+    private GameObject bowlInstance;
 
     void OnEnable() => ResetUI();
 
@@ -51,12 +69,62 @@ public class MixingMinigameController : MonoBehaviour
     /// 
     void Awake()
     {
+        inventory = GameObject.FindGameObjectWithTag("Player").gameObject.GetComponent<PlayerInventory>();
+        rootTable = GameObject.FindGameObjectWithTag("MaquinaMezcla");
+
         if (autoRadius && knobRoot)
         {
-            // Usa el menor de ancho/alto para que sea un círculo real
             float r = Mathf.Min(knobRoot.rect.width, knobRoot.rect.height) * 0.5f - radiusPadding;
             handleRadius = Mathf.Max(0f, r);
         }
+    }
+
+    void Start()
+    {
+        var kp = knobHandle.GetComponent<KnobPointer>();
+
+        mixerHomePos = mixerModel ? mixerModel.localPosition : Vector3.zero;
+
+        kp.OnDown = () =>
+        {
+            dragging = true;
+
+            Vector2 localPos = knobHandle.anchoredPosition;
+            if (localPos.sqrMagnitude < 0.0001f) localPos = Vector2.right;
+            lastDir = localPos.normalized;
+        };
+
+        kp.OnUp = () =>
+        {
+            dragging = false;
+            SnapHandleHome();
+        };
+
+        kp.OnDirection = dir =>
+        {
+            if (!dragging || !running) return;
+
+            PositionHandle(dir);
+
+            float delta = DeltaAngleSigned(lastDir, dir);
+
+            Debug.Log($"Delta: {delta:F2}  progress:{progress:F2}");
+
+            if (Mathf.Abs(delta) >= minDragDeltaDeg)
+            {
+                if (delta < 0f) // sentido horario
+                {
+                    cumulativeCW += -delta;
+                    progress = Mathf.Clamp01(cumulativeCW / requiredDegrees);
+                    UpdateLinkVisuals();
+                }
+                lastDir = dir;
+            }
+
+            UpdateMixerOrbit(dir);
+        };
+
+        panelMix.SetActive(false);
     }
 
     public void Begin(ItemData liquid, ItemData solid)
@@ -66,6 +134,9 @@ public class MixingMinigameController : MonoBehaviour
             ShowHint("No existe receta para esta combinación.");
             return;
         }
+        panelMix.SetActive(true);
+        bowlInstance = Instantiate(bowl, rootTable.transform, false);
+        mixerModel = GameObject.FindGameObjectWithTag("Batidora").gameObject.transform;
 
         progress = 0f;
         cumulativeCW = 0f;
@@ -73,13 +144,11 @@ public class MixingMinigameController : MonoBehaviour
 
         requiredDegrees = Mathf.Max(180f, currentRecipe.requiredTurns * 360f);
 
-        // Configurar íconos y colores
         SetIcon(leftIcon, liquid);
         SetIcon(rightIcon, solid);
 
         ShowHint("Gira el knob en sentido horario para reconectar los ingredientes.");
         UpdateLinkVisuals();
-        gameObject.SetActive(true);
     }
 
     void Update()
@@ -104,43 +173,6 @@ public class MixingMinigameController : MonoBehaviour
         UpdateLinkVisuals();
         SnapHandleHome();
         ShowHint("Arrastra el knob para comenzar.");
-    }
-
-    // -------------------------
-    //  KNOB HANDLER (EVENTS)
-    // -------------------------
-    public void OnKnobPointerDown(BaseEventData bed)
-    {
-        var ped = (PointerEventData)bed;
-        dragging = true;
-        lastDir = DirFromPointer(ped.position);
-        PositionHandle(lastDir);
-    }
-
-    public void OnKnobDrag(BaseEventData bed)
-    {
-        if (!dragging || !running) return;
-        var ped = (PointerEventData)bed;
-        Vector2 currentDir = DirFromPointer(ped.position);
-        PositionHandle(currentDir);
-
-        float delta = DeltaAngleSigned(lastDir, currentDir);
-        if (Mathf.Abs(delta) >= minDragDeltaDeg)
-        {
-            if (delta < 0f) // horario
-            {
-                cumulativeCW += -delta;
-                progress = Mathf.Clamp01(cumulativeCW / requiredDegrees);
-                UpdateLinkVisuals();
-            }
-            lastDir = currentDir;
-        }
-    }
-
-    public void OnKnobPointerUp(BaseEventData bed)
-    {
-        dragging = false;
-        SnapHandleHome();
     }
 
     void UpdateLinkVisuals()
@@ -180,6 +212,7 @@ public class MixingMinigameController : MonoBehaviour
 
         // Cierra panel después de un segundo
         Invoke(nameof(ClosePanel), 1.2f);
+        Destroy(bowlInstance);
     }
 
     void ClosePanel() => gameObject.SetActive(false);
@@ -199,13 +232,6 @@ public class MixingMinigameController : MonoBehaviour
         if (!img) return;
         img.sprite = item.icon;
         img.enabled = true;
-    }
-
-    Vector2 DirFromPointer(Vector2 screenPos)
-    {
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(knobRoot, screenPos, null, out var local);
-        if (local.sqrMagnitude < 0.0001f) return Vector2.right;
-        return local.normalized;
     }
 
     private void SnapHandleHome()
@@ -229,5 +255,27 @@ public class MixingMinigameController : MonoBehaviour
         float angB = Mathf.Atan2(b.y, b.x) * Mathf.Rad2Deg;
         float delta = Mathf.DeltaAngle(angA, angB); // positivo = antihorario
         return delta;
+    }
+
+    private void UpdateMixerOrbit(Vector2 dir)
+    {
+        if (!mixerModel) return;
+
+        Vector3 orbitTarget = new Vector3(dir.x, - dir.y, 0) * orbitRadius;
+
+        mixerModel.localPosition = Vector3.Lerp(
+            mixerModel.localPosition,
+            mixerHomePos + orbitTarget,
+            Time.deltaTime * orbitSmooth
+        );
+
+        mixerSpinAngle += spinSpeed * Time.deltaTime;
+        if (mixerSpinAngle > 360f) mixerSpinAngle -= 360f;
+
+        Quaternion spinRot = Quaternion.identity;
+        spinRot = Quaternion.Euler(0, 0, mixerSpinAngle);
+
+        Vector3 currentEuler = mixerModel.localEulerAngles;
+        mixerModel.localRotation = Quaternion.Euler(0f, 0f, mixerSpinAngle);
     }
 }
