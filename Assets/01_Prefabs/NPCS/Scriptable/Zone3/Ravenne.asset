@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72e56808d53f91a43ba962452b25e1ed, type: 3}
   m_Name: Ravenne
   m_EditorClassIdentifier: 
-  nameNPC: 
-  id: 0
-  zone: 0
-  favoriteDrink: 
+  nameNPC: Ravenne Ash
+  id: 29
+  zone: 3
+  favoriteDrink: Pepsi
   drinkPepsi: 0
-  ReputationThreshold: 0
+  ReputationThreshold: 140

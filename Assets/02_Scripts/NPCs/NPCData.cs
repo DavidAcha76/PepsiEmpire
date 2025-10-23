@@ -1,6 +1,6 @@
 using System.Net.NetworkInformation;
 using UnityEngine;
-[CreateAssetMenu]
+[CreateAssetMenu(fileName = "New NPC Data", menuName="NPCData")]
 public class NPCData : ScriptableObject
 {
     [SerializeField] private string nameNPC;
