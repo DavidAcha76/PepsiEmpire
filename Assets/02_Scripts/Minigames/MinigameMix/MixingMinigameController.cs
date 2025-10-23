@@ -3,16 +3,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-
 public class MixingMinigameController : MonoBehaviour
 {
     [Header("Prefabs")]
     public GameObject bowl;
 
-
     [Header("Referencias externas")]
     public MixDatabase database;
-    public PlayerInventory inventory;   // tu inventario principal
+    public PlayerInventory inventory;
     public MixSlot slotLiquid;
     public MixSlot slotSolid;
     public GameObject rootTable;
@@ -40,10 +38,10 @@ public class MixingMinigameController : MonoBehaviour
     public float decayPerSecDefault = 0.1f;
 
     [Header("Knob Home")]
-    [SerializeField] private Vector2 handleHomePos = Vector2.zero; 
-    [SerializeField] private float handleHomeAngle = 0f;            
-    [SerializeField] private bool returnToCenter = true;            
-    [SerializeField] private bool autoRadius = true;                
+    [SerializeField] private Vector2 handleHomePos = Vector2.zero;
+    [SerializeField] private float handleHomeAngle = 0f;
+    [SerializeField] private bool returnToCenter = true;
+    [SerializeField] private bool autoRadius = true;
     [SerializeField] private float radiusPadding = 6f;
 
     [Header("Batidora 3D")]
@@ -64,22 +62,18 @@ public class MixingMinigameController : MonoBehaviour
     private float mixerSpinAngle;
     private GameObject bowlInstance;
 
+    private LiquidMixController liquidController;
 
     void OnEnable()
     {
         Transform slots = transform.Find("SlotsPanel");
         if (slots) slots.gameObject.SetActive(true);
-
-        ResetUI(); // si ya la tenés
+        ResetUI();
     }
 
-    /// <summary>
-    /// Llamado por MixStarter cuando el usuario presiona "Iniciar mezcla"
-    /// </summary>
-    /// 
     void Awake()
     {
-        inventory = GameObject.FindGameObjectWithTag("Player").gameObject.GetComponent<PlayerInventory>();
+        inventory = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInventory>();
         rootTable = GameObject.FindGameObjectWithTag("MaquinaMezcla");
         rootUI = GameObject.FindGameObjectWithTag("RootUI");
 
@@ -93,13 +87,11 @@ public class MixingMinigameController : MonoBehaviour
     void Start()
     {
         var kp = knobHandle.GetComponent<KnobPointer>();
-
         mixerHomePos = mixerModel ? mixerModel.localPosition : Vector3.zero;
 
         kp.OnDown = () =>
         {
             dragging = true;
-
             Vector2 localPos = knobHandle.anchoredPosition;
             if (localPos.sqrMagnitude < 0.0001f) localPos = Vector2.right;
             lastDir = localPos.normalized;
@@ -116,12 +108,11 @@ public class MixingMinigameController : MonoBehaviour
             if (!dragging || !running) return;
 
             PositionHandle(dir);
-
             float delta = DeltaAngleSigned(lastDir, dir);
 
             if (Mathf.Abs(delta) >= minDragDeltaDeg)
             {
-                if (delta < 0f) // sentido horario
+                if (delta < 0f)
                 {
                     cumulativeCW += -delta;
                     progress = Mathf.Clamp01(cumulativeCW / requiredDegrees);
@@ -136,30 +127,6 @@ public class MixingMinigameController : MonoBehaviour
         panelMix.SetActive(false);
     }
 
-    public void Begin(ItemData liquid, ItemData solid)
-    {
-        if (!database || !database.TryGet(liquid, solid, out currentRecipe))
-        {
-            ShowHint("No existe receta para esta combinación.");
-            return;
-        }
-        panelMix.SetActive(true);
-        bowlInstance = Instantiate(bowl, rootTable.transform, false);
-        mixerModel = GameObject.FindGameObjectWithTag("Batidora").gameObject.transform;
-
-        progress = 0f;
-        cumulativeCW = 0f;
-        running = true;
-
-        requiredDegrees = Mathf.Max(180f, currentRecipe.requiredTurns * 360f);
-
-        SetIcon(leftIcon, liquid);
-        SetIcon(rightIcon, solid);
-
-        ShowHint("Gira el knob en sentido horario para reconectar los ingredientes.");
-        UpdateLinkVisuals();
-    }
-
     void Update()
     {
         if (!running) return;
@@ -169,21 +136,46 @@ public class MixingMinigameController : MonoBehaviour
             float decay = (currentRecipe ? currentRecipe.decayPerSecond : decayPerSecDefault) * Time.deltaTime;
             progress = Mathf.Max(0f, progress - decay);
             cumulativeCW = progress * requiredDegrees;
-
             UpdateLinkVisuals();
         }
-
-
     }
 
-    void ResetUI()
+    public void Begin(ItemData liquid, ItemData solid)
     {
-        running = false;
+        if (!database || !database.TryGet(liquid, solid, out currentRecipe))
+        {
+            ShowHint("No existe receta para esta combinación.");
+            return;
+        }
+
+        panelMix.SetActive(true);
+        bowlInstance = Instantiate(bowl, rootTable.transform, false);
+        mixerModel = GameObject.FindGameObjectWithTag("Batidora").transform;
+
         progress = 0f;
         cumulativeCW = 0f;
+        running = true;
+        requiredDegrees = Mathf.Max(180f, currentRecipe.requiredTurns * 360f);
+
+        SetIcon(leftIcon, liquid);
+        SetIcon(rightIcon, solid);
+
+        ShowHint("Gira el knob en sentido horario para mezclar los ingredientes.");
         UpdateLinkVisuals();
-        SnapHandleHome();
-        ShowHint("Arrastra el knob para comenzar.");
+
+        // Configurar el shader del líquido
+        liquidController = bowlInstance.GetComponentInChildren<LiquidMixController>();
+        if (liquidController)
+        {
+            Color baseColor = liquid.visualColor;
+            Color targetColor = solid.visualColor;
+
+            if (currentRecipe.resultColor != Color.white)
+                targetColor = currentRecipe.resultColor;
+
+            liquidController.SetColors(baseColor, targetColor);
+            liquidController.SetMixProgress(0f);
+        }
     }
 
     void UpdateLinkVisuals()
@@ -202,37 +194,47 @@ public class MixingMinigameController : MonoBehaviour
 
         if (linkFill) linkFill.fillAmount = t;
 
-        if (t >= 0.999f) CompleteMix();
+        if (liquidController)
+            liquidController.SetMixProgress(progress);
+
+        if (t >= 0.999f)
+            CompleteMix();
     }
 
-void CompleteMix()
-{
-    running = false;
-    if (!currentRecipe || currentRecipe.result == null)
+    void CompleteMix()
     {
-        ShowHint("La mezcla no produjo ningún resultado.");
-        return;
+        running = false;
+
+        if (!currentRecipe || currentRecipe.result == null)
+        {
+            ShowHint("La mezcla no produjo ningún resultado.");
+            return;
+        }
+
+        ShowHint($"¡Mezcla completa! Has creado {currentRecipe.result.itemName}");
+
+        pickupInstance = Instantiate(panelPickup, rootUI.transform, false);
+        pickupInstance.SetItem(currentRecipe.result, 1);
+        pickupInstance.itemImage.color = Color.white;
+
+        panelMix.SetActive(false);
+        slotLiquid.Clear();
+        slotSolid.Clear();
+
+        if (bowlInstance) Destroy(bowlInstance);
+        liquidController = null;
     }
 
-    ShowHint($"¡Mezcla completa! Has creado {currentRecipe.result.itemName}");
+    void ResetUI()
+    {
+        running = false;
+        progress = 0f;
+        cumulativeCW = 0f;
+        UpdateLinkVisuals();
+        SnapHandleHome();
+        ShowHint("Arrastra el knob para comenzar.");
+    }
 
-    pickupInstance = Instantiate(panelPickup, rootUI.transform, false);
-    pickupInstance.SetItem(currentRecipe.result, 1);
-    pickupInstance.itemImage.color = Color.white;
-
-    panelMix.SetActive(false);
-
-
-    slotLiquid.Clear();
-    slotSolid.Clear();
-    if (bowlInstance) Destroy(bowlInstance);
-}
-
-
-
-    // -------------------------
-    //  UTILIDADES
-    // -------------------------
     void ShowHint(string s)
     {
         if (hint) hint.text = s;
@@ -250,7 +252,7 @@ void CompleteMix()
     private void SnapHandleHome()
     {
         if (!knobHandle) return;
-        knobHandle.anchoredPosition = handleHomePos;           // centro (0,0)
+        knobHandle.anchoredPosition = handleHomePos;
         knobHandle.localEulerAngles = new Vector3(0, 0, handleHomeAngle);
     }
 
@@ -266,16 +268,14 @@ void CompleteMix()
     {
         float angA = Mathf.Atan2(a.y, a.x) * Mathf.Rad2Deg;
         float angB = Mathf.Atan2(b.y, b.x) * Mathf.Rad2Deg;
-        float delta = Mathf.DeltaAngle(angA, angB); // positivo = antihorario
-        return delta;
+        return Mathf.DeltaAngle(angA, angB);
     }
 
     private void UpdateMixerOrbit(Vector2 dir)
     {
         if (!mixerModel) return;
 
-        Vector3 orbitTarget = new Vector3(dir.x, - dir.y, 0) * orbitRadius;
-
+        Vector3 orbitTarget = new Vector3(dir.x, -dir.y, 0) * orbitRadius;
         mixerModel.localPosition = Vector3.Lerp(
             mixerModel.localPosition,
             mixerHomePos + orbitTarget,
@@ -284,11 +284,6 @@ void CompleteMix()
 
         mixerSpinAngle += spinSpeed * Time.deltaTime;
         if (mixerSpinAngle > 360f) mixerSpinAngle -= 360f;
-
-        Quaternion spinRot = Quaternion.identity;
-        spinRot = Quaternion.Euler(0, 0, mixerSpinAngle);
-
-        Vector3 currentEuler = mixerModel.localEulerAngles;
         mixerModel.localRotation = Quaternion.Euler(0f, 0f, mixerSpinAngle);
     }
 }

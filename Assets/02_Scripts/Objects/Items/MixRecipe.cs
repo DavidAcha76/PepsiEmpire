@@ -1,15 +1,18 @@
-using UnityEngine;
+Ôªøusing UnityEngine;
 
 [CreateAssetMenu(fileName = "NewRecipe", menuName = "Inventory/Recipe")]
 public class MixRecipe : ScriptableObject
 {
-    public ItemData liquidBase;
-    public ItemData solidAdditive;
-    public ItemData result;
+    [Header("Ingredientes")]
+    public ItemData liquidBase;      // Ej: Pepsi
+    public ItemData solidAdditive;   // Ej: Naranja
+    public ItemData result;          // Ej: Pepsi Naranja
 
-    [Header("Minigame tuning")]
-    [Tooltip("Vueltas necesarias en el knob (>=1).")]
-    [Range(0.5f, 15f)] public float requiredTurns = 2f;  // 2 vueltas = 720∞
-    [Tooltip("Cu·nto retrocede el progreso por segundo si no giras.")]
+    [Header("Ajustes del minijuego")]
+    [Range(0.5f, 15f)] public float requiredTurns = 2f;
     [Range(0f, 1f)] public float decayPerSecond = 0.15f;
+
+    [Header("Visual (para shader y color final)")]
+    [Tooltip("Color final de la mezcla (si lo dejas blanco, se calcula autom√°ticamente).")]
+    public Color resultColor = Color.white;
 }

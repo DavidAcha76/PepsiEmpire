@@ -1,19 +1,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewDatabaseRecipes", menuName = "Inventory/Recipe Database")]
+[CreateAssetMenu(fileName = "MixDatabase", menuName = "Inventory/Mix Database")]
 public class MixDatabase : ScriptableObject
 {
-    public List<MixRecipe> recipes = new();
+    [Header("Recetas registradas")]
+    public List<MixRecipe> recipes = new List<MixRecipe>();
 
-    public bool TryGet(ItemData a, ItemData b, out MixRecipe r)
+    public bool TryGet(ItemData liquid, ItemData solid, out MixRecipe recipe)
     {
-        foreach (var x in recipes)
+        foreach (var r in recipes)
         {
-            if ((x.liquidBase == a && x.solidAdditive == b) ||
-                (x.liquidBase == b && x.solidAdditive == a))
-            { r = x; return true; }
+            if (r == null) continue;
+
+            bool match = (r.liquidBase == liquid && r.solidAdditive == solid);
+            if (match)
+            {
+                recipe = r;
+                return true;
+            }
         }
-        r = null; return false;
+
+        recipe = null;
+        return false;
     }
 }
