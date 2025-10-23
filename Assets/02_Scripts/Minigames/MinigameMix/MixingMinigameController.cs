@@ -3,12 +3,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public enum SpinAxis { X, Y, Z }
 
 public class MixingMinigameController : MonoBehaviour
 {
     [Header("Prefabs")]
     public GameObject bowl;
+
 
     [Header("Referencias externas")]
     public MixDatabase database;
@@ -16,6 +16,7 @@ public class MixingMinigameController : MonoBehaviour
     public MixSlot slotLiquid;
     public MixSlot slotSolid;
     public GameObject rootTable;
+    public GameObject rootUI;
 
     [Header("UI LinkBar")]
     public RectTransform linkBar;
@@ -26,6 +27,7 @@ public class MixingMinigameController : MonoBehaviour
 
     [Header("Paneles")]
     public GameObject panelMix;
+    public PickupSlot panelPickup;
 
     [Header("Knob")]
     public RectTransform knobRoot;
@@ -50,18 +52,26 @@ public class MixingMinigameController : MonoBehaviour
     public float spinSpeed = 720f;
     public float orbitSmooth = 10f;
 
+    public PickupSlot pickupInstance;
     private MixRecipe currentRecipe;
     private float requiredDegrees;
     private float progress;
     private float cumulativeCW;
-    private bool running;
+    public bool running;
     private bool dragging;
     private Vector2 lastDir;
     private Vector3 mixerHomePos;
     private float mixerSpinAngle;
     private GameObject bowlInstance;
 
-    void OnEnable() => ResetUI();
+
+    void OnEnable()
+    {
+        Transform slots = transform.Find("SlotsPanel");
+        if (slots) slots.gameObject.SetActive(true);
+
+        ResetUI(); // si ya la tenés
+    }
 
     /// <summary>
     /// Llamado por MixStarter cuando el usuario presiona "Iniciar mezcla"
@@ -71,6 +81,7 @@ public class MixingMinigameController : MonoBehaviour
     {
         inventory = GameObject.FindGameObjectWithTag("Player").gameObject.GetComponent<PlayerInventory>();
         rootTable = GameObject.FindGameObjectWithTag("MaquinaMezcla");
+        rootUI = GameObject.FindGameObjectWithTag("RootUI");
 
         if (autoRadius && knobRoot)
         {
@@ -107,8 +118,6 @@ public class MixingMinigameController : MonoBehaviour
             PositionHandle(dir);
 
             float delta = DeltaAngleSigned(lastDir, dir);
-
-            Debug.Log($"Delta: {delta:F2}  progress:{progress:F2}");
 
             if (Mathf.Abs(delta) >= minDragDeltaDeg)
             {
@@ -163,6 +172,8 @@ public class MixingMinigameController : MonoBehaviour
 
             UpdateLinkVisuals();
         }
+
+
     }
 
     void ResetUI()
@@ -194,28 +205,30 @@ public class MixingMinigameController : MonoBehaviour
         if (t >= 0.999f) CompleteMix();
     }
 
-    void CompleteMix()
+void CompleteMix()
+{
+    running = false;
+    if (!currentRecipe || currentRecipe.result == null)
     {
-        running = false;
-        if (!currentRecipe || currentRecipe.result == null)
-        {
-            ShowHint("La mezcla no produjo ningún resultado.");
-            return;
-        }
-
-        ShowHint($"¡Mezcla completa! Has creado {currentRecipe.result.itemName}");
-        inventory.AddItem(currentRecipe.result, 1);
-
-        // Limpia los slots del minijuego
-        slotLiquid.Clear();
-        slotSolid.Clear();
-
-        // Cierra panel después de un segundo
-        Invoke(nameof(ClosePanel), 1.2f);
-        Destroy(bowlInstance);
+        ShowHint("La mezcla no produjo ningún resultado.");
+        return;
     }
 
-    void ClosePanel() => gameObject.SetActive(false);
+    ShowHint($"¡Mezcla completa! Has creado {currentRecipe.result.itemName}");
+
+    pickupInstance = Instantiate(panelPickup, rootUI.transform, false);
+    pickupInstance.SetItem(currentRecipe.result, 1);
+    pickupInstance.itemImage.color = Color.white;
+
+    panelMix.SetActive(false);
+
+
+    slotLiquid.Clear();
+    slotSolid.Clear();
+    if (bowlInstance) Destroy(bowlInstance);
+}
+
+
 
     // -------------------------
     //  UTILIDADES

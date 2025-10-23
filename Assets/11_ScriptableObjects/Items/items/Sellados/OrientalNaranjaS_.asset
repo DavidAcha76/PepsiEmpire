@@ -9,9 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17d7b3f80897ce142a648ea7a75fa861, type: 3}
-  m_Name: MixDatabase
+  m_Script: {fileID: 11500000, guid: f0a3972b3232b5744a05547eb6eed2a8, type: 3}
+  m_Name: OrientalNaranjaS_
   m_EditorClassIdentifier: 
-  recipes:
-  - {fileID: 11400000, guid: 5b7369045a80b964da311c9133c28926, type: 2}
-  - {fileID: 11400000, guid: 6159c8883bcf3514188721fc0c8c2f82, type: 2}
+  itemName: Oriental Naranja Sellado
+  type: 0
+  icon: {fileID: 21300000, guid: b908d6911cfd25f45b9a998199703b41, type: 3}
+  price: 0
+  isStackable: 1
+  maxStack: 20

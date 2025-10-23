@@ -309,12 +309,15 @@ MonoBehaviour:
   inventory: {fileID: 0}
   slotLiquid: {fileID: 6342832348695459641}
   slotSolid: {fileID: 3621631291663722219}
+  rootTable: {fileID: 0}
+  rootUI: {fileID: 0}
   linkBar: {fileID: 97553749274577639}
   leftIcon: {fileID: 4874328928314762406}
   rightIcon: {fileID: 4301102591110895817}
   linkFill: {fileID: 0}
   hint: {fileID: 0}
   panelMix: {fileID: 2814615902911092405}
+  panelPickup: {fileID: -1877297428031823628, guid: 218e576f06cf1a24bbff6f86cacbb22a, type: 3}
   knobRoot: {fileID: 4709333686584058195}
   knobHandle: {fileID: 5594827356522741903}
   handleRadius: 80

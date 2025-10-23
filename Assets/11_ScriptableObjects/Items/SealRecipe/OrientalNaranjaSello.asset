@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbefcf59636cfd646b5283c0a1275294, type: 3}
-  m_Name: OrientalNaranja
+  m_Name: OrientalNaranjaSello
   m_EditorClassIdentifier: 
-  liquidInput: {fileID: 11400000, guid: 42fb2ee06e676d54e840f8476bfe5d24, type: 2}
-  sealedCanResult: {fileID: 11400000, guid: 681ca52bd3ca7b140aba107f4a70a8ce, type: 2}
+  liquidInput: {fileID: 11400000, guid: 9bfdba2fc2f3f35438bef4c1111e9bec, type: 2}
+  sealedCanResult: {fileID: 11400000, guid: b450c41f6393c244a94115001a50ecc9, type: 2}
   requiredClicks: 10
-  decayClicksPerSecond: 2
+  decayClicksPerSecond: 6
   cpsWindow: 1

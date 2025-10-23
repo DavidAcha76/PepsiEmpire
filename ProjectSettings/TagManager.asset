@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Batidora
   - MaquinaMezcla
+  - RootUI
   layers:
   - Default
   - TransparentFX
