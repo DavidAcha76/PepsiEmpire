@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: Papaya
   m_EditorClassIdentifier: 
   itemName: Papaya
+  type: 0
   icon: {fileID: 21300000, guid: 530ec1d8efdb9174c896bd9a5e02a480, type: 3}
   price: 12
   isStackable: 1
+  maxStack: 20
+  visualColor: {r: 1, g: 0.49803922, b: 0.29411766, a: 1}

@@ -18,3 +18,4 @@ MonoBehaviour:
   price: 10
   isStackable: 1
   maxStack: 20
+  visualColor: {r: 1, g: 0.6039216, b: 0.23137255, a: 1}
