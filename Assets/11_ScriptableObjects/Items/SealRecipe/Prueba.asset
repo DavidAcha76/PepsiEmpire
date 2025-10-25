@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbefcf59636cfd646b5283c0a1275294, type: 3}
-  m_Name: OrientalNaranjaSello
+  m_Name: Prueba
   m_EditorClassIdentifier: 
-  liquidInput: {fileID: 11400000, guid: 9bfdba2fc2f3f35438bef4c1111e9bec, type: 2}
+  liquidInput: {fileID: 11400000, guid: 73c007dfd70b24543bcc072bc2f2bd4c, type: 2}
   sealedCanResult: {fileID: 11400000, guid: b450c41f6393c244a94115001a50ecc9, type: 2}
   requiredClicks: 10
   decayClicksPerSecond: 1

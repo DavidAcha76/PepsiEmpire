@@ -1,3 +1,4 @@
+Ôªøusing System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -7,163 +8,313 @@ public class SealerMinigameController : MonoBehaviour
 {
     [Header("Data")]
     public SealDatabase database;
-    public PlayerInventory inventory;
 
     [Header("UI")]
-    public MixSlot sealSlot;              // slot donde sueltas el lÌquido
+    public MixSlot sealSlot;          // slot de entrada
+    public GameObject panelStart;     // pantalla con slot + bot√≥n
+    public GameObject panelGame;      // HUD del minijuego
     public Button startButton;
-    public TextMeshProUGUI hint;
-    public Slider progressBar;             // 0..1
-    public TextMeshProUGUI cpsText;        // clicks/s (opcional)
+    public Slider progressSlider;
+    public TextMeshProUGUI cpsText;
 
-    [Header("Arm / World")]
-    public Transform arm;                  // brazo que baja
-    public Transform armUpRef;             // posiciÛn arriba
-    public Transform armDownRef;           // posiciÛn abajo (en contacto)
-    public ArmContactRelay armContact;     // punta con collider
+    [Header("Escena")]
+    public SealerMachineRig machine;  // anchors de la m√°quina
+    public SealModelLibrary prefabs; // mapeo ItemData -> canPrefab + armPrefab
 
-    [Header("Click Input")]
-    public KeyCode clickKey = KeyCode.Mouse0; // tambiÈn Space si quieres
-    public KeyCode altKey = KeyCode.Space;
+    [Header("Tuning / Dificultad")]
+    [Tooltip("Cu√°nto suma cada click (1 = 1 'click efectivo' de la receta).")]
+    public float clickPower = 1.0f;
 
-    [Header("FX (opcionales)")]
-    public AudioSource sfx;
-    public AudioClip sfxClick;
-    public AudioClip sfxSeal;
+    [Tooltip("Multiplica el decaimiento definido en la receta.")]
+    public float decayMultiplier = 1.0f;
 
-    // runtime
-    SealRecipe currentRecipe;
-    ItemData inputLiquid;
-    float progress;               // 0..1 = clicksAcum / requiredClicks
-    float clicksAccum;            // clicks ìefectivosî acumulados
-    bool running;
-    bool sealedDone;
+    [Tooltip("Curva de sensaci√≥n (1 = lineal, >1 = m√°s duro al principio).")]
+    public float stiffness = 1.2f;
 
-    Queue<float> clickTimes = new(); // para CPS UI
+    [Tooltip("Velocidad con la que el brazo sigue su objetivo.")]
+    public float armMoveSpeed = 6f;
+
+    [Tooltip("Progreso m√≠nimo para permitir sellar (0..1).")]
+    [Range(0.8f, 1f)] public float sealProgressThreshold = 0.98f;
+
+    [Tooltip("Distancia m√°xima punta‚Üítapa para sellar (m).")]
+    public float minContactDist = 0.01f;
+
+    [Header("Pickup")]
+    public PickupSlot pickupPrefab;       // Prefab UI del pickup
+    public Transform uiParent;            // Normalmente el RootUI
+    public CameraTargetSwitcher cameraTargetSwitcher; // Para volver al jugador
+
+    // Runtime
+    private PickupSlot pickupInstance;
+
+    // ---------------- RUNTIME ----------------
+    private GameObject canInstance, armInstance;
+    private Transform armRoot, armTip;
+    private Transform downPosTarget;           // = can.topSnap (posici√≥n abajo din√°mica)
+    private SealRecipe currentRecipe;
+    private ItemData inputLiquid;
+
+    private float clicksAccum;                 // clicks efectivos acumulados
+    private float progress;                    // 0..1
+    private bool running;
+    private bool sealedDone;
+
+    private readonly Queue<float> clickTimes = new(); // para CPS
 
     void Awake()
     {
-        if (armContact) armContact.controller = this;
-        if (startButton) startButton.onClick.AddListener(StartSealingFromSlot);
-        ResetUI();
+        if (startButton) startButton.onClick.AddListener(OnPressSeal);
+        if (!uiParent)
+        {
+            var go = GameObject.FindWithTag("RootUI");
+            if (go) uiParent = go.transform;
+        }
+
+        if (!cameraTargetSwitcher)
+            cameraTargetSwitcher = FindAnyObjectByType<CameraTargetSwitcher>();
     }
 
-    void OnEnable() => ResetUI();
+    void OnEnable() => ShowStart();
 
-    void ResetUI()
+    // ----------- FASE 1: abrir, validar, instanciar y encajar ----------
+    void ShowStart()
     {
-        running = false; sealedDone = false;
-        progress = 0f; clicksAccum = 0f;
-        UpdateProgressUI();
-        SetArmByProgress(0f);
-        SetHint("Coloca un lÌquido y pulsa 'Mezclar / Sellar'.");
+        if (pickupInstance && !pickupInstance.IsEmpty())
+        {
+            if (panelStart) panelStart.SetActive(false);
+            if (panelGame) panelGame.SetActive(false);
+            pickupInstance.gameObject.SetActive(true);
+            Debug.Log("[Sealer] Reabierto con pickup pendiente: mostrando pickup.");
+            return;
+        }
+
+        // Flujo normal (sin pickup pendiente)
+        if (panelStart) panelStart.SetActive(true);
+        if (panelGame) panelGame.SetActive(false);
+        Debug.Log("[Sealer] PanelStart activo. Arrastra un l√≠quido v√°lido y pulsa SELLAR.");
     }
 
-    public void StartSealingFromSlot()
+    void OnPressSeal()
     {
-        if (!sealSlot || !sealSlot.IsFilled()) { SetHint("Coloca un lÌquido en el slot."); return; }
-        if (!database || !database.TryGet(sealSlot.currentItem, out currentRecipe))
-        { SetHint("Ese lÌquido no tiene receta de sellado."); return; }
+        // 1) Validar slot
+        if (!sealSlot || !sealSlot.IsFilled())
+        { Debug.Log("[Sealer] Coloca un l√≠quido en el slot."); return; }
 
         inputLiquid = sealSlot.currentItem;
-        clicksAccum = 0f; progress = 0f; sealedDone = false;
+
+        if (!database || !database.TryGet(inputLiquid, out currentRecipe))
+        { Debug.Log("[Sealer] Ese l√≠quido no est√° en la base de sellado."); return; }
+
+        // 2) Prefabs & anchors
+        if (!prefabs) { Debug.LogError("[Sealer] Falta SealPrefabLibrary."); return; }
+        var canPrefab = prefabs.GetCanPrefab(inputLiquid);
+        var armPrefab = prefabs.armPrefab;
+        if (!canPrefab) { Debug.LogWarning("[Sealer] No hay prefab de lata mapeado."); return; }
+        if (!armPrefab) { Debug.LogWarning("[Sealer] No hay prefab de brazo asignado."); return; }
+        if (!machine || !machine.canAnchor || !machine.armTipAnchor || !machine.armUpRef)
+        { Debug.LogError("[Sealer] Faltan anchors en la m√°quina (canAnchor/armTipAnchor/armUpRef)."); return; }
+
+        // 3) Limpiar instancias anteriores
+        if (canInstance) Destroy(canInstance);
+        if (armInstance) Destroy(armInstance);
+
+        // 4) Instanciar
+        canInstance = Instantiate(canPrefab);
+        armInstance = Instantiate(armPrefab);
+        armRoot = armInstance.transform;
+
+        // 5) Encajar tipo LEGO
+        var canSnap = canInstance.GetComponentInChildren<SealableCanSetup>();
+        var armSnap = armInstance.GetComponentInChildren<SealerArmSetup>();
+        if (!canSnap || !canSnap.bottomSnap) { Debug.LogError("[Sealer] Lata sin bottomSnap."); return; }
+        if (!armSnap || !armSnap.tipSnap) { Debug.LogError("[Sealer] Brazo sin tipSnap."); return; }
+
+        armTip = armSnap.tipSnap;
+        if (!canSnap.topSnap) { Debug.LogError("[Sealer] Lata sin topSnap (tapa)."); return; }
+        downPosTarget = canSnap.topSnap;
+
+        SnapByChild(canInstance.transform, canSnap.bottomSnap, machine.canAnchor);
+        SnapByChild(armInstance.transform, armSnap.tipSnap, machine.armTipAnchor);
+
+
+
+        // 6) Consumir 1 del slot
+        sealSlot.Clear();
+
+        // 7) Minijuego
+        StartMinigame();
+
+        panelStart?.SetActive(false);
+        panelGame?.SetActive(true);
+    }
+
+    void SnapByChild(Transform objRoot, Transform snapPoint, Transform anchor)
+    {
+        /*var rotDelta = anchor.rotation * Quaternion.Inverse(snapPoint.rotation);
+        objRoot.rotation = rotDelta * objRoot.rotation;*/
+        objRoot.position += (anchor.position - snapPoint.position);
+    }
+
+    // ---------------------- FASE 2: minijuego --------------------------
+    void StartMinigame()
+    {
+        clicksAccum = 0f;
+        progress = 0f;
+        sealedDone = false;
         running = true;
         clickTimes.Clear();
-        SetHint("°Clic r·pido para sellar!");
-        UpdateProgressUI();
-        SetArmByProgress(0f);
-        gameObject.SetActive(true);
+
+        // Forzar inicio arriba: que la PUNTA coincida con armUpRef
+        var tipOffset = armTip.position - armRoot.position;
+        armRoot.position = machine.armUpRef.position - tipOffset;
+        armRoot.rotation = machine.armUpRef.rotation;
+
+        if (progressSlider) progressSlider.value = 0f;
+
     }
 
     void Update()
     {
+        if (pickupInstance && pickupInstance.IsEmpty())
+        {
+            Destroy(pickupInstance.gameObject);
+            pickupInstance = null;
+
+            if (cameraTargetSwitcher) cameraTargetSwitcher.ReturnToPlayer();
+
+            // Ocultar por completo el panel (no dejar panelStart visible)
+            if (panelGame) panelGame.SetActive(false);
+            if (panelStart) panelStart.SetActive(false);
+            gameObject.SetActive(false);
+        }
         if (!running) return;
 
-        // Entrada de click
-        if (Input.GetKeyDown(clickKey) || Input.GetKeyDown(altKey))
-        {
+        // INPUT (mouse izq/Space). Cambia a Rewired si quer√©s.
+        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
             DoClickImpulse();
-        }
 
-        // Decaimiento si no haces click
-        float decay = currentRecipe.decayClicksPerSecond * Time.deltaTime;
-        if (decay > 0f && clicksAccum > 0f)
-        {
-            clicksAccum = Mathf.Max(0f, clicksAccum - decay);
-            progress = Mathf.Clamp01(clicksAccum / currentRecipe.requiredClicks);
-        }
+        // Decaimiento
+        float decay = currentRecipe.decayClicksPerSecond * decayMultiplier * Time.deltaTime;
+        if (decay > 0f && clicksAccum > 0f) clicksAccum = Mathf.Max(0f, clicksAccum - decay);
 
-        SetArmByProgress(progress);
-        UpdateProgressUI();
+        // Progreso 0..1
+        progress = Mathf.Clamp01(clicksAccum / Mathf.Max(1, currentRecipe.requiredClicks));
 
-        // (Opcional) si prefieres terminar por ìllegar al 100%î aunque no haya colisiÛn:
-        // if (progress >= 1f && !sealedDone) OnSealComplete();
+        // Mover brazo por progreso
+        MoveArmByProgress(progress);
+
+        // UI
+        UpdateGameUI();
+
+        // Regla de sellado (progreso alto + contacto)
+        TrySealByContactAndProgress();
     }
 
     void DoClickImpulse()
     {
-        clicksAccum += 1f; // 1 click
-        progress = Mathf.Clamp01(clicksAccum / currentRecipe.requiredClicks);
-        SetArmByProgress(progress);
-        UpdateProgressUI();
+        clicksAccum += clickPower;
 
-        if (sfx && sfxClick) sfx.PlayOneShot(sfxClick);
-
-        // CPS (UI)
         float now = Time.time;
         clickTimes.Enqueue(now);
-        float window = currentRecipe ? currentRecipe.cpsWindow : 1f;
-        while (clickTimes.Count > 0 && now - clickTimes.Peek() > window) clickTimes.Dequeue();
+        while (clickTimes.Count > 0 && now - clickTimes.Peek() > currentRecipe.cpsWindow)
+            clickTimes.Dequeue();
     }
 
-    void SetArmByProgress(float t)
+    void MoveArmByProgress(float t)
     {
-        if (!arm || !armUpRef || !armDownRef) return;
-        arm.position = Vector3.Lerp(armUpRef.position, armDownRef.position, t);
-        arm.rotation = Quaternion.Slerp(armUpRef.rotation, armDownRef.rotation, t);
+        if (!armRoot || !armTip || !machine.armUpRef || !downPosTarget) return;
+
+        float easedT = Mathf.Pow(t, Mathf.Max(0.001f, stiffness));
+
+        // Posici√≥n objetivo de la PUNTA: armUpRef ‚Üí can.topSnap (downPosTarget)
+        Vector3 targetTipPos = Vector3.Lerp(
+            machine.armUpRef.position,
+            downPosTarget.position,
+            easedT
+        );
+
+
+        // Convertir target de la punta a posici√≥n del ROOT (respeta offset)
+        Vector3 tipOffset = armTip.position - armRoot.position;
+        Vector3 desiredRootPos = targetTipPos - tipOffset;
+
+        armRoot.position = Vector3.MoveTowards(armRoot.position, desiredRootPos, armMoveSpeed * Time.deltaTime);
+
+        float distToDown = Vector3.Distance(armTip.position, downPosTarget.position);
     }
 
-    void UpdateProgressUI()
+    void UpdateGameUI()
     {
-        if (progressBar) progressBar.value = progress;
+        if (progressSlider) progressSlider.value = progress;
+
         if (cpsText)
         {
-            float window = currentRecipe ? currentRecipe.cpsWindow : 1f;
-            float cps = clickTimes.Count / Mathf.Max(0.001f, window);
+            float cps = clickTimes.Count / Mathf.Max(0.001f, currentRecipe.cpsWindow);
             cpsText.text = $"{cps:0.0} cps";
         }
     }
 
-    void SetHint(string s) { if (hint) hint.text = s; }
-
-    // Llamado por ArmContactRelay cuando la punta toca la lata.
-    public void OnArmHitCan(Collider _)
+    void TrySealByContactAndProgress()
     {
-        if (!running || sealedDone) return;
+        if (!downPosTarget) return;
 
-        // Asegura que estemos pr·cticamente abajo (evita sellar por roce lateral)
-        if (progress >= 0.98f) OnSealComplete();
+        float dist = Vector3.Distance(armTip.position, downPosTarget.position);
+        if (progress >= sealProgressThreshold && dist <= minContactDist)
+        {
+            OnSealComplete();
+        }
     }
 
     void OnSealComplete()
     {
-        sealedDone = true;
-        running = false;
-        SetArmByProgress(1f);
-        SetHint("°Sellada!");
+        if (panelGame) panelGame.SetActive(false);
 
-        if (sfx && sfxSeal) sfx.PlayOneShot(sfxSeal);
-
-        // Entrega resultado al inventario
+        // Instanciar PICKUP con el resultado
         if (currentRecipe && currentRecipe.sealedCanResult)
-            inventory.AddItem(currentRecipe.sealedCanResult, 1);
+        {
+            if (!pickupPrefab || !uiParent)
+            {
+                Debug.LogWarning("[Sealer] Falta pickupPrefab o uiParent: no se mostrar√° pickup.");
+            }
+            else
+            {
+                if (pickupInstance) Destroy(pickupInstance.gameObject);
+                pickupInstance = Instantiate(pickupPrefab, uiParent, false);
+                pickupInstance.gameObject.SetActive(true);
+                pickupInstance.SetItem(currentRecipe.sealedCanResult, 1);
+            }
+        }
 
-        // Limpia slot de entrada (consumiste 1 al soltar)
-        if (sealSlot) sealSlot.Clear();
-
-        // (Opcional) Cerrar panel tras un tiempo
-        // Invoke(nameof(HidePanel), 0.8f);
+        running = false;
+        // (Opcional) limpiar modelos de escena
+        if (canInstance) Destroy(canInstance);
+        if (armInstance) Destroy(armInstance);
+        canInstance = null;
+        armInstance = null;
     }
 
-    public void HidePanel() => gameObject.SetActive(false);
+    public bool TryClosePanel()
+    {
+        // Bloquear cierre si el minijuego est√° en curso
+        if (running)
+        {
+            return false;
+        }
+
+        // Si hay pickup con √≠tem, permitir cierre pero ocultando el pickup (NO destruir)
+        if (pickupInstance && !pickupInstance.IsEmpty())
+        {
+            pickupInstance.gameObject.SetActive(false);
+        }
+
+        // Ocultar UI del minijuego/panel
+        if (panelGame) panelGame.SetActive(false);
+        if (panelStart) panelStart.SetActive(false);
+
+        gameObject.SetActive(false);
+
+        sealedDone = false;
+        return true;
+    }
 }

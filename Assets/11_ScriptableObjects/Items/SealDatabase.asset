@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: SealDatabase
   m_EditorClassIdentifier: 
   recipes:
-  - {fileID: 11400000, guid: d5ba2f793f69613409fe8d07502d6aa9, type: 2}
+  - {fileID: 11400000, guid: 02946ef21bce53a4bae2c577e54f9f03, type: 2}
+  - {fileID: 11400000, guid: ce13faac3aeb51d4eaa2c4106dc2f025, type: 2}

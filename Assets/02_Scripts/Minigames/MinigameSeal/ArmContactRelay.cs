@@ -4,7 +4,7 @@ public class ArmContactRelay : MonoBehaviour
 {
     public SealerMinigameController controller;
 
-    private void OnTriggerEnter(Collider other)
+    /*private void OnTriggerEnter(Collider other)
     {
         controller?.OnArmHitCan(other);
     }
@@ -12,5 +12,5 @@ public class ArmContactRelay : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         controller?.OnArmHitCan(collision.collider);
-    }
+    }*/
 }
