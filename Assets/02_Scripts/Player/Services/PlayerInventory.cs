@@ -14,8 +14,8 @@ public class PlayerInventory : MonoBehaviour
     private void Awake()
     {
         player = ReInput.players.GetPlayer(0);
-        for (int i = 0; i < slots.Length; i++)
-            slots[i].SetHighlight(i == selectItemIndex);
+        /*for (int i = 0; i < slots.Length; i++)
+            slots[i].SetHighlight(i == selectItemIndex);*/
     }
 
     private void Update()

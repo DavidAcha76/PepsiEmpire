@@ -28,7 +28,7 @@ public class CinemachineBridgeCamera : MonoBehaviour
         orbital = cineCam.GetComponent<CinemachineOrbitalFollow>();
     }
 
-    void Update()
+    void LateUpdate()
     {
         if (player == null || orbital == null) return;
 
