@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6d5e56370f7a8e4bb1a107c54784547, type: 3}
+  m_Name: EssenceMine
+  m_EditorClassIdentifier: 
+  title: Mina de esencia
+  icon: {fileID: 21300000, guid: 8f33a733eaa3850439afecad6dd619d9, type: 3}
+  descriptions:
+  - Esta mejora rebaja el tiempo de produccion de esencia 1 segundo
+  - Esta mejora rebaja el tiempo de produccion de esencia 2 segundo
+  costs: 0a00000014000000
+  prefabsPorNivel:
+  - {fileID: 856298941411411843, guid: af8a9546e497c6a4184c399ea49daf79, type: 3}
+  - {fileID: 8555518372020871990, guid: f3d5cf9c2a8c7c84aa8dd0937541f243, type: 3}
