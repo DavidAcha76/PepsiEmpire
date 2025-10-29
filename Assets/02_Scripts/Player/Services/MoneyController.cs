@@ -28,7 +28,7 @@ public class MoneyController : MonoBehaviour
         money += amount;
         moneyUI.SetMoney(money, true, amount);
 
-        SpawnFloatingText("+" + amount, worldPosition ?? Vector3.zero, true);
+        SpawnFloatingText("      +", amount.ToString(), worldPosition ?? Vector3.zero, true);
         if (gainParticles) gainParticles.Play();
         if (audioSource && kachingClip) audioSource.PlayOneShot(kachingClip);
     }
@@ -39,17 +39,17 @@ public class MoneyController : MonoBehaviour
         if (money < 0) money = 0;
         moneyUI.SetMoney(money, false, amount);
 
-        SpawnFloatingText("-" + amount, worldPosition ?? Vector3.zero, false);
+        SpawnFloatingText("      -", amount.ToString(), worldPosition ?? Vector3.zero, false);
         if (loseParticles) loseParticles.Play();
         if (audioSource && errorClip) audioSource.PlayOneShot(errorClip);
     }
 
-    void SpawnFloatingText(string text, Vector3 worldPos, bool positive)
+    void SpawnFloatingText(string sign, string text, Vector3 worldPos, bool positive)
     {
         if (floatingTextPrefab == null || floatingTextParent == null) return;
 
         GameObject go = Instantiate(floatingTextPrefab, floatingTextParent);
         FloatingText ft = go.GetComponent<FloatingText>();
-        ft.Setup(text, positive);
+        ft.Setup(sign, text, positive);
     }
 }

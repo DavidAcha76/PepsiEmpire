@@ -9,14 +9,14 @@ public class UpgradeItemUI : MonoBehaviour
     public TextMeshProUGUI title;
     public TextMeshProUGUI description;
     public TextMeshProUGUI costText;
+    public Transform progressContainer;
+    public GameObject progressPrefab;
     public Button upgradeButton;
-    public Transform progressContainer; // contenedor con franjas
-    public GameObject progressPrefab;   // prefab de franja roja
 
-    [Header("Lógica")]
-    public UpgradeData upgradeData; // Scriptable con niveles
+    [Header("Referencias de Lógica")]
+    public MachineController machine;
 
-    private int currentLevel = 0;
+    private int currentLevel => machine.GetCurrentLevel();
 
     void Start()
     {
@@ -26,34 +26,24 @@ public class UpgradeItemUI : MonoBehaviour
 
     void RefreshUI()
     {
-        title.text = upgradeData.title;
-        description.text = upgradeData.descriptions[currentLevel];
-        costText.text = "$" + upgradeData.costs[currentLevel].ToString();
+        var data = machine.upgradeData;
 
-        // limpiar y regenerar franjas
+        title.text = data.machineName;
+        description.text = data.descriptions[currentLevel - 1];
+        costText.text = "$" + data.costs[currentLevel - 1];
+
         foreach (Transform child in progressContainer)
             Destroy(child.gameObject);
 
         for (int i = 0; i < currentLevel; i++)
             Instantiate(progressPrefab, progressContainer);
 
-        // desactivar botón si está al máximo
-        upgradeButton.interactable = currentLevel < upgradeData.maxLevel;
+        upgradeButton.interactable = currentLevel < data.maxLevel;
     }
 
     void OnUpgrade()
     {
-        if (currentLevel >= upgradeData.maxLevel) return;
-
-        // pagar costo (aquí integrar tu sistema de dinero)
-        // if (!PlayerStats.TrySpend(upgradeData.costs[currentLevel])) return;
-
-        currentLevel++;
+        FactoryUpgradeManager.Instance.UpgradeMachine(machine);
         RefreshUI();
-
-        // Cambiar prefab en escena (llamada a manager)
-        FactoryUpgradeManager.Instance.ApplyUpgrade(upgradeData, currentLevel);
-
-        Debug.Log($"🔧 Mejora '{upgradeData.title}' aplicada. Nivel: {currentLevel}");
     }
 }

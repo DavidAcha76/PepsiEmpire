@@ -3,12 +3,25 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Factory/Upgrade Data")]
 public class UpgradeData : ScriptableObject
 {
-    public string title;
+    [Header("Info General")]
+    public string machineName;
     public Sprite icon;
-    [TextArea] public string[] descriptions;
-    public int[] costs;
-    public int maxLevel => Mathf.Min(descriptions.Length, costs.Length);
 
-    [Header("Prefabs a actualizar")]
-    public GameObject[] prefabsPorNivel;
+    [Header("Niveles de Mejora")]
+    [Range(1, 9)] public int maxLevel = 9;
+
+    [Tooltip("Costo por cada nivel (index = nivel-1)")]
+    public int[] costs = new int[9];
+
+    [Tooltip("Descripción por nivel")]
+    [TextArea] public string[] descriptions = new string[9];
+
+    [Header("Prefabs de Máquina por Fase")]
+    [Tooltip("Modelos que cambian visualmente (niveles 1-3 usan prefab[0], 4-6 usan prefab[1], 7-9 usan prefab[2])")]
+    public GameObject[] machinePrefabs = new GameObject[3];
+
+    [Header("Multiplicadores de Variables")]
+    [Tooltip("Cada nivel modifica variables específicas de la máquina")]
+    public float[] productionSpeedMultipliers = new float[9];
+    public float[] efficiencyMultipliers = new float[9];
 }

@@ -8,21 +8,25 @@ public class FloatingText : MonoBehaviour
     public float duration = 0.7f;
     public Vector2 randomOffsetRange = new Vector2(-30f, 30f);
 
-    TextMeshProUGUI tmp;
-    CanvasGroup cg;
-    RectTransform rect;
+    public TextMeshProUGUI txtMoney;
+    public TextMeshProUGUI txtSign;
+
+    private CanvasGroup cg;
+    private RectTransform rect;
+
 
     private void Awake()
     {
-        tmp = GetComponent<TextMeshProUGUI>();
         cg = GetComponent<CanvasGroup>();
         rect = GetComponent<RectTransform>();
     }
 
-    public void Setup(string text, bool positive)
+    public void Setup(string sign, string text, bool positive)
     {
-        tmp.text = text;
-        tmp.color = positive ? Color.green : Color.red;
+        txtMoney.text = text;
+        txtSign.text = sign;
+        txtMoney.color = positive ? Color.green : Color.red;
+        txtSign.color = positive ? Color.green : Color.red;
         StartCoroutine(Animate());
     }
 

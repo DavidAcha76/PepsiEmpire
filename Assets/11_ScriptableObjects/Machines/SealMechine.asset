@@ -12,11 +12,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6d5e56370f7a8e4bb1a107c54784547, type: 3}
   m_Name: SealMechine
   m_EditorClassIdentifier: 
-  title: Maquina de Sellado
+  machineName: Maquina de sellado
   icon: {fileID: 21300000, guid: 8bee27144945bf943b5f5a7337ed22f1, type: 3}
+  maxLevel: 9
+  costs: 010000000200000003000000040000000500000006000000070000000800000009000000
   descriptions:
-  - Prueba mejora maquina 2
-  costs: 64000000c8000000
-  prefabsPorNivel:
+  - Mejora 1
+  - Mejora 2
+  - Mejora 3
+  - Mejora 4
+  - Mejora 5
+  - Mejora 6
+  - Mejora 7
+  - Mejora 8
+  - Mejora 9
+  machinePrefabs:
+  - {fileID: 1822199884451726184, guid: ecf44062ebbae9b45a4db7f459e7faf6, type: 3}
   - {fileID: 6404026677336227344, guid: 987bbeb9d3db2194c9d6d916a07366bd, type: 3}
   - {fileID: 5274244478664284904, guid: 216e4d8edb10255409910f28f0f65075, type: 3}
+  productionSpeedMultipliers:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  efficiencyMultipliers:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0

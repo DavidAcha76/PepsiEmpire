@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 375089432054055650}
   - component: {fileID: 5162162087453383660}
+  - component: {fileID: 4420386035407929189}
+  - component: {fileID: 443426478729122625}
   m_Layer: 5
   m_Name: MoneyPrefab
   m_TagString: Untagged
@@ -62,6 +64,35 @@ MonoBehaviour:
   m_Spacing: {x: 0, y: 0}
   m_Constraint: 1
   m_ConstraintCount: 2
+--- !u!114 &4420386035407929189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 681534505971892947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9923848f2652ec4596d125b3631efb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  riseDistance: 60
+  duration: 2
+  randomOffsetRange: {x: -30, y: 30}
+  txtMoney: {fileID: 8696751961250264925}
+  txtSign: {fileID: 7850323607028492020}
+--- !u!225 &443426478729122625
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 681534505971892947}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &3260869216945850147
 GameObject:
   m_ObjectHideFlags: 0
