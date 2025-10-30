@@ -21,6 +21,8 @@ public class MoneyController : MonoBehaviour
     {
         if (Instance != null && Instance != this) Destroy(gameObject);
         else Instance = this;
+
+        moneyUI.moneyText.text = money.ToString();
     }
 
     public void AddMoney(int amount, Vector3? worldPosition = null)

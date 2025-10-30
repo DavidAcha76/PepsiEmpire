@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f0a3972b3232b5744a05547eb6eed2a8, type: 3}
-  m_Name: OrientalNaran
+  m_Name: PepsiOriginS_
   m_EditorClassIdentifier: 
-  itemName: Oriental Naranja
+  itemName: Pepsi Original Sellado
   type: 0
-  icon: {fileID: 21300000, guid: fc79d70919b68c143813f0658d404150, type: 3}
-  price: 30
+  icon: {fileID: 21300000, guid: 041ec3e493dfa5342822a598af0bd5a7, type: 3}
+  price: 0
   isStackable: 1
   maxStack: 20
-  visualColor: {r: 1, g: 0.6039216, b: 0.23137255, a: 1}
+  visualColor: {r: 1, g: 1, b: 1, a: 1}

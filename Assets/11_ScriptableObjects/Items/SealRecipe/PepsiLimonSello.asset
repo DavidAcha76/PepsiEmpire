@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbefcf59636cfd646b5283c0a1275294, type: 3}
+  m_Name: PepsiLimonSello
+  m_EditorClassIdentifier: 
+  liquidInput: {fileID: 11400000, guid: 19241f957ac59be4e801d9a58d5ff95b, type: 2}
+  sealedCanResult: {fileID: 11400000, guid: b78dde498f2b5314096dbfcd6a428f4e, type: 2}
+  requiredClicks: 10
+  decayClicksPerSecond: 1
+  cpsWindow: 1

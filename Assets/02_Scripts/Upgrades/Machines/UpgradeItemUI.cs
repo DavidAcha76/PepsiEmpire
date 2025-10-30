@@ -9,6 +9,7 @@ public class UpgradeItemUI : MonoBehaviour
     public TextMeshProUGUI title;
     public TextMeshProUGUI description;
     public TextMeshProUGUI costText;
+    public TextMeshProUGUI levelText;
     public Transform progressContainer;
     public GameObject progressPrefab;
     public Button upgradeButton;
@@ -17,6 +18,7 @@ public class UpgradeItemUI : MonoBehaviour
     public MachineController machine;
 
     private int currentLevel => machine.GetCurrentLevel();
+    private int imageCont = 0;
 
     void Start()
     {
@@ -28,9 +30,21 @@ public class UpgradeItemUI : MonoBehaviour
     {
         var data = machine.upgradeData;
 
+        
+
         title.text = data.machineName;
+        levelText.text = currentLevel.ToString();
         description.text = data.descriptions[currentLevel - 1];
         costText.text = "$" + data.costs[currentLevel - 1];
+        if (currentLevel == 3 || currentLevel == 6)
+        {
+            icon.sprite = data.icons[imageCont];
+            imageCont++;
+        }
+
+        if (currentLevel != 1) MoneyController.Instance.RemoveMoney(data.costs[currentLevel - 2]);
+
+
 
         foreach (Transform child in progressContainer)
             Destroy(child.gameObject);

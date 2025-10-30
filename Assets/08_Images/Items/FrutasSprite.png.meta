@@ -100,12 +100,12 @@ TextureImporter:
       name: FrutasSprite_0
       rect:
         serializedVersion: 2
-        x: 42
-        y: 549
-        width: 274
-        height: 338
+        x: 27
+        y: 536
+        width: 304
+        height: 365
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -122,12 +122,12 @@ TextureImporter:
       name: FrutasSprite_1
       rect:
         serializedVersion: 2
-        x: 392
-        y: 547
-        width: 237
-        height: 345
+        x: 379
+        y: 534
+        width: 267
+        height: 373
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -144,12 +144,12 @@ TextureImporter:
       name: FrutasSprite_2
       rect:
         serializedVersion: 2
-        x: 708
-        y: 549
-        width: 277
-        height: 341
+        x: 695
+        y: 537
+        width: 307
+        height: 369
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -166,12 +166,12 @@ TextureImporter:
       name: FrutasSprite_3
       rect:
         serializedVersion: 2
-        x: 40
-        y: 142
-        width: 258
-        height: 258
+        x: 27
+        y: 129
+        width: 290
+        height: 288
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -188,12 +188,12 @@ TextureImporter:
       name: FrutasSprite_4
       rect:
         serializedVersion: 2
-        x: 353
-        y: 139
-        width: 309
-        height: 261
+        x: 343
+        y: 132
+        width: 331
+        height: 277
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -210,12 +210,12 @@ TextureImporter:
       name: FrutasSprite_5
       rect:
         serializedVersion: 2
-        x: 712
-        y: 140
-        width: 271
-        height: 337
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 695
+        y: 132
+        width: 307
+        height: 354
+      alignment: 9
+      pivot: {x: 0.47081804, y: 0.4915643}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []

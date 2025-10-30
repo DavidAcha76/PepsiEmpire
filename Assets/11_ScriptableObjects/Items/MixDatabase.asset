@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: MixDatabase
   m_EditorClassIdentifier: 
   recipes:
-  - {fileID: 11400000, guid: 5b7369045a80b964da311c9133c28926, type: 2}
   - {fileID: 11400000, guid: 6159c8883bcf3514188721fc0c8c2f82, type: 2}
+  - {fileID: 11400000, guid: 7273dbeedfa36794e9ac8207c947b10e, type: 2}
+  - {fileID: 11400000, guid: f9b11151d7fc45e4e8ca0dda76996252, type: 2}

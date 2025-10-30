@@ -5,7 +5,7 @@ public class UpgradeData : ScriptableObject
 {
     [Header("Info General")]
     public string machineName;
-    public Sprite icon;
+    public Sprite[] icons = new Sprite[2];
 
     [Header("Niveles de Mejora")]
     [Range(1, 9)] public int maxLevel = 9;

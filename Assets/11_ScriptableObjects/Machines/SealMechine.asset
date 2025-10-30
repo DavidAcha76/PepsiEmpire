@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: SealMechine
   m_EditorClassIdentifier: 
   machineName: Maquina de sellado
-  icon: {fileID: 21300000, guid: 8bee27144945bf943b5f5a7337ed22f1, type: 3}
+  icons:
+  - {fileID: 21300000, guid: 8bee27144945bf943b5f5a7337ed22f1, type: 3}
+  - {fileID: 21300000, guid: 6349fe227f7abf94793612297700dcea, type: 3}
   maxLevel: 9
   costs: 010000000200000003000000040000000500000006000000070000000800000009000000
   descriptions:
