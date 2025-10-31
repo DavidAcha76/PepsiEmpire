@@ -2,6 +2,9 @@
 
 public class MachineController : MonoBehaviour
 {
+    [Header("Referencias")]
+    public MachineBase machine;
+
     [Header("Datos de mejora")]
     public UpgradeData upgradeData;
     public int currentLevel = 1;
@@ -36,14 +39,9 @@ public class MachineController : MonoBehaviour
         currentLevel = newLevel;
         if (upgradeData == null) return;
 
-        float speedMult = 1;
-        float effMult = 1;
+        machine.OnUpgradeApplied(upgradeData.newValue[newLevel - 1]);
 
-        currentProductionSpeed = baseProductionSpeed * speedMult;
-        currentEfficiency = baseEfficiency * effMult;
 
         Debug.Log($"⚙️ Mejora aplicada a '{upgradeData.machineName}' — Nivel {newLevel}");
-        Debug.Log($"   🔸 Producción: {currentProductionSpeed:F2}");
-        Debug.Log($"   🔸 Eficiencia: {currentEfficiency:F2}");
     }
 }

@@ -58,22 +58,20 @@ public class ElectricityMachine : MonoBehaviour
             OnFullyCharged.Invoke();
     }
 
-    public void OnPointerDown(PointerEventData eventData)
+    public void OnPointerDown()
     {
-        if (eventData.pointerEnter == holdButton.gameObject)
-        {
+
             isHolding = true;
             Debug.Log("⚡ MANTENIENDO botón de electricidad...");
-        }
+        
     }
 
-    public void OnPointerUp(PointerEventData eventData)
+    public void OnPointerUp()
     {
-        if (eventData.pointerEnter == holdButton.gameObject)
-        {
+
             isHolding = false;
             Debug.Log("🪫 Soltaste el botón de electricidad");
-        }
+        
     }
 
     private void UpdateUI()

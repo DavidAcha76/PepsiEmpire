@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SealerMinigameController : MonoBehaviour
+public class SealerMinigameController : MachineBase
 {
     [Header("Data")]
     public SealDatabase database;
@@ -33,6 +33,9 @@ public class SealerMinigameController : MonoBehaviour
 
     [Tooltip("Velocidad con la que el brazo sigue su objetivo.")]
     public float armMoveSpeed = 6f;
+
+    [Tooltip("Cantidad de clicks requeridos para sellar.")]
+    public float requiredClicks = 20f;
 
     [Tooltip("Progreso mínimo para permitir sellar (0..1).")]
     [Range(0.8f, 1f)] public float sealProgressThreshold = 0.98f;
@@ -199,7 +202,7 @@ public class SealerMinigameController : MonoBehaviour
         if (decay > 0f && clicksAccum > 0f) clicksAccum = Mathf.Max(0f, clicksAccum - decay);
 
         // Progreso 0..1
-        progress = Mathf.Clamp01(clicksAccum / Mathf.Max(1, currentRecipe.requiredClicks));
+        progress = Mathf.Clamp01(clicksAccum / Mathf.Max(1, requiredClicks));
 
         // Mover brazo por progreso
         MoveArmByProgress(progress);
@@ -316,5 +319,10 @@ public class SealerMinigameController : MonoBehaviour
 
         sealedDone = false;
         return true;
+    }
+
+    public override void OnUpgradeApplied(float newLevel)
+    {
+        requiredClicks -= newLevel;
     }
 }

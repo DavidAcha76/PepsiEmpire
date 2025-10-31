@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EssenceMine : MonoBehaviour
+public class EssenceMine : MachineBase
 {
     [Header("Configuración")]
     public ItemData itemGenerado;
@@ -19,6 +19,7 @@ public class EssenceMine : MonoBehaviour
     public CameraTargetSwitcher cameraTargetSwitcher;
     private GameObject spawnUIParent;
     private PickupSlot pickupActual;
+    private float timer;
 
     private void Awake()
     {
@@ -27,7 +28,7 @@ public class EssenceMine : MonoBehaviour
             cameraTargetSwitcher = FindAnyObjectByType<CameraTargetSwitcher>();
     }
 
-    private void OnEnable() => StartGeneracion();
+    //private void OnEnable() => StartGeneracion();
     private void OnDisable() => StopGeneracion();
 
     private void Update()
@@ -45,17 +46,19 @@ public class EssenceMine : MonoBehaviour
         {
             pickupActual.SetItem(itemGenerado, cantidadActual);
         }
+
+        Generar();
     }
 
     // -----------------------------------------
     // Generación automática
     // -----------------------------------------
-    public void StartGeneracion()
+    /*public void StartGeneracion()
     {
         if (generando || itemGenerado == null) return;
         generando = true;
         generacionCo = StartCoroutine(CicloGeneracion());
-    }
+    }*/
 
     public void StopGeneracion()
     {
@@ -64,12 +67,30 @@ public class EssenceMine : MonoBehaviour
         generacionCo = null;
     }
 
-    private IEnumerator CicloGeneracion()
+    /*private IEnumerator CicloGeneracion()
     {
         while (generando)
         {
             yield return new WaitForSeconds(tiempoGeneracion);
 
+            if (cantidadActual < maxCapacidad)
+            {
+                cantidadActual += cantidadPorCiclo;
+
+                if (pickupActual && pickupActual.gameObject.activeSelf && itemGenerado != null)
+                {
+                    pickupActual.SetItem(itemGenerado, cantidadActual);
+                }
+            }
+        }
+    }*/
+
+    public void Generar()
+    {
+        timer += Time.deltaTime;
+        if (timer >= tiempoGeneracion)
+        {
+            timer = 0f;
             if (cantidadActual < maxCapacidad)
             {
                 cantidadActual += cantidadPorCiclo;
@@ -128,5 +149,10 @@ public class EssenceMine : MonoBehaviour
             Destroy(pickupActual.gameObject);
             pickupActual = null;
         }
+    }
+
+    public override void OnUpgradeApplied(float newLevel)
+    {
+        tiempoGeneracion -= newLevel;
     }
 }

@@ -26,15 +26,15 @@ public class StartGameController : MonoBehaviour
         if (!gameOpen && player.GetButtonDown("Interact"))
         {
             // Si hay una referencia pero el objeto ya fue destruido, limpiar
-            if (instancePanel == null)
+            /*if (instancePanel == null)
             {
                 instancePanel = null;
-            }
+            }*/
 
             // Si ya hay un pickup pendiente, mostrarlo directamente
-            if (instancePanel && instancePanel.pickupInstance && !instancePanel.pickupInstance.IsEmpty())
+            if (instancePanel && panelMixPrefab.pickupInstance && !panelMixPrefab.pickupInstance.IsEmpty())
             {
-                instancePanel.pickupInstance.gameObject.SetActive(true);
+                panelMixPrefab.pickupInstance.gameObject.SetActive(true);
                 cameraSwicher.LookAtOtherTarget();
                 gameOpen = true;
                 return;
@@ -43,14 +43,15 @@ public class StartGameController : MonoBehaviour
             // Si no hay instancia (porque se destruyó al terminar ciclo), crear una nueva
             if (instancePanel == null)
             {
-                instancePanel = Instantiate(panelMixPrefab, rootUI.transform, false);
+                //instancePanel = Instantiate(panelMixPrefab, rootUI.transform, false);
+                panelMixPrefab.gameObject.SetActive(true);
             }
 
             // Si la instancia existe pero está desactivada, solo reactivarla
-            if (!instancePanel.gameObject.activeSelf)
+            /*if (!instancePanel.gameObject.activeSelf)
             {
                 instancePanel.gameObject.SetActive(true);
-            }
+            }*/
 
             cameraSwicher.LookAtOtherTarget();
             gameOpen = true;
@@ -59,28 +60,28 @@ public class StartGameController : MonoBehaviour
         // ---- CERRAR ----
         else if (gameOpen && player.GetButtonDown("Close"))
         {
-            if (!instancePanel.running)
+            if (!panelMixPrefab.running)
             {
                 gameOpen = false;
                 cameraSwicher.ReturnToPlayer();
 
-                if (instancePanel)
+                if (panelMixPrefab)
                 {
                     // Caso A: mezcla completada → pickup activo
-                    if (instancePanel.pickupInstance && !instancePanel.pickupInstance.IsEmpty())
+                    if (panelMixPrefab.pickupInstance && !panelMixPrefab.pickupInstance.IsEmpty())
                     {
-                        instancePanel.pickupInstance.gameObject.SetActive(false);
+                        panelMixPrefab.pickupInstance.gameObject.SetActive(false);
                     }
                     // Caso B: mezcla aún en curso
                     else
                     {
-                        instancePanel.gameObject.SetActive(false);
+                        panelMixPrefab.gameObject.SetActive(false);
                     }
 
-                    if (instancePanel.pickupInstance && instancePanel.pickupInstance.IsEmpty())
+                    if (panelMixPrefab.pickupInstance && panelMixPrefab.pickupInstance.IsEmpty())
                     {
-                        Destroy(instancePanel.pickupInstance.gameObject);
-                        instancePanel.pickupInstance = null;
+                        Destroy(panelMixPrefab.pickupInstance.gameObject);
+                        panelMixPrefab.pickupInstance = null;
                     }
                 }
             }

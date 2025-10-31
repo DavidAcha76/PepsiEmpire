@@ -20,8 +20,7 @@ public class UpgradeData : ScriptableObject
     [Tooltip("Modelos que cambian visualmente (niveles 1-3 usan prefab[0], 4-6 usan prefab[1], 7-9 usan prefab[2])")]
     public GameObject[] machinePrefabs = new GameObject[3];
 
-    [Header("Multiplicadores de Variables")]
+    [Header("Mejoras de Variables")]
     [Tooltip("Cada nivel modifica variables específicas de la máquina")]
-    public float[] productionSpeedMultipliers = new float[9];
-    public float[] efficiencyMultipliers = new float[9];
+    public float[] newValue = new float[9];
 }

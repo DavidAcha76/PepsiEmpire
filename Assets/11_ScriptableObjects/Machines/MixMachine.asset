@@ -32,19 +32,9 @@ MonoBehaviour:
   - {fileID: 5664307816016021711, guid: 972172929d47de74d8cea0062909c52b, type: 3}
   - {fileID: 506505891219160718, guid: fc612f1d78f060f48968ea0b17c5cce4, type: 3}
   - {fileID: 7148935232994675619, guid: cda0ec77fef4afc4e93122fa12f75100, type: 3}
-  productionSpeedMultipliers:
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  efficiencyMultipliers:
-  - 0
-  - 0
+  newValue:
+  - 10
+  - 8
   - 0
   - 0
   - 0

@@ -22,6 +22,7 @@ public class FactoryUpgradeManager : MonoBehaviour
 
         // aplicar valores numéricos
         machine.ApplyUpgrade(newLevel);
+        
 
         // aplicar cambio visual si corresponde
         if (cambioVisual)

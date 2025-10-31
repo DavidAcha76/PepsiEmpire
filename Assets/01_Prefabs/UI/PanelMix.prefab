@@ -304,6 +304,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 751ba380eafb3844a86cb0c0e261c919, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  controller: {fileID: 0}
   bowl: {fileID: 6591317463668532775, guid: cf22e3c59f143e44f934c9d24954d83d, type: 3}
   database: {fileID: 11400000, guid: 4ea1d8acc6ef289479726d941337d614, type: 2}
   inventory: {fileID: 0}
@@ -323,6 +324,7 @@ MonoBehaviour:
   handleRadius: 80
   minDragDeltaDeg: 1.5
   decayPerSecDefault: 0.1
+  requiredTurns: 20
   handleHomePos: {x: 0, y: 0}
   handleHomeAngle: 0
   returnToCenter: 1
@@ -332,6 +334,8 @@ MonoBehaviour:
   orbitRadius: 0.2
   spinSpeed: 720
   orbitSmooth: 10
+  pickupInstance: {fileID: 0}
+  running: 0
 --- !u!114 &5786201267141358042
 MonoBehaviour:
   m_ObjectHideFlags: 0

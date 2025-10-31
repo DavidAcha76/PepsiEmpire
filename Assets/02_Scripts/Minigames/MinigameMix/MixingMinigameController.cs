@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class MixingMinigameController : MonoBehaviour
+public class MixingMinigameController : MachineBase
 {
     [Header("Prefabs")]
     public GameObject bowl;
@@ -36,6 +36,7 @@ public class MixingMinigameController : MonoBehaviour
     [Header("Ajustes")]
     public float minDragDeltaDeg = 1.5f;
     public float decayPerSecDefault = 0.1f;
+    public float requiredTurns = 10f;
 
     [Header("Knob Home")]
     [SerializeField] private Vector2 handleHomePos = Vector2.zero;
@@ -155,7 +156,7 @@ public class MixingMinigameController : MonoBehaviour
         progress = 0f;
         cumulativeCW = 0f;
         running = true;
-        requiredDegrees = Mathf.Max(180f, currentRecipe.requiredTurns * 360f);
+        requiredDegrees = Mathf.Max(180f, requiredTurns * 360f);
 
         SetIcon(leftIcon, liquid);
         SetIcon(rightIcon, solid);
@@ -285,5 +286,10 @@ public class MixingMinigameController : MonoBehaviour
         mixerSpinAngle += spinSpeed * Time.deltaTime;
         if (mixerSpinAngle > 360f) mixerSpinAngle -= 360f;
         mixerModel.localRotation = Quaternion.Euler(0f, 0f, mixerSpinAngle);
+    }
+
+    public override void OnUpgradeApplied(float newLevel)
+    {
+        requiredTurns -= newLevel;
     }
 }
