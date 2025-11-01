@@ -22,6 +22,18 @@ public class StartGameController : MonoBehaviour
     {
         if (!isPlayerCloser) return;
 
+        if (gameOpen && panelMixPrefab.pickupInstance && panelMixPrefab.pickupInstance.IsEmpty())
+        {
+            Debug.Log("[MixGame] Pickup recogido → cerrando panel automáticamente.");
+            cameraSwicher.ReturnToPlayer();
+            panelMixPrefab.gameObject.SetActive(false);
+            gameOpen = false;
+
+            Destroy(panelMixPrefab.pickupInstance.gameObject);
+            panelMixPrefab.pickupInstance = null;
+            return;
+        }
+
         // ---- ABRIR ----
         if (!gameOpen && player.GetButtonDown("Interact"))
         {

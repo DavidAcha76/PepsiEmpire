@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Rewired;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -64,9 +65,11 @@ public class SealerMinigameController : MachineBase
     private bool sealedDone;
 
     private readonly Queue<float> clickTimes = new(); // para CPS
+    private Player player;
 
     void Awake()
     {
+        player = ReInput.players.GetPlayer(0);
         if (startButton) startButton.onClick.AddListener(OnPressSeal);
         if (!uiParent)
         {
@@ -194,7 +197,7 @@ public class SealerMinigameController : MachineBase
         if (!running) return;
 
         // INPUT (mouse izq/Space). Cambia a Rewired si querés.
-        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
+        if (player.GetButtonDown("Select"))
             DoClickImpulse();
 
         // Decaimiento

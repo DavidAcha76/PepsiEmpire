@@ -14,6 +14,7 @@ public class ElectricityMachine : MonoBehaviour
     public Slider chargeBar;                   // referencia a la barra
     public Image barFill;                      // opcional para cambiar color
     public Button holdButton;                  // botón de mantener presionado
+    public GameObject panel;
 
     [Header("Colores de estado")]
     public Color fullColor = Color.green;
@@ -56,6 +57,12 @@ public class ElectricityMachine : MonoBehaviour
 
         if (charge >= 1f)
             OnFullyCharged.Invoke();
+
+        if (!panel.activeInHierarchy && isHolding)
+        {
+            isHolding = false;
+            Debug.Log("🪫 Panel cerrado, reseteando estado de recarga.");
+        }
     }
 
     public void OnPointerDown()

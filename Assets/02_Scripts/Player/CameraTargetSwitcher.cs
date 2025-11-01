@@ -1,4 +1,5 @@
-﻿using Unity.Cinemachine;
+﻿using Rewired;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class CameraTargetSwitcher : MonoBehaviour
@@ -27,8 +28,11 @@ public class CameraTargetSwitcher : MonoBehaviour
     bool lookingElsewhere;
     Coroutine switchCo;
 
+    private Player player;
+
     void Awake()
     {
+        player = ReInput.players.GetPlayer(0);
         if (!cineCam) cineCam = FindAnyObjectByType<CinemachineCamera>();
     }
 
@@ -94,6 +98,7 @@ public class CameraTargetSwitcher : MonoBehaviour
 
     System.Collections.IEnumerator SwitchRoutine(float targetFOV)
     {
+        player.controllers.maps.SetMapsEnabled(false, "UI");
         float startFOV = cineCam.Lens.FieldOfView;
         float t0 = 0f;
 
@@ -107,5 +112,6 @@ public class CameraTargetSwitcher : MonoBehaviour
 
         cineCam.Lens.FieldOfView = targetFOV;
         switchCo = null;
+        player.controllers.maps.SetMapsEnabled(true, "UI");
     }
 }

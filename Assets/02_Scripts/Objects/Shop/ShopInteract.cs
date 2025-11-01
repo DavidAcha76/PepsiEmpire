@@ -42,7 +42,7 @@ public class ShopInteract : MonoBehaviour
 
         camera_.GetComponent<CinemachineCamera>().enabled = false;
         playerInstance.GetComponent<PlayerController>().enabled = false;
-        playerInstance.GetComponent<PlayerJump>().enabled = false;
+        //playerInstance.GetComponent<PlayerJump>().enabled = false;
         playerInstance.GetComponent<PlayerMovement>().Stop(true);
 
         shopOpen = true;
@@ -55,7 +55,7 @@ public class ShopInteract : MonoBehaviour
 
         camera_.GetComponent<CinemachineCamera>().enabled = true;
         playerInstance.GetComponent<PlayerController>().enabled = true;
-        playerInstance.GetComponent<PlayerJump>().enabled = true;
+        //playerInstance.GetComponent<PlayerJump>().enabled = true;
 
         shopOpen = false;
     }
