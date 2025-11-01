@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameNPC: Nina Kuro
   id: 8
-  zone: 0
+  day: 1
   favoriteDrink: 
   drinkPepsi: 0
-  ReputationThreshold: 0

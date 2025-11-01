@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameNPC: Valeria Torres
   id: 5
-  zone: 1
+  day: 1
   favoriteDrink: Pepsi
   drinkPepsi: 0
-  ReputationThreshold: 60

@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameNPC: Natalia Brooks
   id: 7
-  zone: 1
-  favoriteDrink: PepsiLeon
+  day: 1
+  favoriteDrink: PepsiLimon
   drinkPepsi: 0
-  ReputationThreshold: 70

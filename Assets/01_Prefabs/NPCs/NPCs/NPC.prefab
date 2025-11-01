@@ -286,7 +286,9 @@ GameObject:
   - component: {fileID: 5996275421038725365}
   - component: {fileID: 610672408335216422}
   - component: {fileID: 1101804958244841529}
+  - component: {fileID: 6760667237155616421}
   - component: {fileID: 6887581722387731742}
+  - component: {fileID: -6525104755589107160}
   m_Layer: 0
   m_Name: NPC
   m_TagString: Untagged
@@ -420,6 +422,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a3a37a501caeb241a280096d7dac384, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6760667237155616421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5863471697046503288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e048db20ee6a8cf46853c24cf4524071, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationSet: {fileID: 0}
+  speedParam: Speed
+  happyParam: IsHappy
+  drinkTrigger: Drink
 --- !u!114 &6887581722387731742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -433,11 +451,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 67900d8648ddfb54daab654b0f75e484, type: 2}
+  animDriver: {fileID: 6760667237155616421}
   pathFromSpawn: {fileID: 0}
-  pathBack: {fileID: 0}
   shopQueue: {fileID: 0}
   spawnPoint: {fileID: 0}
   view: {fileID: 2164154877240807845}
+  wanderPaths: []
+  probeCooldown: 3
+  joinProximity: 1.2
+--- !u!95 &-6525104755589107160
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5863471697046503288}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8673062184917476424
 GameObject:
   m_ObjectHideFlags: 0

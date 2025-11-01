@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameNPC: Roxy Khaos
   id: 6
-  zone: 1
+  day: 1
   favoriteDrink: Pepsi
   drinkPepsi: 1
-  ReputationThreshold: 0

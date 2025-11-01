@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameNPC: Luna Prisma
   id: 9
-  zone: 1
+  day: 1
   favoriteDrink: Pepesi
   drinkPepsi: 0
-  ReputationThreshold: 40
