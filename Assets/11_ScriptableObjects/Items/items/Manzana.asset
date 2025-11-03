@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Manzana
   m_EditorClassIdentifier: 
   itemName: Manzana
-  type: 0
+  type: 1
   icon: {fileID: 318073479, guid: 57bf5f1a240541543a382aaac532858d, type: 3}
   price: 0
   isStackable: 1

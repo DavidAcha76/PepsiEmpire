@@ -15,6 +15,6 @@ MonoBehaviour:
   liquidBase: {fileID: 11400000, guid: 290f32824677e1d4895b76ee3d8a1843, type: 2}
   solidAdditive: {fileID: 11400000, guid: a78bc7074b2566349b08a6b168b28969, type: 2}
   result: {fileID: 11400000, guid: b954b94cb55503749b932f1314649ea0, type: 2}
-  requiredTurns: 2
+  requiredTurns: 10
   decayPerSecond: 0.15
   resultColor: {r: 1, g: 1, b: 1, a: 1}

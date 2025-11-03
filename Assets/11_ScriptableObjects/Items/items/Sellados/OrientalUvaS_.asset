@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f0a3972b3232b5744a05547eb6eed2a8, type: 3}
-  m_Name: Papaya
+  m_Name: OrientalUvaS_
   m_EditorClassIdentifier: 
-  itemName: Papaya
+  itemName: Oriental Uva Sellado
   type: 0
-  icon: {fileID: 21300000, guid: 530ec1d8efdb9174c896bd9a5e02a480, type: 3}
-  price: 12
+  icon: {fileID: 21300000, guid: f0d876a92d7d9684c8a4de0bf7d2b466, type: 3}
+  price: 0
   isStackable: 1
   maxStack: 20
-  visualColor: {r: 1, g: 0.49803922, b: 0.29411766, a: 1}
+  visualColor: {r: 1, g: 1, b: 1, a: 1}

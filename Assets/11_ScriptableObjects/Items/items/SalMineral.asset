@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: SalMineral
   m_EditorClassIdentifier: 
   itemName: Sal mineral
-  type: 0
-  icon: {fileID: 21300000, guid: 716b19bccb15347419b5ab6d69c3c9a9, type: 3}
+  type: 1
+  icon: {fileID: 21300000, guid: 0e79b1c6a3978ed45b7e686bada390fa, type: 3}
   price: 20
   isStackable: 1
   maxStack: 20
-  visualColor: {r: 0.83137256, g: 0.9372549, b: 1, a: 1}
+  visualColor: {r: 1, g: 0.00969137, b: 0, a: 1}
