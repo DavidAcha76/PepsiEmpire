@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 046fc25ae91f0b04fa81ab3e287e732a, type: 3}
   m_Name: EleanorAnim
   m_EditorClassIdentifier: 
-  baseController: {fileID: 0}
-  sadIdle: {fileID: 0}
-  sadWalk: {fileID: 0}
-  happyIdle: {fileID: 0}
-  happyWalk: {fileID: 0}
-  drinking: {fileID: 0}
+  baseController: {fileID: 9100000, guid: 5e087beacfbd77e479379ba53607a81c, type: 2}
+  sadIdle: {fileID: -203655887218126122, guid: 6fad4d42656f00348938e80fa0ebe798, type: 3}
+  sadWalk: {fileID: -203655887218126122, guid: 379ea551fceaa9545957a93dafe88a1d, type: 3}
+  happyIdle: {fileID: -203655887218126122, guid: b6a4eab380a0d1843a977dad56edf4ef, type: 3}
+  happyWalk: {fileID: -203655887218126122, guid: 9a116c9d5c5b6d14cab5f415ab69c8c0, type: 3}
+  drinking: {fileID: -203655887218126122, guid: 0a47a518672ce394ca4447d6eb32e0d9, type: 3}

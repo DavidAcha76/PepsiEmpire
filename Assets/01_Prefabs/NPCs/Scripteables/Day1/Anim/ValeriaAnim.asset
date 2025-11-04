@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 046fc25ae91f0b04fa81ab3e287e732a, type: 3}
   m_Name: ValeriaAnim
   m_EditorClassIdentifier: 
-  baseController: {fileID: 0}
-  sadIdle: {fileID: 0}
-  sadWalk: {fileID: 0}
-  happyIdle: {fileID: 0}
-  happyWalk: {fileID: 0}
-  drinking: {fileID: 0}
+  baseController: {fileID: 9100000, guid: 5e087beacfbd77e479379ba53607a81c, type: 2}
+  sadIdle: {fileID: -203655887218126122, guid: c74cbe53a88d43842a83f1653d83fcdb, type: 3}
+  sadWalk: {fileID: -203655887218126122, guid: 8694f03beeece194bacfaa198543fb8f, type: 3}
+  happyIdle: {fileID: -203655887218126122, guid: 1209d6e852d74e14daac1e45a2952051, type: 3}
+  happyWalk: {fileID: -203655887218126122, guid: e6fb61ed3378b234e90a2db27ed7309b, type: 3}
+  drinking: {fileID: -203655887218126122, guid: b0723902ebed8244cbdd4aba222698ab, type: 3}
