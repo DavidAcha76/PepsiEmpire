@@ -30,6 +30,7 @@ public class TimeManager : MonoBehaviour
         RenderSettings.skybox.SetTexture("_Texture1", skyboxDay);
         StartCoroutine(LerpLight(gradSunriseToDay, 0f));
         RenderSettings.skybox.SetFloat("_Blend", 0f);
+        RenderSettings.fogColor = globalLight.color;
     }
 
     // Update is called once per frame
@@ -102,6 +103,7 @@ public class TimeManager : MonoBehaviour
         for (float i = 0; i < time; i += Time.deltaTime)
         {
             globalLight.color = lightGradient.Evaluate(i / time);
+            RenderSettings.fogColor = globalLight.color;
             yield return null;
         }
     }
