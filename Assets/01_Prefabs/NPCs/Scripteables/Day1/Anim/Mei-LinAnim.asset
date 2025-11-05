@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 046fc25ae91f0b04fa81ab3e287e732a, type: 3}
+  m_Name: Mei-LinAnim
+  m_EditorClassIdentifier: 
+  baseController: {fileID: 9100000, guid: 5e087beacfbd77e479379ba53607a81c, type: 2}
+  sadIdle: {fileID: -203655887218126122, guid: a5aedabee7116944abe709fa3bd08b6d, type: 3}
+  sadWalk: {fileID: -203655887218126122, guid: 13b0a64568dbfbd449fe186bbc632d19, type: 3}
+  happyIdle: {fileID: -203655887218126122, guid: 9079097909c75c6468e733e9a063753c, type: 3}
+  happyWalk: {fileID: -203655887218126122, guid: ac424c80f9089684080a37cf0e625347, type: 3}
+  drinking: {fileID: -203655887218126122, guid: abcc83b0d7c673a46870f2419e0ed02f, type: 3}
