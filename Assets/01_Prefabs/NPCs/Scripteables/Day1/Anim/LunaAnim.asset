@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: LunaAnim
   m_EditorClassIdentifier: 
   baseController: {fileID: 9100000, guid: 5e087beacfbd77e479379ba53607a81c, type: 2}
-  sadIdle: {fileID: -203655887218126122, guid: f968818b5fd1c92499d22683fa42ba2b, type: 3}
-  sadWalk: {fileID: -203655887218126122, guid: 196e994def7b8124db817a435cc5ffb1, type: 3}
-  happyIdle: {fileID: -203655887218126122, guid: 3cf6483e9ec8ee2438bf105e3463e53d, type: 3}
-  happyWalk: {fileID: -203655887218126122, guid: c294c8f41b258d94e89d5c8bff9b479b, type: 3}
+  sadIdle: {fileID: -203655887218126122, guid: 43a4258f5be88d6429ee98dc5b1ef774, type: 3}
+  sadWalk: {fileID: -203655887218126122, guid: 0bb3f8cdf8c19fd4fb045928c963d8bc, type: 3}
+  happyIdle: {fileID: -203655887218126122, guid: fa7a4792e64aac34095328f79d3f64b4, type: 3}
+  happyWalk: {fileID: -203655887218126122, guid: 3fd38cb1d4b56574895b8ecfe2f9bd24, type: 3}
   drinking: {fileID: -203655887218126122, guid: b160dcccfa3a06c41a31da8142b06774, type: 3}

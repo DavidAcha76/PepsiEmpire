@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 046fc25ae91f0b04fa81ab3e287e732a, type: 3}
   m_Name: NinaAnim
   m_EditorClassIdentifier: 
-  baseController: {fileID: 0}
-  sadIdle: {fileID: 0}
-  sadWalk: {fileID: 0}
-  happyIdle: {fileID: 0}
-  happyWalk: {fileID: 0}
-  drinking: {fileID: 0}
+  baseController: {fileID: 9100000, guid: 5e087beacfbd77e479379ba53607a81c, type: 2}
+  sadIdle: {fileID: -203655887218126122, guid: ce92b6d60973776449a4fcb1ddbcbe0c, type: 3}
+  sadWalk: {fileID: -203655887218126122, guid: a19490f86cedf7b4dadf0bf49ee3da72, type: 3}
+  happyIdle: {fileID: -203655887218126122, guid: 4de2c3b078d61354cba2b8d8a5ff6d43, type: 3}
+  happyWalk: {fileID: -203655887218126122, guid: bf4dd02c0f18b6e45ac202cb49a42acd, type: 3}
+  drinking: {fileID: -203655887218126122, guid: 91aa19947edabca46b137696a607441b, type: 3}

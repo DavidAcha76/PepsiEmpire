@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 046fc25ae91f0b04fa81ab3e287e732a, type: 3}
   m_Name: RoxyAnim
   m_EditorClassIdentifier: 
-  baseController: {fileID: 0}
-  sadIdle: {fileID: 0}
-  sadWalk: {fileID: 0}
-  happyIdle: {fileID: 0}
-  happyWalk: {fileID: 0}
-  drinking: {fileID: 0}
+  baseController: {fileID: 9100000, guid: 5e087beacfbd77e479379ba53607a81c, type: 2}
+  sadIdle: {fileID: -203655887218126122, guid: 99897c5a664833044bf9f9bc28d4c9b5, type: 3}
+  sadWalk: {fileID: -203655887218126122, guid: e80be579d9bd0b9468619f95e4ac9976, type: 3}
+  happyIdle: {fileID: -203655887218126122, guid: b1e8131135755e1409a66003169a5e20, type: 3}
+  happyWalk: {fileID: -203655887218126122, guid: da456a51137d7994e922f0eff5ea8224, type: 3}
+  drinking: {fileID: -203655887218126122, guid: b3acd28e7ab16264999fbfc0a3c774f8, type: 3}
