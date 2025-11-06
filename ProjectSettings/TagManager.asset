@@ -44,6 +44,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: TutorialMarker
+    uniqueID: 1416740131
+    locked: 0
   m_RenderingLayers:
   - Default
   - Light Layer 1
