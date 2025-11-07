@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: EleanorAnim
   m_EditorClassIdentifier: 
   baseController: {fileID: 9100000, guid: 5e087beacfbd77e479379ba53607a81c, type: 2}
-  sadIdle: {fileID: -203655887218126122, guid: 6fad4d42656f00348938e80fa0ebe798, type: 3}
-  sadWalk: {fileID: -203655887218126122, guid: 379ea551fceaa9545957a93dafe88a1d, type: 3}
+  sadIdle: {fileID: 7400000, guid: f6e1d78f212de34488a91e1a87dbded3, type: 2}
+  sadWalk: {fileID: 7400000, guid: d221b98a514d06f43bf14454d17d54b2, type: 2}
   happyIdle: {fileID: -203655887218126122, guid: b6a4eab380a0d1843a977dad56edf4ef, type: 3}
-  happyWalk: {fileID: -203655887218126122, guid: 9a116c9d5c5b6d14cab5f415ab69c8c0, type: 3}
+  happyWalk: {fileID: 7400000, guid: 5bb39820f31faba4fac6969b61795ebf, type: 2}
   drinking: {fileID: 7400000, guid: 7acaa86187764754c9327d32cd518433, type: 2}
