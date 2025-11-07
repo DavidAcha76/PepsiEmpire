@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,57 +15,83 @@ public class ShopQueue : MonoBehaviour
     // Cola FIFO real
     private readonly Queue<NPCController> _waiting = new();
 
-    // El que est� siendo atendido (siempre debe ser el .Peek() de _waiting)
+    // El que está siendo atendido (siempre debe ser el .Peek() de _waiting)
     private NPCController _serving;
 
-    // Evento para NPCs que merodean y quieran reintentar
     public event Action SlotFreed;
 
-    // --- Control de reentrancia / secci�n cr�tica ---
     private bool _advancing = false;
     private bool _advancePending = false;
 
     public float GetMaxWait() => maxWaitSeconds;
     public bool HasFreeSlot() => _waiting.Count < queueSlots.Count;
 
-    /// Intenta encolar; si entra, agenda un ciclo de avance.
+    // ============================
+    // INTENTAR UNIRSE A LA COLA
+    // ============================
     public bool TryJoin(NPCController npc)
     {
-        if (!HasFreeSlot()) return false;
+        PurgeInvalidNPCs();
+
+        if (!HasFreeSlot())
+        {
+            Debug.Log($"❌ [QUEUE] {npc.name} no puede entrar, cola llena ({_waiting.Count}/{queueSlots.Count}).");
+            return false;
+        }
+
         _waiting.Enqueue(npc);
+        Debug.Log($"🧍‍♂️ [QUEUE] {npc.name} se une a la cola. Cola actual: {QueueState()}");
         ScheduleAdvance();
         return true;
     }
 
-    /// Remueve al NPC (por abandono/timeout o salida manual). Reacomoda y notifica hueco.
-    public void ForceLeave(NPCController npc)
+    // ============================
+    // REMOVER NPC DE LA COLA
+    // ============================
+    private void ForceLeave(NPCController npc)
     {
         bool changed = false;
 
         if (_serving != null && ReferenceEquals(_serving, npc))
         {
+            Debug.Log($"⚠️ [QUEUE] {npc.name} estaba siendo atendido. Liberando slot 0.");
             _serving = null;
             changed = true;
         }
 
+        // reconstruimos la cola sin el NPC
         if (_waiting.Count > 0)
         {
-            var tmp = new List<NPCController>(_waiting.Count);
+            var tmp = new Queue<NPCController>();
             while (_waiting.Count > 0)
             {
-                var x = _waiting.Dequeue();
-                if (!ReferenceEquals(x, npc)) tmp.Add(x);
-                else changed = true;
+                var current = _waiting.Dequeue();
+                if (current == null || ReferenceEquals(current, npc))
+                {
+                    if (current == null)
+                        Debug.Log($"💀 [QUEUE] Un NPC nulo fue eliminado de la cola.");
+                    else
+                        Debug.Log($"🚶 [QUEUE] {current.name} eliminado de la cola.");
+                    changed = true;
+                }
+                else tmp.Enqueue(current);
             }
-            foreach (var x in tmp) _waiting.Enqueue(x);
+            _waiting.Clear();
+            foreach (var x in tmp)
+                _waiting.Enqueue(x);
         }
 
         if (changed)
         {
+            Debug.Log($"🧹 [QUEUE] Cola reacomodada tras salida de {npc.name}. Nueva cola: {QueueState()}");
+            ForceAdvanceIfFrontFree();
             ScheduleAdvance(invokeFreed: true);
         }
     }
 
+    // ============================
+    // CICLO DE AVANCE
+    // ============================
     private void ScheduleAdvance(bool invokeFreed = false)
     {
         _advancePending = true;
@@ -75,7 +101,6 @@ public class ShopQueue : MonoBehaviour
         }
     }
 
-    /// Ciclo at�mico: reasigna TODOS los slots en un snapshot y decide servicio.
     private void DoAdvanceCycle(bool invokeFreed)
     {
         _advancing = true;
@@ -84,51 +109,175 @@ public class ShopQueue : MonoBehaviour
             while (_advancePending)
             {
                 _advancePending = false;
+                PurgeInvalidNPCs();
 
-                // 1) Snapshot de la cola para asignar �ndices de forma estable
                 var arr = _waiting.ToArray();
 
-                // 2) Reasignar posiciones visibles (0..queueSlots.Count-1)
+                Debug.Log($"🔁 [QUEUE] AdvanceCycle -> serving={_serving?.name ?? "null"} | count={_waiting.Count}");
+
                 for (int i = 0; i < arr.Length && i < queueSlots.Count; i++)
                 {
                     var npc = arr[i];
-                    if (npc != null)
-                        npc.AssignQueueSlot(i, queueSlots[i].position);
-                }
 
-                // 3) Iniciar servicio si corresponde
-                if (_serving == null && _waiting.Count > 0)
-                {
-                    _serving = _waiting.Peek();
-                    _serving.BeginService(servingTimeSeconds, OnServedCallback);
+                    // 🔒 chequea si el objeto sigue existiendo
+                    if (npc == null || npc.gameObject == null)
+                    {
+                        Debug.Log($"💀 [QUEUE] NPC nulo o destruido detectado en slot {i}. Eliminando de la cola...");
+                        continue;
+                    }
+
+                    string npcName = npc ? npc.name : "(null)";
+                    Debug.Log($"➡️ [QUEUE] {npcName} asignado al slot {i}");
+
+                    npc.AssignQueueSlot(i, queueSlots[i].position, queueSlots[i].rotation);
                 }
             }
         }
-        finally
-        {
-            _advancing = false;
-        }
+        finally { _advancing = false; }
 
-        // Notificar fuera de la secci�n cr�tica para evitar reentrancia dentro
         if (invokeFreed)
         {
+            Debug.Log($"🔔 [QUEUE] SlotFreed invoked. Cola actual: {QueueState()}");
             SlotFreed?.Invoke();
         }
     }
 
+    // ============================
+    // NPC ATENDIDO
+    // ============================
     private void OnServedCallback(NPCController served)
     {
-        // Remove head si coincide (deber�a)
+        Debug.Log($"🥤 [QUEUE] {served.name} finalizó servicio. Procesando salida...");
+
         if (_waiting.Count > 0 && ReferenceEquals(_waiting.Peek(), served))
         {
             _waiting.Dequeue();
+            Debug.Log($"🍹 [QUEUE] {served.name} eliminado del frente. Nueva cola: {QueueState()}");
+        }
+        else
+        {
+            Debug.LogWarning($"⚠ [QUEUE] {served.name} no estaba al frente. Forzando limpieza.");
+            ForceLeave(served);
+            return;
         }
 
         _serving = null;
-
-        // Reacomodar y luego notificar hueco
-        ScheduleAdvance(invokeFreed: true);
+        ForceAdvanceIfFrontFree();
     }
+
+    // ============================
+    // NOTIFICACIÓN DESDE NPC
+    // ============================
+    public void NotifyNPCAtFront(NPCController npc)
+    {
+        if (_serving == null && _waiting.Count > 0 && ReferenceEquals(_waiting.Peek(), npc))
+        {
+            Debug.Log($"🍹 [QUEUE] {npc.name} llegó al frente. Iniciando servicio.");
+            _serving = npc;
+            _serving.BeginService(servingTimeSeconds, OnServedCallback);
+        }
+        else
+        {
+            Debug.Log($"❌ [QUEUE] {npc.name} intentó iniciar servicio pero no está al frente o ya hay otro atendido.");
+        }
+    }
+
+    // ============================
+    // AVANCE AUTOMÁTICO
+    // ============================
+    private void ForceAdvanceIfFrontFree()
+    {
+        PurgeInvalidNPCs();
+
+        if (_serving != null)
+        {
+            Debug.Log($"⏸ [QUEUE] No se avanza: {_serving.name} aún está siendo atendido.");
+            return;
+        }
+
+        if (_waiting.Count > 0)
+        {
+            var next = _waiting.Peek();
+            if (next != null)
+            {
+                Debug.Log($"🧠 [QUEUE] Slot 0 libre → promoviendo a {next.name}");
+                ForceReassignFront(next);
+                ScheduleAdvance(invokeFreed: false);
+                next.NotifyBecameFront();
+            }
+        }
+        else
+        {
+            Debug.Log($"🧠 [QUEUE] Slot 0 libre y cola vacía. Avisando a NPCs externos.");
+            SlotFreed?.Invoke();
+        }
+    }
+
+    // ============================
+    // HERRAMIENTAS
+    // ============================
+    private void ForceReassignFront(NPCController npc)
+    {
+        var tmp = new Queue<NPCController>();
+        bool found = false;
+
+        foreach (var n in _waiting)
+        {
+            if (!found && ReferenceEquals(n, npc))
+            {
+                tmp.Enqueue(n);
+                found = true;
+            }
+            else tmp.Enqueue(n);
+        }
+
+        _waiting.Clear();
+        foreach (var n in tmp)
+            _waiting.Enqueue(n);
+
+        Debug.Log($"🔀 [QUEUE] {npc.name} promovido al frente. Nueva cola: {QueueState()}");
+    }
+
+    private void PurgeInvalidNPCs()
+    {
+        bool purged = false;
+        var tmp = new Queue<NPCController>();
+
+        while (_waiting.Count > 0)
+        {
+            var npc = _waiting.Dequeue();
+            if (npc != null && npc.gameObject != null)
+                tmp.Enqueue(npc);
+            else
+            {
+                purged = true;
+                Debug.Log("💀 [QUEUE] NPC destruido o nulo eliminado de la cola.");
+            }
+        }
+
+        _waiting.Clear();
+        foreach (var n in tmp)
+            _waiting.Enqueue(n);
+
+        if (purged)
+            Debug.Log($"🧹 [QUEUE] Limpieza completada. Nueva cola: {QueueState()}");
+    }
+
+    private string QueueState()
+    {
+        string s = "";
+        foreach (var n in _waiting)
+            s += n != null ? n.name + ", " : "(null), ";
+        return $"[{s.TrimEnd(',', ' ')}]";
+    }
+
+    public NPCController GetCurrentFrontNPC()
+    {
+        if (_waiting.Count == 0) return null;
+        return _waiting.Peek();
+    }
+
+
 
 #if UNITY_EDITOR
     private void OnDrawGizmos()

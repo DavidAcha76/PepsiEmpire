@@ -17,4 +17,4 @@ MonoBehaviour:
   sadWalk: {fileID: -203655887218126122, guid: b848751370ba74f47a69ddf1820acdb5, type: 3}
   happyIdle: {fileID: -203655887218126122, guid: 2a70affd3e0185b478366698805eb574, type: 3}
   happyWalk: {fileID: -203655887218126122, guid: e2db3be1acd6bd74baaf34b8c6720a3b, type: 3}
-  drinking: {fileID: -203655887218126122, guid: 661420a865ed15a4c86dc12b00c62e03, type: 3}
+  drinking: {fileID: 7400000, guid: 2d07a1e86ef1b6a41a7aee9de9ce4bc2, type: 2}

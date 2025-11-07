@@ -23,12 +23,12 @@ public class TimeManager : MonoBehaviour
 
     private void Start()
     {
-        hours = 8;
+        hours = 6;
         minutes = 0;
         days = 1;
 
-        RenderSettings.skybox.SetTexture("_Texture1", skyboxDay);
-        StartCoroutine(LerpLight(gradSunriseToDay, 0f));
+        RenderSettings.skybox.SetTexture("_Texture1", skyboxSunrise);
+        StartCoroutine(LerpLight(gradNightToSunrise, 0.5f));
         RenderSettings.skybox.SetFloat("_Blend", 0f);
         RenderSettings.fogColor = globalLight.color;
     }
@@ -37,7 +37,7 @@ public class TimeManager : MonoBehaviour
     void Update()
     {
         tempSecond += Time.deltaTime;
-        if (tempSecond >= 1)
+        if (tempSecond >= 2.5)
         {
             minutes += 1;
             OnMinutesChange(minutes);
@@ -107,4 +107,8 @@ public class TimeManager : MonoBehaviour
             yield return null;
         }
     }
+
+    public int Hora => hours;
+    public int Minuto => minutes;
+    public int GetCurrentDay() => days;
 }
