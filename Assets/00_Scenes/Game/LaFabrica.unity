@@ -43823,67 +43823,10 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 58cb286b4a56e32449f5ada6099b9f25, type: 3}
   m_PrefabInstance: {fileID: 696797900}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &699194539
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 1060940953}
-    m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: dd5fadf7838eea14a885d787dd2365c1, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 20.33
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: dd5fadf7838eea14a885d787dd2365c1, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: dd5fadf7838eea14a885d787dd2365c1, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 19.87
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: dd5fadf7838eea14a885d787dd2365c1, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: -0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: dd5fadf7838eea14a885d787dd2365c1, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: dd5fadf7838eea14a885d787dd2365c1, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: dd5fadf7838eea14a885d787dd2365c1, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: dd5fadf7838eea14a885d787dd2365c1, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: dd5fadf7838eea14a885d787dd2365c1, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 270
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: dd5fadf7838eea14a885d787dd2365c1, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: dd5fadf7838eea14a885d787dd2365c1, type: 3}
-      propertyPath: m_Name
-      value: kanyewest@Singing
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: dd5fadf7838eea14a885d787dd2365c1, type: 3}
 --- !u!4 &699194540 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: dd5fadf7838eea14a885d787dd2365c1, type: 3}
-  m_PrefabInstance: {fileID: 699194539}
+  m_CorrespondingSourceObject: {fileID: 8198143975134396996, guid: e4233799fc6640a4e8af07375d6a30e7, type: 3}
+  m_PrefabInstance: {fileID: 162761973619159137}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &702979591
 GameObject:
@@ -53654,6 +53597,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 5ba1aafc68d70ef499c1fd87d6772052, type: 3}
   m_PrefabInstance: {fileID: 1483380861}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &755193379 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 2820806250715469886, guid: e4233799fc6640a4e8af07375d6a30e7, type: 3}
+  m_PrefabInstance: {fileID: 162761973619159137}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &759012668
 GameObject:
@@ -76120,6 +76068,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 0}
   database: {fileID: 11400000, guid: 47efbfdbb1f085546876dded0c033ce1, type: 2}
+  flashFX: {fileID: 0}
   sealSlot: {fileID: 167418608}
   panelStart: {fileID: 919954366}
   panelGame: {fileID: 1529149956}
@@ -169843,6 +169792,103 @@ RectTransform:
   m_AnchoredPosition: {x: 235.7, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1001 &162761973619159137
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1060940953}
+    m_Modifications:
+    - target: {fileID: 2820806250715469886, guid: e4233799fc6640a4e8af07375d6a30e7, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 78b75f1b4ccdf0e49b9779e6af3b11a3, type: 2}
+    - target: {fileID: 6645065155627274183, guid: e4233799fc6640a4e8af07375d6a30e7, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 755193379}
+    - target: {fileID: 6645065155627274183, guid: e4233799fc6640a4e8af07375d6a30e7, type: 3}
+      propertyPath: cantarTrigger
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6645065155627274183, guid: e4233799fc6640a4e8af07375d6a30e7, type: 3}
+      propertyPath: canciones.Array.size
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6645065155627274183, guid: e4233799fc6640a4e8af07375d6a30e7, type: 3}
+      propertyPath: 'canciones.Array.data[6]'
+      value: 
+      objectReference: {fileID: 8300000, guid: df7667c858a241e40ab67acf724e92c6, type: 3}
+    - target: {fileID: 6645065155627274183, guid: e4233799fc6640a4e8af07375d6a30e7, type: 3}
+      propertyPath: 'canciones.Array.data[7]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 565ce279b36cdb5448a6b4a325b23b73, type: 3}
+    - target: {fileID: 6645065155627274183, guid: e4233799fc6640a4e8af07375d6a30e7, type: 3}
+      propertyPath: 'canciones.Array.data[8]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 18d3532001c84944986cd499c30bb9a5, type: 3}
+    - target: {fileID: 6645065155627274183, guid: e4233799fc6640a4e8af07375d6a30e7, type: 3}
+      propertyPath: 'canciones.Array.data[9]'
+      value: 
+      objectReference: {fileID: 8300000, guid: d301b97777982534d9e2b718f8a4e23d, type: 3}
+    - target: {fileID: 6645065155627274183, guid: e4233799fc6640a4e8af07375d6a30e7, type: 3}
+      propertyPath: 'canciones.Array.data[10]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 420fb29764a88db49a28b933fbd0c0d9, type: 3}
+    - target: {fileID: 6645065155627274183, guid: e4233799fc6640a4e8af07375d6a30e7, type: 3}
+      propertyPath: 'canciones.Array.data[11]'
+      value: 
+      objectReference: {fileID: 8300000, guid: a0d33aef147a2204ab89f639550f8564, type: 3}
+    - target: {fileID: 8198143975134396996, guid: e4233799fc6640a4e8af07375d6a30e7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 20.33
+      objectReference: {fileID: 0}
+    - target: {fileID: 8198143975134396996, guid: e4233799fc6640a4e8af07375d6a30e7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8198143975134396996, guid: e4233799fc6640a4e8af07375d6a30e7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 19.87
+      objectReference: {fileID: 0}
+    - target: {fileID: 8198143975134396996, guid: e4233799fc6640a4e8af07375d6a30e7, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 8198143975134396996, guid: e4233799fc6640a4e8af07375d6a30e7, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8198143975134396996, guid: e4233799fc6640a4e8af07375d6a30e7, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 8198143975134396996, guid: e4233799fc6640a4e8af07375d6a30e7, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8198143975134396996, guid: e4233799fc6640a4e8af07375d6a30e7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8198143975134396996, guid: e4233799fc6640a4e8af07375d6a30e7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 270
+      objectReference: {fileID: 0}
+    - target: {fileID: 8198143975134396996, guid: e4233799fc6640a4e8af07375d6a30e7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8831128062139914494, guid: e4233799fc6640a4e8af07375d6a30e7, type: 3}
+      propertyPath: m_Name
+      value: kanyewest@Singing
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e4233799fc6640a4e8af07375d6a30e7, type: 3}
 --- !u!1 &187239834232675122
 GameObject:
   m_ObjectHideFlags: 0

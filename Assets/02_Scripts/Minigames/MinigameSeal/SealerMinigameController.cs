@@ -9,7 +9,7 @@ public class SealerMinigameController : MachineBase
 {
     [Header("Data")]
     public SealDatabase database;
-
+    [SerializeField] private SealFlashFX flashFX;
     [Header("UI")]
     public MixSlot sealSlot;          // slot de entrada
     public GameObject panelStart;     // pantalla con slot + botón
@@ -291,7 +291,7 @@ public class SealerMinigameController : MachineBase
                 pickupInstance.SetItem(currentRecipe.sealedCanResult, 1);
             }
         }
-
+        flashFX.PlayFlash();
         running = false;
         // (Opcional) limpiar modelos de escena
         if (canInstance) Destroy(canInstance);
