@@ -72129,12 +72129,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   npcPrefabs:
-  - {fileID: 3592383230316495659, guid: e6945807ca6d8e64e9c0110cb52c09ad, type: 3}
-  - {fileID: 6443452660339050828, guid: 911d80f6fbd84b14c9d72172e7d56a98, type: 3}
   - {fileID: 735425802172196999, guid: bfceb8cb114815147893d7961d0ddf5d, type: 3}
-  - {fileID: 2076765026811805244, guid: 8b3326e2872c064409071b1cdf043fee, type: 3}
-  - {fileID: 6464984174730647727, guid: b937c7446cb558b45815629836ef3e94, type: 3}
-  - {fileID: 5550378676303905700, guid: b8556d3270d0110479df10c8800e65de, type: 3}
   spawns:
   - spawnTransform: {fileID: 274279644}
     path: {fileID: 1900720716}

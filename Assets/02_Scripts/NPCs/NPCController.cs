@@ -341,7 +341,7 @@ public class NPCController : MonoBehaviour
         // Ajusta este tiempo según dure tu clip (2-3 segundos aprox)
         yield return new WaitForSeconds(4.5f);
 
-        Debug.Log($"😊 [NPC] {name} terminó de beber y se retira feliz.");
+        Debug.Log($"😊 [NPC] {name} terminó de beber y se retira feliz.gaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 
         // Ahora sí, inicia la rutina de salida caminando
         StartCoroutine(LeaveRoutine());

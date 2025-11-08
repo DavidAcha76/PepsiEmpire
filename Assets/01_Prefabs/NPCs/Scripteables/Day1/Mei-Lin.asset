@@ -16,4 +16,4 @@ MonoBehaviour:
   id: 3
   day: 1
   favoriteDrink: Pepsi
-  drinkPepsi: 0
+  drinkPepsi: 1
