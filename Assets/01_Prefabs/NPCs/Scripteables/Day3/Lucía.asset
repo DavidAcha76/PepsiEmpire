@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameNPC: "Luc\xEDa Morrow"
   id: 24
-  zone: 3
+  day: 3
   favoriteDrink: Pepsi
   drinkPepsi: 0
-  ReputationThreshold: 90

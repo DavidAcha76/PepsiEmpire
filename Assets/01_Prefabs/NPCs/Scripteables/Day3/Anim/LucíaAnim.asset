@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 046fc25ae91f0b04fa81ab3e287e732a, type: 3}
   m_Name: "Luc\xEDaAnim"
   m_EditorClassIdentifier: 
-  baseController: {fileID: 0}
-  sadIdle: {fileID: 0}
-  sadWalk: {fileID: 0}
-  happyIdle: {fileID: 0}
-  happyWalk: {fileID: 0}
-  drinking: {fileID: 0}
+  baseController: {fileID: 9100000, guid: 5e087beacfbd77e479379ba53607a81c, type: 2}
+  sadIdle: {fileID: 7400000, guid: 40ce66abe1967f4418cdef587a6b262e, type: 2}
+  sadWalk: {fileID: 7400000, guid: 8ec62e9b5bc3e304aa87a618a2eca5b2, type: 2}
+  happyIdle: {fileID: -203655887218126122, guid: f408b5490ecda8c46aa9623e5848125f, type: 3}
+  happyWalk: {fileID: 7400000, guid: 948436aeb238e594b968c4695c74a6ea, type: 2}
+  drinking: {fileID: 7400000, guid: 6ac96f431addcea4b821f711a764c32b, type: 2}

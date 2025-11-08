@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 046fc25ae91f0b04fa81ab3e287e732a, type: 3}
   m_Name: "Ver\xF3nicaAnim"
   m_EditorClassIdentifier: 
-  baseController: {fileID: 0}
-  sadIdle: {fileID: 0}
-  sadWalk: {fileID: 0}
-  happyIdle: {fileID: 0}
-  happyWalk: {fileID: 0}
-  drinking: {fileID: 0}
+  baseController: {fileID: 9100000, guid: 5e087beacfbd77e479379ba53607a81c, type: 2}
+  sadIdle: {fileID: 7400000, guid: 89a31e1ba0e651c42b2443deb1d4cc23, type: 2}
+  sadWalk: {fileID: 7400000, guid: e9f81f242670a404493cbc5f3fc5f056, type: 2}
+  happyIdle: {fileID: -203655887218126122, guid: 90cfd3a30e5bfe64eb0a0bb81fabff17, type: 3}
+  happyWalk: {fileID: 7400000, guid: 2647236cc042b574283594b61793ef21, type: 2}
+  drinking: {fileID: 7400000, guid: 5d7c00651dbab594b9ba1124a2c78c09, type: 2}

@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 046fc25ae91f0b04fa81ab3e287e732a, type: 3}
   m_Name: AyaAnim
   m_EditorClassIdentifier: 
-  baseController: {fileID: 0}
-  sadIdle: {fileID: 0}
-  sadWalk: {fileID: 0}
-  happyIdle: {fileID: 0}
-  happyWalk: {fileID: 0}
-  drinking: {fileID: 0}
+  baseController: {fileID: 9100000, guid: 5e087beacfbd77e479379ba53607a81c, type: 2}
+  sadIdle: {fileID: 7400000, guid: 0aae6b605072a8741873a40c055550ec, type: 2}
+  sadWalk: {fileID: 7400000, guid: 38056c8124873ce47b24b4c58227b8b2, type: 2}
+  happyIdle: {fileID: -203655887218126122, guid: 0e582a28ba3043c44833c54491d30028, type: 3}
+  happyWalk: {fileID: 7400000, guid: 176fb202de2279041bbd3a851aaf1a77, type: 2}
+  drinking: {fileID: 7400000, guid: effa6a23bee31b249a8dfa0b3222f9e9, type: 2}

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: SabrinaAnim
   m_EditorClassIdentifier: 
   baseController: {fileID: 9100000, guid: 5e087beacfbd77e479379ba53607a81c, type: 2}
-  sadIdle: {fileID: -203655887218126122, guid: b207be4fb28c867468aacd39a117e686, type: 3}
-  sadWalk: {fileID: -203655887218126122, guid: a8f7b5c23ef68a44da9b41d449b5c1d6, type: 3}
+  sadIdle: {fileID: 7400000, guid: c7a2b47439dad2a428e854b82a9403d7, type: 2}
+  sadWalk: {fileID: 7400000, guid: 883852e787fb82c428244b57a9cacd37, type: 2}
   happyIdle: {fileID: -203655887218126122, guid: 2ce1bd2fd7bbc174b8084552964da6f4, type: 3}
-  happyWalk: {fileID: -203655887218126122, guid: db5c3470f714dc8418420d77d3783140, type: 3}
-  drinking: {fileID: 0}
+  happyWalk: {fileID: 7400000, guid: dae76155ef045d94583d7b37d1e68a77, type: 2}
+  drinking: {fileID: 7400000, guid: 8040275355c40504d8e78abc24fd9c21, type: 2}

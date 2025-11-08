@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: MarinaAnim
   m_EditorClassIdentifier: 
   baseController: {fileID: 9100000, guid: 5e087beacfbd77e479379ba53607a81c, type: 2}
-  sadIdle: {fileID: -203655887218126122, guid: 7bb1149a6c3c1774f9d1c1931ddf95f4, type: 3}
-  sadWalk: {fileID: -203655887218126122, guid: c423c457995aa124190bdd05a3404290, type: 3}
+  sadIdle: {fileID: 7400000, guid: 8dfd9f11bb49dd74db3d4cdecf8fb7a0, type: 2}
+  sadWalk: {fileID: 7400000, guid: 9fbd1f5bee862d34798b5627b5b72bc4, type: 2}
   happyIdle: {fileID: -203655887218126122, guid: 73918c531c7e91b4a903c8fd2e9d8863, type: 3}
-  happyWalk: {fileID: -203655887218126122, guid: e304661f104f5c740a8008c44299e482, type: 3}
-  drinking: {fileID: -203655887218126122, guid: 896818cb423507b4f88854ba286ff30b, type: 3}
+  happyWalk: {fileID: 7400000, guid: bf1d43d768c7b694cb30a677c903c9f7, type: 2}
+  drinking: {fileID: 7400000, guid: f98eba09f5264b544a155e7f02546ac0, type: 2}

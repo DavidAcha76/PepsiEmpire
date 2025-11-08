@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: RubyAnim
   m_EditorClassIdentifier: 
   baseController: {fileID: 9100000, guid: 5e087beacfbd77e479379ba53607a81c, type: 2}
-  sadIdle: {fileID: -203655887218126122, guid: e5c1c5d8cab3439439ab6c8491592f4e, type: 3}
-  sadWalk: {fileID: -203655887218126122, guid: a5da20e0a4034ea40bd6a552113a6859, type: 3}
+  sadIdle: {fileID: 7400000, guid: b4f5c09bc7ebd92408bdbff0d466205c, type: 2}
+  sadWalk: {fileID: 7400000, guid: 7f9e45c3b7a4fea4b9ca5b7f78958c1b, type: 2}
   happyIdle: {fileID: -203655887218126122, guid: dd1d94f77d3e3df48a866390f1419b5e, type: 3}
-  happyWalk: {fileID: -203655887218126122, guid: 70d44108fdad08d46a15fc811399960e, type: 3}
-  drinking: {fileID: -203655887218126122, guid: a3386596af4ee3e47b59153f88bbb164, type: 3}
+  happyWalk: {fileID: 7400000, guid: f69a2706730586545b1c4012abc140c4, type: 2}
+  drinking: {fileID: 7400000, guid: e644c6823fc04534093ef51c8be98422, type: 2}
