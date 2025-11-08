@@ -78,7 +78,11 @@ public class ClawMinigameController : MonoBehaviour
     /// </summary>
     public void TryDeliverCurrentSlot()
     {
-        if (!active || currentUI == null || playerInventory == null) return;
+        if (!active || currentUI == null || playerInventory == null)
+        {
+            Debug.LogWarning("[ClawMinigame] No hay UI o inventario activo.");
+            return;
+        }
 
         var slot = playerInventory.slots[currentIndex];
         ItemData entregado = slot.IsEmpty() ? null : slot.currentItem;
@@ -88,20 +92,16 @@ public class ClawMinigameController : MonoBehaviour
 
         if (entregado != null)
         {
-            // Consumir 1 unidad del stack actual
             slot.RemoveFromStack(1);
-            Debug.Log($"📦 Consumido 1x {entregado.itemName} del inventario (slot {currentIndex}).");
+            Debug.Log($"📦 Consumido 1x {entregado.itemName} (slot {currentIndex}).");
         }
         else
         {
             Debug.Log("⚠️ Slot vacío, no se entregó nada.");
         }
 
-        // Notificar resultado al UI
+        // ✅ Notificar resultado al UI (NO cerrar el minijuego todavía)
         currentUI.OnItemDelivered(entregado);
-
-        // Cerrar minijuego tras entrega
-        CloseGame();
     }
 
     /// <summary>
@@ -126,11 +126,14 @@ public class ClawMinigameController : MonoBehaviour
         Debug.Log("🎮 Minijuego de garra iniciado (movimiento automático).");
     }
 
+    /// <summary>
+    /// Cierra el minijuego (solo lo llama el CustomOrderUI cuando termina todo).
+    /// </summary>
     public void CloseGame()
     {
         active = false;
         gameObject.SetActive(false);
-        HighlightSlot();
         currentUI = null;
+        Debug.Log("🛑 [ClawMinigame] Cerrado manualmente por el UI.");
     }
 }

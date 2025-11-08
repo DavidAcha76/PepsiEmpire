@@ -93142,7 +93142,7 @@ MonoBehaviour:
   playerFOV: 55
   otherFOV: 7
   fixedHorizontal: 176
-  fixedVertical: 7
+  fixedVertical: -2
   fixedRadial: 1
 --- !u!1 &1336258329
 GameObject:
