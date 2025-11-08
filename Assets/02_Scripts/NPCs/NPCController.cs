@@ -71,6 +71,7 @@ public class NPCController : MonoBehaviour
         {
             // Muestra que está esperando, pero sin tiempo regresivo
             view?.ShowWaitTime(0, false);
+            if (animDriver) animDriver.SetHappy(data && data.drinkPepsi);
         }
     }
 
@@ -259,14 +260,44 @@ public class NPCController : MonoBehaviour
         }
     }
 
+    //private void Leave(bool happy)
+    //{
+    //    if (_state == NPCState.Leaving) return;
+
+    //    Debug.Log($"🚪 [NPC] {name} está abandonando la zona. Felicidad: {happy}");
+    //    UnlockRotation(true);
+    //    Destroy(instanceSliderTimer.gameObject);
+    //    instanceSliderTimer = null;
+    //    _state = NPCState.Leaving;
+    //    view?.ShowWaitTime(0, false);
+
+    //    if (_subscribedSlotFreed && shopQueue != null)
+    //    {
+    //        shopQueue.SlotFreed -= OnSlotFreed;
+    //        _subscribedSlotFreed = false;
+    //    }
+    //    if (shopQueue != null)
+    //    {
+    //        Debug.Log($"🧾 [NPC] {name} informa a ShopQueue que se retira.");
+    //        var queue = shopQueue;
+    //        shopQueue = null;
+    //        queue.SendMessage("ForceLeave", this, SendMessageOptions.DontRequireReceiver);
+    //    }
+    //    StartCoroutine(LeaveRoutine());
+    //}
     private void Leave(bool happy)
     {
         if (_state == NPCState.Leaving) return;
 
         Debug.Log($"🚪 [NPC] {name} está abandonando la zona. Felicidad: {happy}");
         UnlockRotation(true);
-        Destroy(instanceSliderTimer.gameObject);
-        instanceSliderTimer = null;
+
+        if (instanceSliderTimer)
+        {
+            Destroy(instanceSliderTimer.gameObject);
+            instanceSliderTimer = null;
+        }
+
         _state = NPCState.Leaving;
         view?.ShowWaitTime(0, false);
 
@@ -275,6 +306,7 @@ public class NPCController : MonoBehaviour
             shopQueue.SlotFreed -= OnSlotFreed;
             _subscribedSlotFreed = false;
         }
+
         if (shopQueue != null)
         {
             Debug.Log($"🧾 [NPC] {name} informa a ShopQueue que se retira.");
@@ -282,6 +314,36 @@ public class NPCController : MonoBehaviour
             shopQueue = null;
             queue.SendMessage("ForceLeave", this, SendMessageOptions.DontRequireReceiver);
         }
+
+        // 👉 Si se va feliz, primero beberá y luego se irá caminando
+        if (happy && animDriver)
+        {
+            StartCoroutine(PlayDrinkThenLeave());
+        }
+        else
+        {
+            // Si no está feliz, se va directamente
+            StartCoroutine(LeaveRoutine());
+        }
+    }
+    private IEnumerator PlayDrinkThenLeave()
+    {
+        Debug.Log($"🥤 [NPC] {name} va a beber antes de irse feliz.");
+
+        // Dispara la animación de beber
+        animDriver.PlayDrink();
+
+        // Marca como feliz (en animación y en data)
+        animDriver.SetHappy(true);
+        if (data) data.drinkPepsi = true;
+
+        // Espera la duración de la animación de beber
+        // Ajusta este tiempo según dure tu clip (2-3 segundos aprox)
+        yield return new WaitForSeconds(4.5f);
+
+        Debug.Log($"😊 [NPC] {name} terminó de beber y se retira feliz.");
+
+        // Ahora sí, inicia la rutina de salida caminando
         StartCoroutine(LeaveRoutine());
     }
 
