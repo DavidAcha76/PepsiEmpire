@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 046fc25ae91f0b04fa81ab3e287e732a, type: 3}
+  m_Name: RubyAnim
+  m_EditorClassIdentifier: 
+  baseController: {fileID: 9100000, guid: 5e087beacfbd77e479379ba53607a81c, type: 2}
+  sadIdle: {fileID: 7400000, guid: b4f5c09bc7ebd92408bdbff0d466205c, type: 2}
+  sadWalk: {fileID: 7400000, guid: 7f9e45c3b7a4fea4b9ca5b7f78958c1b, type: 2}
+  happyIdle: {fileID: -203655887218126122, guid: dd1d94f77d3e3df48a866390f1419b5e, type: 3}
+  happyWalk: {fileID: 7400000, guid: f69a2706730586545b1c4012abc140c4, type: 2}
+  drinking: {fileID: 7400000, guid: e644c6823fc04534093ef51c8be98422, type: 2}

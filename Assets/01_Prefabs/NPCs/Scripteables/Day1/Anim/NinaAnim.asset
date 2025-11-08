@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: NinaAnim
   m_EditorClassIdentifier: 
   baseController: {fileID: 9100000, guid: 5e087beacfbd77e479379ba53607a81c, type: 2}
-  sadIdle: {fileID: -203655887218126122, guid: 10fbf6986ffb2da419b687b2c92a747f, type: 3}
-  sadWalk: {fileID: -203655887218126122, guid: c51b341748df1c2468510f7de0dfd631, type: 3}
-  happyIdle: {fileID: -203655887218126122, guid: 1440b1d69bf077c45b16b7909e6a2e21, type: 3}
-  happyWalk: {fileID: -203655887218126122, guid: 1e37041a6eb876d428618cbd2c6afff2, type: 3}
-  drinking: {fileID: 7400000, guid: abc95f29592db3e4a9f999d499a17531, type: 2}
+  sadIdle: {fileID: -203655887218126122, guid: ce92b6d60973776449a4fcb1ddbcbe0c, type: 3}
+  sadWalk: {fileID: -203655887218126122, guid: a19490f86cedf7b4dadf0bf49ee3da72, type: 3}
+  happyIdle: {fileID: -203655887218126122, guid: 4de2c3b078d61354cba2b8d8a5ff6d43, type: 3}
+  happyWalk: {fileID: -203655887218126122, guid: bf4dd02c0f18b6e45ac202cb49a42acd, type: 3}
+  drinking: {fileID: -203655887218126122, guid: 91aa19947edabca46b137696a607441b, type: 3}

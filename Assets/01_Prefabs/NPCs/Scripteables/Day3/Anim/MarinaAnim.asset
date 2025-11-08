@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 046fc25ae91f0b04fa81ab3e287e732a, type: 3}
+  m_Name: MarinaAnim
+  m_EditorClassIdentifier: 
+  baseController: {fileID: 9100000, guid: 5e087beacfbd77e479379ba53607a81c, type: 2}
+  sadIdle: {fileID: 7400000, guid: 8dfd9f11bb49dd74db3d4cdecf8fb7a0, type: 2}
+  sadWalk: {fileID: 7400000, guid: 9fbd1f5bee862d34798b5627b5b72bc4, type: 2}
+  happyIdle: {fileID: -203655887218126122, guid: 73918c531c7e91b4a903c8fd2e9d8863, type: 3}
+  happyWalk: {fileID: 7400000, guid: bf1d43d768c7b694cb30a677c903c9f7, type: 2}
+  drinking: {fileID: 7400000, guid: f98eba09f5264b544a155e7f02546ac0, type: 2}

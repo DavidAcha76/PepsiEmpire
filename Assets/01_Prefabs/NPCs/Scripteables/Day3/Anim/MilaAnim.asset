@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 046fc25ae91f0b04fa81ab3e287e732a, type: 3}
+  m_Name: MilaAnim
+  m_EditorClassIdentifier: 
+  baseController: {fileID: 9100000, guid: 5e087beacfbd77e479379ba53607a81c, type: 2}
+  sadIdle: {fileID: 7400000, guid: be38c2622c963e04aaf79a05ba4fa2e4, type: 2}
+  sadWalk: {fileID: 7400000, guid: 1887df00c2d4db84697bd0b40e400403, type: 2}
+  happyIdle: {fileID: -203655887218126122, guid: d79844d4cc59da44297e5edf73bd53a3, type: 3}
+  happyWalk: {fileID: 7400000, guid: 314f3452a9e1dda40b25f5d920768802, type: 2}
+  drinking: {fileID: 7400000, guid: a99219a4f8212e64a83920d49998dfda, type: 2}

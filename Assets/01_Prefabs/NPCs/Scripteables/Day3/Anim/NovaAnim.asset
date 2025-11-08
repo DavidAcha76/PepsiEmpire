@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 046fc25ae91f0b04fa81ab3e287e732a, type: 3}
+  m_Name: NovaAnim
+  m_EditorClassIdentifier: 
+  baseController: {fileID: 9100000, guid: 5e087beacfbd77e479379ba53607a81c, type: 2}
+  sadIdle: {fileID: 7400000, guid: a23b2d3191fc79241887282bcd647346, type: 2}
+  sadWalk: {fileID: 7400000, guid: fb00026f5cd0ef9438a8593b8a3e7df0, type: 2}
+  happyIdle: {fileID: -203655887218126122, guid: 9c68c2bcf2c67344384e76e673ec60ab, type: 3}
+  happyWalk: {fileID: 7400000, guid: c78893e6d7b466c4e8060d6762a0fecd, type: 2}
+  drinking: {fileID: 7400000, guid: 7a2b2cbe80d3c6549bdeddf52e10be43, type: 2}

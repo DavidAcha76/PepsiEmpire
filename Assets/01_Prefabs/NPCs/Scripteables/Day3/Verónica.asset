@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameNPC: "Ver\xF3nica Dane"
   id: 28
-  zone: 3
+  day: 3
   favoriteDrink: Pepsi
   drinkPepsi: 0
-  ReputationThreshold: 100

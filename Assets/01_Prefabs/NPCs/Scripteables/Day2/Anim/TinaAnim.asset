@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 046fc25ae91f0b04fa81ab3e287e732a, type: 3}
+  m_Name: TinaAnim
+  m_EditorClassIdentifier: 
+  baseController: {fileID: 9100000, guid: 5e087beacfbd77e479379ba53607a81c, type: 2}
+  sadIdle: {fileID: -203655887218126122, guid: 71dd4d9aa5f66b740ae10771a3195664, type: 3}
+  sadWalk: {fileID: -203655887218126122, guid: bdebab826971ef34e9c7697d157e81e9, type: 3}
+  happyIdle: {fileID: -203655887218126122, guid: b0d25f9425dbf294789dcc5d6d052364, type: 3}
+  happyWalk: {fileID: -203655887218126122, guid: b584fd848c8e1fe4f9f8a748dd33ebf0, type: 3}
+  drinking: {fileID: 0}

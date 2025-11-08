@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: ChloeAnim
   m_EditorClassIdentifier: 
   baseController: {fileID: 9100000, guid: 5e087beacfbd77e479379ba53607a81c, type: 2}
-  sadIdle: {fileID: -203655887218126122, guid: f968818b5fd1c92499d22683fa42ba2b, type: 3}
-  sadWalk: {fileID: -203655887218126122, guid: 196e994def7b8124db817a435cc5ffb1, type: 3}
-  happyIdle: {fileID: -203655887218126122, guid: 3cf6483e9ec8ee2438bf105e3463e53d, type: 3}
-  happyWalk: {fileID: -203655887218126122, guid: c294c8f41b258d94e89d5c8bff9b479b, type: 3}
+  sadIdle: {fileID: -203655887218126122, guid: 1c82ca4be8357d641a5926201321a321, type: 3}
+  sadWalk: {fileID: -203655887218126122, guid: a4eedf7ffa7ca154195213b6430d9de5, type: 3}
+  happyIdle: {fileID: -203655887218126122, guid: f112d96a03cbfd442a9ae2db958d1c10, type: 3}
+  happyWalk: {fileID: -203655887218126122, guid: b3d49889adc14a948b814c7b89a1d0ac, type: 3}
   drinking: {fileID: -203655887218126122, guid: b160dcccfa3a06c41a31da8142b06774, type: 3}

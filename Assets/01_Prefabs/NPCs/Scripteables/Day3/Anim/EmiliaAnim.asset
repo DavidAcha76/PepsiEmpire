@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 046fc25ae91f0b04fa81ab3e287e732a, type: 3}
+  m_Name: EmiliaAnim
+  m_EditorClassIdentifier: 
+  baseController: {fileID: 9100000, guid: 5e087beacfbd77e479379ba53607a81c, type: 2}
+  sadIdle: {fileID: 7400000, guid: e137bed30c9a1e647babc7a9dfaf54cd, type: 2}
+  sadWalk: {fileID: 7400000, guid: cc5e860d6dd2d2c49b8aad06dcb5462e, type: 2}
+  happyIdle: {fileID: -203655887218126122, guid: 60276762d197bc84d8528bcd5479646f, type: 3}
+  happyWalk: {fileID: 7400000, guid: d80fe88ea9abedc4d86bb78fd958203f, type: 2}
+  drinking: {fileID: 7400000, guid: 78468fd4d074ad74aa26a854b58acb4c, type: 2}
