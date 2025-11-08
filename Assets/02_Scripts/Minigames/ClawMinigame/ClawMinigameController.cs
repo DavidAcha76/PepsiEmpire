@@ -12,45 +12,37 @@ public class ClawMinigameController : MonoBehaviour
     public float indicatorYOffset = 40f;
     public AudioSource sfx;
     public AudioClip selectSound;
-
+    public AudioClip changeSlotSound;
     [Header("Estado")]
     public CustomOrderUI currentUI;
-
-    private int currentIndex = 0;
-    private bool movingRight = true;
-    private bool active = false;
+    private int currentIndex;
+    private bool active;
     private Player player;
-
     void Awake()
     {
         player = ReInput.players.GetPlayer(0);
         if (entregarButton)
             entregarButton.onClick.AddListener(OnSelectItem);
     }
-
     void Update()
     {
         if (!active || playerInventory == null) return;
-
-        AutoMoveClaw();
-        UpdateClawPosition();
+        AutoMoveClaw(); UpdateClawPosition();
     }
 
     void AutoMoveClaw()
     {
         if (playerInventory.slots.Length == 0) return;
-
         float t = Time.time * moveSpeed;
         float normalized = Mathf.PingPong(t, playerInventory.slots.Length - 1);
         int targetIndex = Mathf.RoundToInt(normalized);
-
         if (targetIndex != currentIndex)
         {
             currentIndex = targetIndex;
             HighlightSlot();
+            sfx.PlayOneShot(changeSlotSound);
         }
     }
-
     void UpdateClawPosition()
     {
         if (!clawIndicator || playerInventory.slots.Length == 0) return;
@@ -73,67 +65,47 @@ public class ClawMinigameController : MonoBehaviour
         TryDeliverCurrentSlot();
     }
 
-    /// <summary>
-    /// Entrega el ítem actual (consumiendo del inventario) y notifica al CustomOrderUI.
-    /// </summary>
     public void TryDeliverCurrentSlot()
     {
-        if (!active || currentUI == null || playerInventory == null)
+        if (!active || currentUI == null || playerInventory == null) return;
+
+        var slot = playerInventory.slots[currentIndex];
+        if (slot == null || slot.IsEmpty())
         {
-            Debug.LogWarning("[ClawMinigame] No hay UI o inventario activo.");
+            Debug.Log("⚠️ Slot vacío, no se entregará nada.");
+            if (sfx && selectSound)
+                sfx.PlayOneShot(selectSound);
             return;
         }
 
-        var slot = playerInventory.slots[currentIndex];
-        ItemData entregado = slot.IsEmpty() ? null : slot.currentItem;
+        ItemData entregado = slot.currentItem;
+        slot.RemoveFromStack(1);
 
         if (sfx && selectSound)
             sfx.PlayOneShot(selectSound);
 
-        if (entregado != null)
-        {
-            slot.RemoveFromStack(1);
-            Debug.Log($"📦 Consumido 1x {entregado.itemName} (slot {currentIndex}).");
-        }
-        else
-        {
-            Debug.Log("⚠️ Slot vacío, no se entregó nada.");
-        }
+        Debug.Log($"📦 Entregado 1x {entregado.itemName} (slot {currentIndex}).");
+        active = false;
 
-        // ✅ Notificar resultado al UI (NO cerrar el minijuego todavía)
+        // Reportar entrega al UI
         currentUI.OnItemDelivered(entregado);
     }
 
-    /// <summary>
-    /// Inicia el minijuego asociado a un pedido específico.
-    /// </summary>
     public void StartClawGame(CustomOrderUI ui)
     {
-        if (!playerInventory || playerInventory.slots.Length == 0)
-        {
-            Debug.LogError("[ClawMinigame] Falta PlayerInventory o slots vacíos.");
-            return;
-        }
-
         currentUI = ui;
         currentIndex = 0;
-        movingRight = true;
         active = true;
+
         gameObject.SetActive(true);
         HighlightSlot();
         UpdateClawPosition();
-
-        Debug.Log("🎮 Minijuego de garra iniciado (movimiento automático).");
     }
 
-    /// <summary>
-    /// Cierra el minijuego (solo lo llama el CustomOrderUI cuando termina todo).
-    /// </summary>
     public void CloseGame()
     {
         active = false;
         gameObject.SetActive(false);
         currentUI = null;
-        Debug.Log("🛑 [ClawMinigame] Cerrado manualmente por el UI.");
     }
 }

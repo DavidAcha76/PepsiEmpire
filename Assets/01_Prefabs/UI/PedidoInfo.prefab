@@ -302,6 +302,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   icon: {fileID: 1596159502119885354}
-  label: {fileID: 6042890144075815118}
   background: {fileID: 4959209015492409037}
+  itemName: {fileID: 6042890144075815118}
   outline: {fileID: 0}

@@ -9,13 +9,15 @@ public class CustomOrderUI : MonoBehaviour
     public PedidoItemUI pedidoItemPrefab;
     public Button btnEmpezar;
     public Button btnEscoger;
+    public Button btnClose;
     public ClawMinigameController clawMinigame;
     public CameraTargetSwitcher camTargetSwitcher;
+    public OrderPanelController orderPanelController;
 
     [Header("Colores de estado")]
-    public Color colorPendiente = new Color(1f, 0.92f, 0.16f);
-    public Color colorCorrecto = new Color(0.26f, 0.83f, 0.26f);
-    public Color colorIncorrecto = new Color(0.85f, 0.1f, 0.1f);
+    public Color colorPendiente = new Color(1f, 0.92f, 0.16f); // Amarillo
+    public Color colorCorrecto = new Color(0.26f, 0.83f, 0.26f); // Verde
+    public Color colorIncorrecto = new Color(0.85f, 0.1f, 0.1f); // Rojo
 
     private readonly List<ItemData> pedidos = new();
     private readonly List<PedidoItemUI> pedidoUIRefs = new();
@@ -28,7 +30,7 @@ public class CustomOrderUI : MonoBehaviour
     {
         if (btnEmpezar == null || btnEscoger == null)
         {
-            Debug.LogError("❌ [CustomOrderUI] Botones no asignados. Asigna btnEmpezar y btnEscoger en el inspector.");
+            Debug.LogError("❌ [CustomOrderUI] Faltan referencias de botones.");
             return;
         }
 
@@ -40,16 +42,29 @@ public class CustomOrderUI : MonoBehaviour
     }
 
     // ---------------------------------------------------------------------
+    // ABRIR PANEL Y CARGAR PEDIDO
+    // ---------------------------------------------------------------------
     public void Open(NPCController npc, List<ItemData> items)
     {
-        Debug.Log($"🟢 [CustomOrderUI] OPEN llamado por {npc?.name ?? "null"} con {items?.Count ?? 0} items");
+        Debug.Log($"🟢 [CustomOrderUI] OPEN por {npc?.name ?? "null"} ({items?.Count ?? 0} ítems)");
 
         if (npc == null || items == null || items.Count == 0)
         {
-            Debug.LogWarning("[CustomOrderUI] No hay pedido válido para mostrar.");
+            Debug.LogWarning("[CustomOrderUI] Pedido inválido o vacío.");
             return;
         }
 
+        // 🔹 Si es el mismo NPC y ya hay ítems cargados, no limpiar (solo volver a mostrar)
+        if (npcRef == npc && pedidoUIRefs.Count > 0)
+        {
+            gameObject.SetActive(true);
+            Debug.Log("♻️ [CustomOrderUI] Reabriendo panel existente sin limpiar.");
+            orderPanelController.panelOpen = true;
+            return;
+        }
+
+        // 🔹 Si es un nuevo NPC o pedido, limpiar normalmente
+        orderPanelController.panelOpen = true;
         npcRef = npc;
         cerradoPorRetiro = false;
         entregando = false;
@@ -63,7 +78,7 @@ public class CustomOrderUI : MonoBehaviour
             var ui = Instantiate(pedidoItemPrefab, containerPedidos);
             ui.SetData(item, colorPendiente);
             pedidoUIRefs.Add(ui);
-            Debug.Log($"➕ Agregado UI para {item.itemName}");
+            Debug.Log($"📦 Añadido {item.itemName}");
         }
 
         btnEmpezar.interactable = true;
@@ -72,34 +87,33 @@ public class CustomOrderUI : MonoBehaviour
     }
 
     // ---------------------------------------------------------------------
+    // EMPIEZA EL MINIJUEGO
+    // ---------------------------------------------------------------------
     private void OnStartEntrega()
     {
-        if (npcRef == null)
+        if (npcRef == null || cerradoPorRetiro)
         {
-            Debug.LogWarning("[CustomOrderUI] NPC de referencia es nulo.");
-            return;
-        }
-
-        if (cerradoPorRetiro)
-        {
-            Debug.Log("🚫 Pedido expirado, no se puede entregar.");
+            Debug.Log("🚫 No se puede iniciar entrega.");
             return;
         }
 
         entregando = true;
         btnEmpezar.interactable = false;
         btnEscoger.interactable = true;
+        btnClose.interactable = false;
 
-        Debug.Log($"🎮 [UI] Iniciando entrega #{currentIndex + 1}");
+        Debug.Log($"🎮 Iniciando entrega #{currentIndex + 1}");
         clawMinigame.StartClawGame(this);
     }
 
+    // ---------------------------------------------------------------------
+    // JUGADOR PRESIONA “ESCOGER”
     // ---------------------------------------------------------------------
     public void OnEscogerItem()
     {
         if (!entregando)
         {
-            Debug.Log("⚠️ [UI] Intento de entregar sin estar entregando.");
+            Debug.Log("⚠️ [UI] Intento de entregar sin estar en modo entrega.");
             return;
         }
 
@@ -107,35 +121,31 @@ public class CustomOrderUI : MonoBehaviour
     }
 
     // ---------------------------------------------------------------------
+    // RESULTADO DE ENTREGA (llamado por ClawMinigame)
+    // ---------------------------------------------------------------------
     public void OnItemDelivered(ItemData entregado)
     {
         if (cerradoPorRetiro) return;
-        if (currentIndex >= pedidos.Count) return;
+        if (currentIndex >= pedidoUIRefs.Count) return;
 
-        var esperado = pedidos[currentIndex];
+        var esperado = npcRef.GetCurrentOrderItems()[currentIndex];
         var ui = pedidoUIRefs[currentIndex];
-
         bool correcto = (entregado != null && entregado == esperado);
-        if (entregado == null)
-        {
-            Debug.Log("❌ Slot vacío — error automático.");
-            correcto = false;
-        }
 
         ui.MarkAs(correcto ? colorCorrecto : colorIncorrecto);
 
         Debug.Log(correcto
-            ? $"✅ [Pedido] {entregado?.itemName ?? "???"} correcto."
-            : $"❌ [Pedido] Error, esperaba {esperado.itemName}.");
+            ? $"✅ {entregado?.itemName ?? "???"} correcto."
+            : $"❌ Error, esperaba {esperado.itemName}.");
 
         if (correcto)
             MoneyController.Instance.AddMoney(15);
 
-        // Avanza al siguiente ítem
         currentIndex++;
+        btnClose.interactable = true;
 
-        // ⚙️ Si todavía faltan ítems → continuar flujo normal
-        if (currentIndex < pedidos.Count)
+        // 🔹 Si aún hay ítems → continuar
+        if (currentIndex < pedidoUIRefs.Count)
         {
             entregando = false;
             btnEmpezar.interactable = true;
@@ -144,73 +154,66 @@ public class CustomOrderUI : MonoBehaviour
             return;
         }
 
-        // ⚙️ Si ya se entregaron todos los ítems, evaluar resultado total:
+        // 🔹 Si ya terminó todo el pedido
         bool success = true;
-        foreach (var itemUI in pedidoUIRefs)
+        foreach (var p in pedidoUIRefs)
         {
-            if (itemUI.IsColor(colorIncorrecto))
+            if (p.IsColor(colorIncorrecto))
             {
                 success = false;
                 break;
             }
         }
 
-        Debug.Log(success
-            ? "🎉 [Pedido] Todos los ítems correctos. Pedido exitoso."
-            : "⚠️ [Pedido] Algunos ítems fueron incorrectos. Pedido fallido.");
-
         npcRef?.OnOrderCompleted(success);
 
-        // Cerrar el minijuego y panel
+        Debug.Log(success
+            ? "🎉 Pedido completado correctamente."
+            : "⚠️ Pedido completado con errores.");
+
         clawMinigame.CloseGame();
         CloseAndClear();
     }
 
+    // ---------------------------------------------------------------------
+    // NPC SE RETIRA AUTOMÁTICAMENTE
     // ---------------------------------------------------------------------
     public void OnNPCLeft()
     {
         if (!gameObject.activeSelf || cerradoPorRetiro) return;
 
         cerradoPorRetiro = true;
-        Debug.Log("🚪 NPC se retiró. Cierre automático del panel.");
+        Debug.Log("🚪 [UI] NPC se retiró. Cerrando panel automáticamente.");
         CloseAndClear();
     }
 
     // ---------------------------------------------------------------------
+    // RESALTAR EL ITEM ACTUAL
+    // ---------------------------------------------------------------------
     private void HighlightCurrentItem()
     {
         for (int i = 0; i < pedidoUIRefs.Count; i++)
-        {
-            bool active = i == currentIndex;
-            pedidoUIRefs[i].SetOutlineActive(active);
-        }
-
-        Debug.Log($"🔸 [UI] Resaltando item #{currentIndex + 1}");
+            pedidoUIRefs[i].SetOutlineActive(i == currentIndex);
     }
 
     // ---------------------------------------------------------------------
+    // CIERRE Y LIMPIEZA DEL PANEL
+    // ---------------------------------------------------------------------
     private void CloseAndClear()
     {
-        bool success = true;
-        foreach (var ui in pedidoUIRefs)
-        {
-            if (ui.IsColor(colorIncorrecto))
-            {
-                success = false;
-                break;
-            }
-        }
-
-        npcRef?.OnOrderCompleted(success);
-        ClearContainer();
         npcRef = null;
-
+        ClearContainer();
         gameObject.SetActive(false);
         camTargetSwitcher?.ReturnToPlayer();
+        orderPanelController.panelOpen = false;
+        btnEmpezar.interactable = false;
+        btnEscoger.interactable = false;
 
         Debug.Log("🔴 [UI] Panel cerrado y limpiado.");
     }
 
+    // ---------------------------------------------------------------------
+    // LIMPIA EL CONTENEDOR VISUAL
     // ---------------------------------------------------------------------
     private void ClearContainer()
     {
@@ -219,6 +222,21 @@ public class CustomOrderUI : MonoBehaviour
 
         pedidoUIRefs.Clear();
         currentIndex = 0;
+    }
+
+    public void ClosePanel()
+    {
+
+        // 🔹 Solo ocultar el panel visualmente, sin limpiar
+        gameObject.SetActive(false);
+        camTargetSwitcher?.ReturnToPlayer();
+
+        // 🔹 Marcamos que el panel ya no está visible,
+        // pero mantenemos los pedidos y colores como están
+        if (orderPanelController != null)
+            orderPanelController.panelOpen = false;
+
+        Debug.Log("🟠 [UI] Panel ocultado (pedido incompleto permanece intacto).");
     }
 
 }
