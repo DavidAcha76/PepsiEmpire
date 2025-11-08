@@ -36,15 +36,22 @@ public class MoneyController : MonoBehaviour
         if (audioSource) audioSource.PlayOneShot(kachingClip);
     }
 
-    public void RemoveMoney(int amount, Vector3? worldPosition = null)
+    public bool RemoveMoney(int amount, Vector3? worldPosition = null)
     {
         money -= amount;
-        if (money < 0) money = 0;
+        if (money < 0)
+        {
+            money = 0;
+            return false;
+        }
+            
         moneyUI.SetMoney(money, false, amount);
 
         SpawnFloatingText("      -", amount.ToString(), worldPosition ?? Vector3.zero, false);
         if (loseParticles) loseParticles.Play();
         if (audioSource) audioSource.PlayOneShot(kachingClip);
+
+        return true;
     }
 
     void SpawnFloatingText(string sign, string text, Vector3 worldPos, bool positive)
@@ -54,5 +61,10 @@ public class MoneyController : MonoBehaviour
         GameObject go = Instantiate(floatingTextPrefab, floatingTextParent);
         FloatingText ft = go.GetComponent<FloatingText>();
         ft.Setup(sign, text, positive);
+    }
+
+    public bool HasEnoughMoney(int amount)
+    {
+        return money >= amount;
     }
 }

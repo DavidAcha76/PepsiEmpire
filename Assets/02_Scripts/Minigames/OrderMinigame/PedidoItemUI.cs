@@ -5,32 +5,29 @@ using UnityEngine.UI;
 public class PedidoItemUI : MonoBehaviour
 {
     public Image icon;
-    public TextMeshProUGUI label;
     public Image background;
+    public TextMeshProUGUI itemName;
     public Outline outline;
 
     private Color currentColor;
 
-    public void SetData(ItemData item, Color c)
+    public void SetData(ItemData item, Color baseColor)
     {
         if (icon) icon.sprite = item.icon;
-        if (label) label.text = item.itemName.ToUpper();
-        if (background) background.color = c;
-        currentColor = c;
-        if (outline) outline.enabled = false;
+        if (itemName) itemName.text = item.itemName;
+        MarkAs(baseColor);
     }
 
     public void MarkAs(Color c)
     {
-        if (background) background.color = c;
         currentColor = c;
+        if (background)
+            background.color = c;
     }
 
     public bool IsColor(Color c)
     {
-        return Mathf.Approximately(currentColor.r, c.r)
-            && Mathf.Approximately(currentColor.g, c.g)
-            && Mathf.Approximately(currentColor.b, c.b);
+        return currentColor == c;
     }
 
     public void SetOutlineActive(bool active)

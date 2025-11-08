@@ -283,6 +283,8 @@ public class NPCController : MonoBehaviour
             queue.SendMessage("ForceLeave", this, SendMessageOptions.DontRequireReceiver);
         }
         StartCoroutine(LeaveRoutine());
+
+        FindObjectOfType<CustomOrderUI>()?.OnNPCLeft();
     }
 
     private IEnumerator LeaveRoutine()

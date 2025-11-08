@@ -291,7 +291,7 @@ public class SealerMinigameController : MachineBase
                 pickupInstance.SetItem(currentRecipe.sealedCanResult, 1);
             }
         }
-        flashFX.PlayFlash();
+        //flashFX.PlayFlash();
         running = false;
         // (Opcional) limpiar modelos de escena
         if (canInstance) Destroy(canInstance);

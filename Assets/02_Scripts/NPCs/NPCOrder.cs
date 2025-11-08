@@ -23,7 +23,7 @@ public class NPCOrder
         switch (day)
         {
             case 1:
-                amount = Random.value < 0.2f ? 2 : 1; // 20% de chance de pedir 2
+                amount = Random.value < 0.2f ? 2 : 2; // 20% de chance de pedir 2
                 break;
             case 2:
                 amount = Random.value < 0.4f ? 2 : 1; // 40%

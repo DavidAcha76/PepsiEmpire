@@ -10,12 +10,20 @@ public class PlayerComponentController : MonoBehaviour
 
     bool isDisabled;
 
+    private GameObject interactUI;
+
     public void DisableAll()
     {
         if (isDisabled) return; isDisabled = true;
         foreach (var b in behaviours) if (b) b.enabled = false;
         foreach (var r in renderers) if (r) r.enabled = false;
         movement.Stop(true);
+
+        interactUI = GameObject.Find("InteractuarUI(Clone)");
+        if (interactUI)
+        {
+            interactUI.SetActive(false);
+        }
     }
 
     public void EnableAll()
@@ -23,6 +31,12 @@ public class PlayerComponentController : MonoBehaviour
         if (!isDisabled) return; isDisabled = false;
         foreach (var b in behaviours) if (b) b.enabled = true;
         foreach (var r in renderers) if (r) r.enabled = true;
+
+        if (interactUI)
+        {
+            interactUI.SetActive(true);
+            interactUI = null;
+        }
     }
 
     public void DisableAllWithoutRenders()

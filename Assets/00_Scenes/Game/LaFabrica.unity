@@ -25163,6 +25163,7 @@ MonoBehaviour:
   description: {fileID: 1182023504}
   costText: {fileID: 249116949}
   levelText: {fileID: 1210033584}
+  infoText: {fileID: 0}
   progressContainer: {fileID: 1426557191}
   progressPrefab: {fileID: 8793461852346115001, guid: 4233a340a8b7e6740a6f2b83587c17dd, type: 3}
   upgradeButton: {fileID: 1004460309}
@@ -53666,6 +53667,7 @@ MonoBehaviour:
   btnEmpezar: {fileID: 2010329168}
   btnEscoger: {fileID: 92269597}
   clawMinigame: {fileID: 764561485}
+  camTargetSwitcher: {fileID: 1334368517}
   colorPendiente: {r: 1, g: 0.9605352, b: 0.504717, a: 1}
   colorCorrecto: {r: 0, g: 0.58431375, b: 0.003921569, a: 1}
   colorIncorrecto: {r: 0.7735849, g: 0.010946936, b: 0.010946936, a: 1}
@@ -93138,9 +93140,9 @@ MonoBehaviour:
   playerController: {fileID: 5024470207927986121}
   blendTime: 0.75
   playerFOV: 55
-  otherFOV: 35
-  fixedHorizontal: 0
-  fixedVertical: 15
+  otherFOV: 7
+  fixedHorizontal: 176
+  fixedVertical: 7
   fixedRadial: 1
 --- !u!1 &1336258329
 GameObject:
@@ -143671,6 +143673,56 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 5ba1aafc68d70ef499c1fd87d6772052, type: 3}
   m_PrefabInstance: {fileID: 1887950036}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1888100100
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1888100101}
+  - component: {fileID: 1888100102}
+  m_Layer: 5
+  m_Name: ToastRoot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1888100101
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1888100100}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2042177737}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 231}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1888100102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1888100100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39457daee5fdb374baa3e7fc3634723a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toastPrefab: {fileID: 4081778648239110552, guid: cf1d76a3f0ff3794f9fc3758b2bb42f1, type: 3}
+  toastParent: {fileID: 1888100101}
 --- !u!1001 &1888607900
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -144381,6 +144433,7 @@ MonoBehaviour:
   description: {fileID: 2009826308}
   costText: {fileID: 1804090711}
   levelText: {fileID: 467371884}
+  infoText: {fileID: 0}
   progressContainer: {fileID: 1847591742}
   progressPrefab: {fileID: 8793461852346115001, guid: 4233a340a8b7e6740a6f2b83587c17dd, type: 3}
   upgradeButton: {fileID: 741285743}
@@ -157588,6 +157641,7 @@ RectTransform:
   - {fileID: 764561486}
   - {fileID: 803214689}
   - {fileID: 1476917088}
+  - {fileID: 1888100101}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -159100,6 +159154,7 @@ MonoBehaviour:
   description: {fileID: 646153920}
   costText: {fileID: 152109139}
   levelText: {fileID: 297021160}
+  infoText: {fileID: 0}
   progressContainer: {fileID: 1678004462}
   progressPrefab: {fileID: 8793461852346115001, guid: 4233a340a8b7e6740a6f2b83587c17dd, type: 3}
   upgradeButton: {fileID: 971168407}
@@ -175562,7 +175617,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75c7f05cb0706f74ab8f8b2fee099f8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  money: 1000
+  money: 10
   moneyUI: {fileID: 1793448325}
   floatingTextPrefab: {fileID: 681534505971892947, guid: 14ca16d255569194ab854a5a8f7efb3c, type: 3}
   floatingTextParent: {fileID: 616280330}
