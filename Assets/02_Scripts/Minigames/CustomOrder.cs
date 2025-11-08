@@ -105,7 +105,7 @@ public class CustomOrder : MonoBehaviour
     {
         pedidoInfoPanel.SetActive(false);
         Debug.Log("🎮 Iniciando minijuego de la garra...");
-        clawMinigame.StartClawGame(this);
+        //clawMinigame.StartClawGame(this);
     }
 
     // ------------------------------

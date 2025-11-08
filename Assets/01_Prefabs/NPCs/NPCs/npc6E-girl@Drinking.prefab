@@ -582,3 +582,7 @@ MonoBehaviour:
   wanderPaths: []
   probeCooldown: 3
   joinProximity: 1.2
+  itemPool: []
+  uiTimerPrefab: {fileID: 0}
+  uiRoot: {fileID: 0}
+  despawnPoint: {fileID: 0}

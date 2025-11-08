@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: LilithAnim
   m_EditorClassIdentifier: 
   baseController: {fileID: 9100000, guid: 5e087beacfbd77e479379ba53607a81c, type: 2}
-  sadIdle: {fileID: -203655887218126122, guid: f968818b5fd1c92499d22683fa42ba2b, type: 3}
-  sadWalk: {fileID: -203655887218126122, guid: 196e994def7b8124db817a435cc5ffb1, type: 3}
+  sadIdle: {fileID: 7400000, guid: 6643b618e16613a4d9be2931871950da, type: 2}
+  sadWalk: {fileID: 7400000, guid: 4f4cb8be9248cdb42b10c0e0ba08fa9a, type: 2}
   happyIdle: {fileID: -203655887218126122, guid: 3cf6483e9ec8ee2438bf105e3463e53d, type: 3}
-  happyWalk: {fileID: -203655887218126122, guid: c294c8f41b258d94e89d5c8bff9b479b, type: 3}
-  drinking: {fileID: -203655887218126122, guid: b160dcccfa3a06c41a31da8142b06774, type: 3}
+  happyWalk: {fileID: 7400000, guid: 4d4a6f821808c3242b924dd27dab9dc1, type: 2}
+  drinking: {fileID: 7400000, guid: 21bf36c36a819894da83e39991e567f9, type: 2}

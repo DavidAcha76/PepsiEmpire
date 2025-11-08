@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Pepsi Original Sellado
   type: 0
-  icon: {fileID: 21300000, guid: 041ec3e493dfa5342822a598af0bd5a7, type: 3}
+  icon: {fileID: -783784474, guid: 041ec3e493dfa5342822a598af0bd5a7, type: 3}
   price: 0
   isStackable: 1
   maxStack: 20

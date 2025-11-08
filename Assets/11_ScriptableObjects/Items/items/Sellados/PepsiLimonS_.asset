@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Pepsi Limon Sellado
   type: 0
-  icon: {fileID: 21300000, guid: 0b4c8e0f3ac7ef840a1b07db72cb2ff9, type: 3}
+  icon: {fileID: 1182356624, guid: 0b4c8e0f3ac7ef840a1b07db72cb2ff9, type: 3}
   price: 0
   isStackable: 1
   maxStack: 20
