@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class ElectricityMachine : MonoBehaviour
 {
+    
+
     [Header("Progreso / Energía")]
     [Range(0f, 1f)] public float charge = 1f;
     public float decayRate = 0.005f;
@@ -40,6 +42,8 @@ public class ElectricityMachine : MonoBehaviour
 
     void Start()
     {
+        
+
         UpdateUI();
         if (holdButton != null)
             holdButton.onClick.RemoveAllListeners();
@@ -47,6 +51,7 @@ public class ElectricityMachine : MonoBehaviour
 
     void Update()
     {
+
         int currentDay = timeManager.GetCurrentDay();
         if (currentDay != lastDay)
         {
@@ -74,6 +79,8 @@ public class ElectricityMachine : MonoBehaviour
         {
             hasTriggeredDepletion = false;
             OnFullyCharged.Invoke();
+            
+
         }
 
         if (!panel.activeInHierarchy && isHolding)
@@ -149,4 +156,8 @@ public class ElectricityMachine : MonoBehaviour
             else barFill.color = lowColor;
         }
     }
+    
+
+
+
 }
