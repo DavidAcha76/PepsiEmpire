@@ -23,6 +23,7 @@ public class MoneyController : MonoBehaviour
         else Instance = this;
 
         moneyUI.moneyText.text = money.ToString();
+        audioSource = GetComponentInChildren<AudioSource>();
     }
 
     public void AddMoney(int amount, Vector3? worldPosition = null)
@@ -32,7 +33,7 @@ public class MoneyController : MonoBehaviour
 
         SpawnFloatingText("      +", amount.ToString(), worldPosition ?? Vector3.zero, true);
         if (gainParticles) gainParticles.Play();
-        if (audioSource && kachingClip) audioSource.PlayOneShot(kachingClip);
+        if (audioSource) audioSource.PlayOneShot(kachingClip);
     }
 
     public void RemoveMoney(int amount, Vector3? worldPosition = null)
@@ -43,7 +44,7 @@ public class MoneyController : MonoBehaviour
 
         SpawnFloatingText("      -", amount.ToString(), worldPosition ?? Vector3.zero, false);
         if (loseParticles) loseParticles.Play();
-        if (audioSource && errorClip) audioSource.PlayOneShot(errorClip);
+        if (audioSource) audioSource.PlayOneShot(kachingClip);
     }
 
     void SpawnFloatingText(string sign, string text, Vector3 worldPos, bool positive)

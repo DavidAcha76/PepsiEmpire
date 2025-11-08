@@ -24,4 +24,18 @@ public class PlayerComponentController : MonoBehaviour
         foreach (var b in behaviours) if (b) b.enabled = true;
         foreach (var r in renderers) if (r) r.enabled = true;
     }
+
+    public void DisableAllWithoutRenders()
+    {
+        if (isDisabled) return; isDisabled = true;
+        foreach (var b in behaviours) if (b) b.enabled = false;
+        movement.Stop(true);
+    }
+
+    public void EnableAllWithoutRenders()
+    {
+        if (!isDisabled) return; isDisabled = false;
+        foreach (var b in behaviours) if (b) b.enabled = true;
+        foreach (var r in renderers) if (r) r.enabled = true;
+    }
 }

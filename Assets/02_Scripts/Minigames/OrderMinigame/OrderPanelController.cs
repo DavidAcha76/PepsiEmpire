@@ -7,8 +7,8 @@ public class OrderPanelController : MonoBehaviour
 
     [SerializeField] public CustomOrderUI orderUI;      
     [SerializeField] public ShopQueue shopQueue;        
-    [SerializeField] public Collider triggerZone;       
-    [SerializeField] public KeyCode openKey = KeyCode.E;
+    [SerializeField] public Collider triggerZone;
+    [SerializeField] public CameraTargetSwitcher cameraTargetSwitcher;
 
     private bool playerInside = false;
     private bool panelOpen = false;
@@ -59,6 +59,7 @@ public class OrderPanelController : MonoBehaviour
         if (!orderUI.gameObject.activeSelf)
             orderUI.gameObject.SetActive(true);
 
+        cameraTargetSwitcher.LookAtOtherTarget();
         orderUI.Open(currentNPC, items);
         panelOpen = true;
         Debug.Log($"🟢 [OrderPanel] Panel abierto para {currentNPC.name}");
@@ -71,6 +72,7 @@ public class OrderPanelController : MonoBehaviour
         orderUI.gameObject.SetActive(false);
         panelOpen = false;
         currentNPC = null;
+        cameraTargetSwitcher.ReturnToPlayer();
 
         Debug.Log("🔴 [OrderPanel] Panel cerrado.");
     }

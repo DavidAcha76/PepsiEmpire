@@ -25,8 +25,8 @@ public class FloatingText : MonoBehaviour
     {
         txtMoney.text = text;
         txtSign.text = sign;
-        txtMoney.color = positive ? Color.green : Color.red;
-        txtSign.color = positive ? Color.green : Color.red;
+        txtMoney.color = positive ? new Color(0f /255f, 149f / 255f, 1f / 255f) : new Color(197f / 255f, 3f / 255f, 3f / 255f);
+        txtSign.color = positive ? new Color(0f / 255f, 149f / 255f, 1f / 255f) : new Color(197f / 255f, 3f / 255f, 3f / 255f);
         StartCoroutine(Animate());
     }
 
