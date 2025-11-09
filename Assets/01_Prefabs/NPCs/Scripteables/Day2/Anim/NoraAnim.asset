@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: NoraAnim
   m_EditorClassIdentifier: 
   baseController: {fileID: 9100000, guid: 5e087beacfbd77e479379ba53607a81c, type: 2}
-  sadIdle: {fileID: -203655887218126122, guid: 7275031a330ffe742966ea205a8c68c8, type: 3}
-  sadWalk: {fileID: -203655887218126122, guid: 47c781b398261c948a61ede2cf2fa5bc, type: 3}
+  sadIdle: {fileID: 7400000, guid: 6970ec4e0105cf74ba33e8c50229b3cd, type: 2}
+  sadWalk: {fileID: 7400000, guid: b2ff7e354929dc240af0eb5dbf510afc, type: 2}
   happyIdle: {fileID: -203655887218126122, guid: 3a434d8c7a5e8764f80a50b0cd5edcd3, type: 3}
-  happyWalk: {fileID: -203655887218126122, guid: a77e8b1869278ff418010ae04fb3ae2e, type: 3}
-  drinking: {fileID: 0}
+  happyWalk: {fileID: 7400000, guid: 6f08853d999d5ac4bb25c869fb759a2f, type: 2}
+  drinking: {fileID: 7400000, guid: 3c1f59e09c674f24bb523e45a2e727c3, type: 2}

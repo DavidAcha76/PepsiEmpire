@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: TinaAnim
   m_EditorClassIdentifier: 
   baseController: {fileID: 9100000, guid: 5e087beacfbd77e479379ba53607a81c, type: 2}
-  sadIdle: {fileID: -203655887218126122, guid: 71dd4d9aa5f66b740ae10771a3195664, type: 3}
-  sadWalk: {fileID: -203655887218126122, guid: bdebab826971ef34e9c7697d157e81e9, type: 3}
+  sadIdle: {fileID: 7400000, guid: 84ef85b4287d468468bbf814588e5b8e, type: 2}
+  sadWalk: {fileID: 7400000, guid: 351e1cc8444ca9e40ac631ebfb29b84f, type: 2}
   happyIdle: {fileID: -203655887218126122, guid: b0d25f9425dbf294789dcc5d6d052364, type: 3}
-  happyWalk: {fileID: -203655887218126122, guid: b584fd848c8e1fe4f9f8a748dd33ebf0, type: 3}
-  drinking: {fileID: 0}
+  happyWalk: {fileID: 7400000, guid: f1f01e90a4a40a740bda9c481df01d0f, type: 2}
+  drinking: {fileID: 7400000, guid: 279397d649853b947bf1d9bc98b07478, type: 2}
