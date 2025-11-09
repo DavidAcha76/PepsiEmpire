@@ -252,6 +252,12 @@ public class MixingMinigameController : MachineBase
             return;
         }
 
+        if (currentState != "STOP" && !dragging)
+        {
+            StopMixingSound();
+            currentState = "STOP";
+        }
+
         ShowHint($"¡Mezcla completa! Has creado {currentRecipe.result.itemName}");
 
         pickupInstance = Instantiate(panelPickup, rootUI.transform, false);
