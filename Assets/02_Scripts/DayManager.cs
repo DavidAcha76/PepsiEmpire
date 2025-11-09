@@ -22,7 +22,7 @@ public class DayManager : MonoBehaviour
     public float transitionDuration = 3f;
     [Header("Formato")]
     [Tooltip("Formato del texto. Usa {DAY} para día y {TIME} para hora")]
-    public string displayFormat = "DiA {DAY}\n{TIME}";
+    public string displayFormat = "Ronda {DAY}\n{TIME}";
     public bool use12HourFormat = false;
 
     private bool isTransitioning = false;
@@ -59,7 +59,7 @@ public class DayManager : MonoBehaviour
     {
         mainUI.SetActive(false);
         dayTransitionUI.SetActive(true);
-        dayText.text = "Dia 1";
+        dayText.text = "Ronda 1";
         UpdateDayAndTimeText(1);
 
         yield return new WaitForSeconds(transitionDuration);
@@ -95,7 +95,7 @@ public class DayManager : MonoBehaviour
 
         mainUI.SetActive(false);
         dayTransitionUI.SetActive(true);
-        dayText.text = "Dia " + nextDay;
+        dayText.text = "Ronda " + nextDay;
         UpdateDayAndTimeText(nextDay);
 
         yield return new WaitForSeconds(transitionDuration);
@@ -123,6 +123,7 @@ public class DayManager : MonoBehaviour
         {
             dayAndTimeText.text = "5 DÍAS COMPLETADOS";
             dayText.text = "5 DÍAS COMPLETADOS";
+            SceneLoader.Instance.LoadScene("WinScene");
         }
 
         Debug.Log("[DayManager] ¡Juego completado!");

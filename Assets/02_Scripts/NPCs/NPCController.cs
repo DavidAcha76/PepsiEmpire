@@ -492,19 +492,19 @@ public class NPCController : MonoBehaviour
                 extraPerItem = 3f;
                 break;
             case 2:
-                baseTime = 25f;
+                baseTime = 107f;
                 extraPerItem = 3.5f;
                 break;
             case 3:
-                baseTime = 22f;
+                baseTime = 107f;
                 extraPerItem = 4f;
                 break;
             case 4:
-                baseTime = 20f;
+                baseTime = 107f;
                 extraPerItem = 4.5f;
                 break;
             case 5:
-                baseTime = 18f;
+                baseTime = 107f;
                 extraPerItem = 5f;
                 break;
         }

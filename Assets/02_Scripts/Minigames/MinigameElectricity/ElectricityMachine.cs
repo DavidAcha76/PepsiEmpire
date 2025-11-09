@@ -178,6 +178,7 @@ public class ElectricityMachine : MonoBehaviour
 
     public void StartMixingSound(AudioSource audioSource, AudioClip elecSound)
     {
+        if(!audioSource) return;
         audioSource.clip = elecSound;
         audioSource.loop = true;    
         audioSource.Play();
@@ -186,6 +187,7 @@ public class ElectricityMachine : MonoBehaviour
 
     public void StopMixingSound(AudioSource audioSource)
     {
+        if (!audioSource) return;
         audioSource.loop = false;
         audioSource.Stop();
         Debug.Log("🔇 Sonido de mezcla detenido.");

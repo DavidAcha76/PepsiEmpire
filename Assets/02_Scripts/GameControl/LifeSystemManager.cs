@@ -42,6 +42,9 @@ public class LifeSystemManager : MonoBehaviour
 
     [SerializeField] private float animationDuration = 0.3f;
 
+    public AudioSource audioSource;
+    public AudioClip clip;
+
     // ========== EVENTOS ==========
 
     [Header("▼ Eventos del Sistema")]
@@ -213,6 +216,7 @@ public class LifeSystemManager : MonoBehaviour
 
         currentLives--;
 
+        audioSource.PlayOneShot(clip);
         Debug.Log($"💔 [LifeSystem] Vida perdida" +
 
                   (string.IsNullOrEmpty(reason) ? "" : $" - {reason}") +
@@ -238,7 +242,6 @@ public class LifeSystemManager : MonoBehaviour
         // Verificar Game Over
 
         if (currentLives <= 0)
-
         {
 
             TriggerGameOver();

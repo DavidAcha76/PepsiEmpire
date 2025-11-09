@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Rewired;
 
 [System.Serializable]
 public class DialogueLine
@@ -43,6 +44,8 @@ public class DialogueManager : MonoBehaviour
     public bool isPausedByTutorial = false;
     private string currentLineText = "";
 
+    private Player player;
+
     void Start()
     {
         if (portraitCanvas != null)
@@ -57,6 +60,8 @@ public class DialogueManager : MonoBehaviour
 
         if (startingDialogue.Length > 0)
             StartDialogue(startingDialogue);
+
+        player = ReInput.players.GetPlayer(0);
     }
 
     public void StartDialogue(DialogueLine[] dialogueLines)
@@ -202,7 +207,7 @@ public class DialogueManager : MonoBehaviour
         if (!dialoguePanel.activeSelf || isPausedByTutorial) return;
 
         // Espacio para avanzar manualmente
-        if (waitingForAdvance && Input.GetKeyDown(KeyCode.Space))
+        if (waitingForAdvance && player.GetButtonDown("Interact"))
         {
             waitingForAdvance = false;
             DisplayNextLine();
