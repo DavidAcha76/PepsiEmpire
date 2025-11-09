@@ -62,18 +62,7 @@ public class NPCController : MonoBehaviour
         if (animDriver) animDriver.SetHappy(data && data.drinkPepsi);
         GoToQueueAreaFirstTime();
     }
-
-
-    private void Update()
-    {
-        // Solo actualiza el UI si está en cola (sin countdown)
-        if (_state == NPCState.InQueue)
-        {
-            // Muestra que está esperando, pero sin tiempo regresivo
-            view?.ShowWaitTime(0, false);
-            if (animDriver) animDriver.SetHappy(data && data.drinkPepsi);
-        }
-    }
+    
 
     public void AssignQueueSlot(int slotIndex, Vector3 slotPosition, Quaternion slotRotation)
     {
@@ -326,28 +315,55 @@ public class NPCController : MonoBehaviour
             StartCoroutine(LeaveRoutine());
         }
     }
+    // Campos de clase
+    private SkinnedMeshRenderer _cachedRenderer;
+    private bool _keepCutEdge = false;
+    private float _desiredCutEdge = 1f;
+
     private IEnumerator PlayDrinkThenLeave()
     {
         Debug.Log($"🥤 [NPC] {name} va a beber antes de irse feliz.");
-
-        // Dispara la animación de beber
         animDriver.PlayDrink();
-
-        // Marca como feliz (en animación y en data)
         animDriver.SetHappy(true);
         if (data) data.drinkPepsi = true;
 
-        // Espera la duración de la animación de beber
-        // Ajusta este tiempo según dure tu clip (2-3 segundos aprox)
-        yield return new WaitForSeconds(4.5f);
+        yield return new WaitForSeconds(7.5f);
 
-        Debug.Log($"😊 [NPC] {name} terminó de beber y se retira feliz.gaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        _cachedRenderer = GetComponentInChildren<SkinnedMeshRenderer>(true);
+        if (_cachedRenderer != null && _cachedRenderer.material.HasProperty("_Cut_Edge"))
+        {
+            // Activa la aplicación contínua en LateUpdate
+            _keepCutEdge = true;
+            _desiredCutEdge = 1f;
+            Debug.Log($"✅ [NPC] {name}: LateUpdate enforcement activado para _Cut_Edge = 1.");
+        }
+        else
+        {
+            Debug.LogWarning($"⚠️ [NPC] {name}: no se encontró la propiedad _Cut_Edge.");
+        }
 
-        // Ahora sí, inicia la rutina de salida caminando
+        // Espera un breve margen (opcional) o hasta que te retires
+        yield return new WaitForSeconds(0.1f);
+
+        // Lógica de salida
+        Debug.Log($"😊 [NPC] {name} terminó de beber y se retira feliz.");
         StartCoroutine(LeaveRoutine());
-
         FindObjectOfType<CustomOrderUI>()?.OnNPCLeft();
+
+        // Desactiva enforcement cuando se vaya (o hazlo en OnDestroy)
+        _keepCutEdge = false;
     }
+
+    private void LateUpdate()
+    {
+        if (!_keepCutEdge || _cachedRenderer == null) return;
+        if (_cachedRenderer.material.HasProperty("_Cut_Edge"))
+        {
+            _cachedRenderer.material.SetFloat("_Cut_Edge", _desiredCutEdge);
+        }
+    }
+
+
 
     private IEnumerator LeaveRoutine()
     {
