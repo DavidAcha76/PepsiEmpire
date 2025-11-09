@@ -30,7 +30,17 @@ public class ShowPanel : MonoBehaviour
             isOpen = true;
         }
         // CERRAR PANEL MANUALMENTE
-        else if (isOpen && player.GetButtonDown("Close"))
+        /*else if (isOpen && player.GetButtonDown("Close"))
+        {
+            panel.SetActive(false);
+            cameraTargetSwitcher.ReturnToPlayer();
+            isOpen = false;
+        }*/
+    }
+
+    public void ClosePanel()
+    {
+        if (isOpen)
         {
             panel.SetActive(false);
             cameraTargetSwitcher.ReturnToPlayer();

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class EssenceMine : MachineBase
 {
@@ -8,6 +9,7 @@ public class EssenceMine : MachineBase
     public int cantidadPorCiclo = 1;
     public float tiempoGeneracion = 10f;
     public int maxCapacidad = 5;
+    public Button btnClose;
 
     [Header("Estado actual (runtime)")]
     public int cantidadActual = 0;
@@ -37,7 +39,7 @@ public class EssenceMine : MachineBase
         {
             if (cameraTargetSwitcher)
                 cameraTargetSwitcher.ReturnToPlayer();
-
+            btnClose.gameObject.SetActive(false);
             VaciarMina();
             return;
         }

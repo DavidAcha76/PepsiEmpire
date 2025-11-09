@@ -1,7 +1,8 @@
 ﻿using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.Audio;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class MixingMinigameController : MachineBase
 {
@@ -23,9 +24,13 @@ public class MixingMinigameController : MachineBase
     public Image linkFill;
     public TextMeshProUGUI hint;
 
+    public AudioSource audioSource;
+    public AudioClip mixSound;
+
     [Header("Paneles")]
     public GameObject panelMix;
     public PickupSlot panelPickup;
+    public Button closeButton;
 
     [Header("Knob")]
     public RectTransform knobRoot;
@@ -62,6 +67,7 @@ public class MixingMinigameController : MachineBase
     private Vector3 mixerHomePos;
     private float mixerSpinAngle;
     private GameObject bowlInstance;
+    private string currentState = "";
 
     private LiquidMixController liquidController;
 
@@ -102,6 +108,12 @@ public class MixingMinigameController : MachineBase
         {
             dragging = false;
             SnapHandleHome();
+            if(currentState != "STOP" && !dragging)
+            {
+                StopMixingSound();
+                currentState = "STOP";
+            }
+            
         };
 
         kp.OnDirection = dir =>
@@ -109,6 +121,7 @@ public class MixingMinigameController : MachineBase
             if (!dragging || !running) return;
 
             PositionHandle(dir);
+
             float delta = DeltaAngleSigned(lastDir, dir);
 
             if (Mathf.Abs(delta) >= minDragDeltaDeg)
@@ -118,10 +131,15 @@ public class MixingMinigameController : MachineBase
                     cumulativeCW += -delta;
                     progress = Mathf.Clamp01(cumulativeCW / requiredDegrees);
                     UpdateLinkVisuals();
+                    if (currentState != "MIXING" && dragging)
+                    {
+                        StartMixingSound();
+                        currentState = "MIXING";
+                    }
                 }
                 lastDir = dir;
             }
-
+            
             UpdateMixerOrbit(dir);
         };
 
@@ -136,9 +154,27 @@ public class MixingMinigameController : MachineBase
         {
             float decay = (currentRecipe ? currentRecipe.decayPerSecond : decayPerSecDefault) * Time.deltaTime;
             progress = Mathf.Max(0f, progress - decay);
+
+
+            
             cumulativeCW = progress * requiredDegrees;
             UpdateLinkVisuals();
         }
+    }
+
+    public void StartMixingSound()
+    {
+        audioSource.clip = mixSound;
+        audioSource.loop = true;    // 🔁 lo pone en bucle
+        audioSource.Play();
+        Debug.Log("🎵 Sonido de mezcla iniciado en loop.");
+    }
+
+    public void StopMixingSound()
+    {
+        audioSource.loop = false;
+        audioSource.Stop();
+        Debug.Log("🔇 Sonido de mezcla detenido.");
     }
 
     public void Begin(ItemData liquid, ItemData solid)
@@ -156,6 +192,8 @@ public class MixingMinigameController : MachineBase
         progress = 0f;
         cumulativeCW = 0f;
         running = true;
+        closeButton.interactable = false;
+        closeButton.gameObject.SetActive(false);
         requiredDegrees = Mathf.Max(180f, requiredTurns * 360f);
 
         SetIcon(leftIcon, liquid);
@@ -205,6 +243,8 @@ public class MixingMinigameController : MachineBase
     void CompleteMix()
     {
         running = false;
+        closeButton.interactable = true;
+        closeButton.gameObject.SetActive(true);
 
         if (!currentRecipe || currentRecipe.result == null)
         {
@@ -229,6 +269,8 @@ public class MixingMinigameController : MachineBase
     void ResetUI()
     {
         running = false;
+        closeButton.interactable = true;
+        closeButton.enabled = true;
         progress = 0f;
         cumulativeCW = 0f;
         UpdateLinkVisuals();

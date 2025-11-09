@@ -47,7 +47,7 @@ public class CartManager : MonoBehaviour
         foreach (var item in cartItems)
             total += item.GetTotal();
 
-        totalText.text = total.ToString();
+        totalText.text = cartItems.Count.ToString();
     }
 
     public void BuyAll()

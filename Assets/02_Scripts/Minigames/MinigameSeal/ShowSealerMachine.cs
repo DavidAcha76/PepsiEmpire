@@ -1,5 +1,6 @@
 ﻿using Rewired;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShowSealerMachine : MonoBehaviour
 {
@@ -29,7 +30,7 @@ public class ShowSealerMachine : MonoBehaviour
             Debug.Log("[ShowSealerMachine] Abierto (panel activo).");
         }
         // CERRAR PANEL MANUALMENTE
-        else if (isOpen && player.GetButtonDown("Close"))
+        /*else if (isOpen && player.GetButtonDown("Close"))
         {
             // Probar cierre seguro (bloquea si está en juego)
             bool closed = sealerMinigame.TryClosePanel();
@@ -46,7 +47,7 @@ public class ShowSealerMachine : MonoBehaviour
             {
                 Debug.Log("[ShowSealerMachine] Cierre bloqueado (minijuego en curso).");
             }
-        }
+        }*/
 
         // AUTO-CIERRE cuando el controller se haya desactivado por su cuenta
         if (isOpen && !sealerMinigame.gameObject.activeSelf)
@@ -54,6 +55,28 @@ public class ShowSealerMachine : MonoBehaviour
             cameraTargetSwitcher.ReturnToPlayer();
             isOpen = false;
             Debug.Log("[ShowSealerMachine] Detectado panel inactivo → cámara vuelve.");
+        }
+    }
+
+    public void ClosePanel()
+    {
+        if (isOpen)
+        {
+            // Probar cierre seguro (bloquea si está en juego)
+            bool closed = sealerMinigame.TryClosePanel();
+
+            // Si el controlador dejó el panel inactivo (sea porque permitió cerrar
+            // o porque ya estaba inactivo con pickup oculto), devolvemos cámara.
+            if (closed || !sealerMinigame.gameObject.activeSelf)
+            {
+                cameraTargetSwitcher.ReturnToPlayer();
+                isOpen = false;
+                Debug.Log("[ShowSealerMachine] Cerrado. Cámara vuelve al jugador.");
+            }
+            else
+            {
+                Debug.Log("[ShowSealerMachine] Cierre bloqueado (minijuego en curso).");
+            }
         }
     }
 

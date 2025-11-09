@@ -1,12 +1,14 @@
 using Rewired;
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class ShowPanelMachine : MonoBehaviour
 {
     [Header("Refs")]
     public EssenceMine essenceMine;
     public CameraTargetSwitcher cameraTargetSwitcher;
+    public Button closeButton;
 
     private Player player;
     private bool isPlayerClose = false;
@@ -24,12 +26,24 @@ public class ShowPanelMachine : MonoBehaviour
             essenceMine.MostrarPickup();
             cameraTargetSwitcher.LookAtOtherTarget();
             isOpen = true;
+            closeButton.gameObject.SetActive(true);
         }
-        else if (isPlayerClose && player.GetButtonDown("Close"))
+        /*else if (isPlayerClose && player.GetButtonDown("Close"))
         {
             essenceMine.OcultarPickup();
             cameraTargetSwitcher.ReturnToPlayer();
             isOpen = false;
+        }*/
+    }
+
+    public void ClosePanel()
+    {
+        if (isPlayerClose)
+        {
+            essenceMine.OcultarPickup();
+            cameraTargetSwitcher.ReturnToPlayer();
+            isOpen = false;
+            closeButton.gameObject.SetActive(false);
         }
     }
 

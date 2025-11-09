@@ -1,11 +1,13 @@
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class MixSlot : MonoBehaviour, IDropHandler
 {
     public IngredientType acceptType = IngredientType.LiquidBase; 
     public Image preview;
+    public List<ItemData> acceptedItems;
 
     public ItemData currentItem;
 
@@ -19,6 +21,12 @@ public class MixSlot : MonoBehaviour, IDropHandler
 
         var data = srcSlot.currentItem;
         if (data == null || data.type != acceptType) return;
+
+        if (!acceptedItems.Contains(data))
+        {
+            Debug.Log($"🚫 {data.itemName} no está permitido en este slot.");
+            return;
+        }
 
         int removed = srcSlot.RemoveFromStack(1);
         if (removed <= 0) return;

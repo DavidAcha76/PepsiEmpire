@@ -1,5 +1,6 @@
 ﻿using Rewired;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -22,6 +23,13 @@ public class ElectricityMachine : MonoBehaviour
     public GameObject panel;
     public GameObject vfxElectricity;
 
+    public AudioSource audioSource_;
+    public AudioClip elecSound_;
+
+    public AudioSource musicSource_;
+    public AudioClip chillMusic;
+    public AudioClip alertMusic;
+
     [Header("Colores de estado")]
     public Color fullColor = Color.green;
     public Color midColor = Color.yellow;
@@ -39,6 +47,7 @@ public class ElectricityMachine : MonoBehaviour
     private bool isHolding = false;
     private int lastDay = -1;
     private bool hasTriggeredDepletion = false;
+    private string currentState = "";
 
     void Start()
     {
@@ -72,7 +81,10 @@ public class ElectricityMachine : MonoBehaviour
         {
             hasTriggeredDepletion = true;
             OnPowerDepleted.Invoke();
+            
             Debug.Log($"⚡ [ElectricityMachine] ENERGÍA AGOTADA (día {currentDay}) — decayRate={decayRate}");
+
+            SceneLoader.Instance.LoadScene("GameOver");
         }
 
         if (charge >= 1f)
@@ -112,24 +124,39 @@ public class ElectricityMachine : MonoBehaviour
             groupA.SetLightsOn(true);
             groupB.SetLightsOn(true);
             groupC.SetLightsOn(true);
+            if (currentState != "NORMAL")
+            {
+                StartMixingSound(musicSource_, chillMusic);
+                currentState = "NORMAL";
+            }
         }
-        else if (charge > 0.3f)
+        else if (charge > 0.45f)
         {
             groupA.SetFlickerActive(true,1.5f);
             groupB.SetLightsOn(true);
             groupC.SetLightsOn(true);
         }
-        else if (charge > 0.1f)
+        else if (charge > 0.2f)
         {
             groupA.SetLightsOn(false);
             groupB.SetFlickerActive(true,2f);
             groupC.SetLightsOn(true);
+            if (currentState != "NORMAL")
+            {
+                StartMixingSound(musicSource_, chillMusic);
+                currentState = "NORMAL";
+            }
         }
         else
         {
             groupA.SetLightsOn(false);
             groupB.SetLightsOn(false);
-            groupC.SetFlickerActive(true, 3f); 
+            groupC.SetFlickerActive(true, 3f);
+            if (currentState != "CRITICAL")
+            {
+                StartMixingSound(musicSource_, alertMusic);
+                currentState = "CRITICAL";
+            }
         }
     }
 
@@ -137,12 +164,30 @@ public class ElectricityMachine : MonoBehaviour
     {
         isHolding = true;
         vfxElectricity.SetActive(true);
+        StartMixingSound(audioSource_,elecSound_);
     }
 
     public void OnPointerUp()
     {
         isHolding = false;
         vfxElectricity.SetActive(false);
+        StopMixingSound(audioSource_);
+    }
+
+
+    public void StartMixingSound(AudioSource audioSource, AudioClip elecSound)
+    {
+        audioSource.clip = elecSound;
+        audioSource.loop = true;    
+        audioSource.Play();
+        Debug.Log("🎵 Sonido de mezcla iniciado en loop.");
+    }
+
+    public void StopMixingSound(AudioSource audioSource)
+    {
+        audioSource.loop = false;
+        audioSource.Stop();
+        Debug.Log("🔇 Sonido de mezcla detenido.");
     }
 
     private void UpdateUI()
@@ -151,8 +196,8 @@ public class ElectricityMachine : MonoBehaviour
 
         if (barFill)
         {
-            if (charge > 0.6f) barFill.color = fullColor;
-            else if (charge > 0.3f) barFill.color = midColor;
+            if (charge > 0.3f) barFill.color = fullColor;
+            else if (charge > 0.2f) barFill.color = midColor;
             else barFill.color = lowColor;
         }
     }

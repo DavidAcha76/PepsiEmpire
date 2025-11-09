@@ -315,6 +315,7 @@ public class NPCController : MonoBehaviour
             queue.SendMessage("ForceLeave", this, SendMessageOptions.DontRequireReceiver);
         }
 
+        FindObjectOfType<CustomOrderUI>()?.OnNPCLeft();
         // 👉 Si se va feliz, primero beberá y luego se irá caminando
         if (happy && animDriver)
         {
@@ -346,7 +347,7 @@ public class NPCController : MonoBehaviour
         // Ahora sí, inicia la rutina de salida caminando
         StartCoroutine(LeaveRoutine());
 
-        FindObjectOfType<CustomOrderUI>()?.OnNPCLeft();
+
     }
 
     private IEnumerator LeaveRoutine()

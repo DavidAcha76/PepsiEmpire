@@ -6,7 +6,6 @@ public class ShopItemUI : MonoBehaviour
 {
     [Header("Referencias UI")]
     public TextMeshProUGUI nombreText;
-    public TextMeshProUGUI precioText;
     public Image iconoImage;
     public Button addToCartButton;
 
@@ -21,7 +20,6 @@ public class ShopItemUI : MonoBehaviour
         if (itemData != null)
         {
             nombreText.text = itemData.itemName;
-            precioText.text = itemData.price.ToString();
             iconoImage.sprite = itemData.icon;
         }
 

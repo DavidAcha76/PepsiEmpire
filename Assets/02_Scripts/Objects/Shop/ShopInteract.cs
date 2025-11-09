@@ -2,6 +2,7 @@ using Rewired;
 using Unity.Cinemachine;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShopInteract : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class ShopInteract : MonoBehaviour
     public GameObject panelShop;
     public CinemachineBridgeCamera camera_;
     public GameObject playerInstance;
-
+    public Button btnClose;
     private Player player;
     private GameObject instancePanel;
     private bool isPlayerCloser = false;
@@ -27,11 +28,6 @@ public class ShopInteract : MonoBehaviour
         {
             OpenShop();
         }
-
-        if (shopOpen && player.GetButtonDown("Close"))
-        {
-            CloseShop();
-        }
     }
 
     private void OpenShop()
@@ -42,13 +38,14 @@ public class ShopInteract : MonoBehaviour
 
         camera_.GetComponent<CinemachineCamera>().enabled = false;
         playerInstance.GetComponent<PlayerController>().enabled = false;
+        btnClose.gameObject.SetActive(true);
         //playerInstance.GetComponent<PlayerJump>().enabled = false;
         playerInstance.GetComponent<PlayerMovement>().Stop(true);
 
         shopOpen = true;
     }
 
-    private void CloseShop()
+    public void CloseShop()
     {
         if (instancePanel) Destroy(instancePanel);
         instancePanel = null;
@@ -56,6 +53,7 @@ public class ShopInteract : MonoBehaviour
         camera_.GetComponent<CinemachineCamera>().enabled = true;
         playerInstance.GetComponent<PlayerController>().enabled = true;
         //playerInstance.GetComponent<PlayerJump>().enabled = true;
+        btnClose.gameObject.SetActive(false);
 
         shopOpen = false;
     }

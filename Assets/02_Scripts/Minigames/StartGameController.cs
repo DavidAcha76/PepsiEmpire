@@ -100,6 +100,38 @@ public class StartGameController : MonoBehaviour
         }
     }
 
+    public void ClosePanel()
+    {
+        if (gameOpen)
+        {
+            if (!panelMixPrefab.running)
+            {
+                gameOpen = false;
+                cameraSwicher.ReturnToPlayer();
+
+                if (panelMixPrefab)
+                {
+                    // Caso A: mezcla completada → pickup activo
+                    if (panelMixPrefab.pickupInstance && !panelMixPrefab.pickupInstance.IsEmpty())
+                    {
+                        panelMixPrefab.pickupInstance.gameObject.SetActive(false);
+                    }
+                    // Caso B: mezcla aún en curso
+                    else
+                    {
+                        panelMixPrefab.gameObject.SetActive(false);
+                    }
+
+                    if (panelMixPrefab.pickupInstance && panelMixPrefab.pickupInstance.IsEmpty())
+                    {
+                        Destroy(panelMixPrefab.pickupInstance.gameObject);
+                        panelMixPrefab.pickupInstance = null;
+                    }
+                }
+            }
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))

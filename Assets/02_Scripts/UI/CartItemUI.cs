@@ -40,7 +40,7 @@ public class CartItemUI : MonoBehaviour
     {
         itemNameText.text = Quantity.ToString() + "x " + Item.itemName;
         //quantityText.text = Quantity.ToString() + "x";
-        totalPriceText.text = (price * Quantity).ToString();
+        //totalPriceText.text = (price * Quantity).ToString();
     }
 
     private void RemoveItem()

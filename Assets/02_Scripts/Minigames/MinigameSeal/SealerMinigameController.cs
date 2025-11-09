@@ -15,6 +15,7 @@ public class SealerMinigameController : MachineBase
     public GameObject panelStart;     // pantalla con slot + botón
     public GameObject panelGame;      // HUD del minijuego
     public Button startButton;
+    public Button closeButton;
     public Slider progressSlider;
     public TextMeshProUGUI cpsText;
 
@@ -48,6 +49,9 @@ public class SealerMinigameController : MachineBase
     public PickupSlot pickupPrefab;       // Prefab UI del pickup
     public Transform uiParent;            // Normalmente el RootUI
     public CameraTargetSwitcher cameraTargetSwitcher; // Para volver al jugador
+
+    public AudioSource audioSource;
+    public AudioClip closeAudioClip;
 
     // Runtime
     private PickupSlot pickupInstance;
@@ -169,6 +173,8 @@ public class SealerMinigameController : MachineBase
         progress = 0f;
         sealedDone = false;
         running = true;
+        closeButton.interactable = false;
+        closeButton.gameObject.SetActive(false);
         clickTimes.Clear();
 
         // Forzar inicio arriba: que la PUNTA coincida con armUpRef
@@ -292,6 +298,9 @@ public class SealerMinigameController : MachineBase
             }
         }
         //flashFX.PlayFlash();
+        audioSource.PlayOneShot(closeAudioClip);
+        closeButton.interactable = true;
+        closeButton.gameObject.SetActive(true);
         running = false;
         // (Opcional) limpiar modelos de escena
         if (canInstance) Destroy(canInstance);
