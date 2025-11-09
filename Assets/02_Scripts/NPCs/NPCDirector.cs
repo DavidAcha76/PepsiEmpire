@@ -9,6 +9,9 @@ public class NPCDirector : MonoBehaviour
         public Transform spawnTransform;
         public WaypointPath path;
     }
+    [Header("Punto de bebida global (fuera de la fila)")]
+    public Transform drinkPoint;
+
 
     [Header("Spawning")]
     public List<NPCController> npcPrefabs = new();
@@ -88,7 +91,7 @@ public class NPCDirector : MonoBehaviour
         npc.shopQueue = shopQueue;
 
         npc.despawnPoint = globalDespawnPoint;
-
+        npc.drinkPoint = drinkPoint;
         // 🔹 Pasa referencias globales
         npc.itemPool = new List<ItemData>(globalItemPool);
         npc.uiTimerPrefab = uiTimerPrefab;
