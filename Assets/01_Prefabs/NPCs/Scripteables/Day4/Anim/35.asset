@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: 35
   m_EditorClassIdentifier: 
   baseController: {fileID: 9100000, guid: 5e087beacfbd77e479379ba53607a81c, type: 2}
-  sadIdle: {fileID: 7400000, guid: 1ae9cfebe12d18041af2b6b159336354, type: 2}
-  sadWalk: {fileID: 7400000, guid: a8df45ac0e63b7a44ac49bd514500df3, type: 2}
+  sadIdle: {fileID: -203655887218126122, guid: aca207850291d3741b2e2e8bb639e131, type: 3}
+  sadWalk: {fileID: -203655887218126122, guid: c2e8105d52e37a74f9464c74d139f874, type: 3}
   happyIdle: {fileID: 0}
-  happyWalk: {fileID: 7400000, guid: 1c79d6166c7194f4d9c8d07ee2522160, type: 2}
+  happyWalk: {fileID: -203655887218126122, guid: f4a97d3de1ce71f43bacc86603826a8a, type: 3}
   drinking: {fileID: 7400000, guid: 24a9beda12dc6c94cbfb26f3463e3862, type: 2}
