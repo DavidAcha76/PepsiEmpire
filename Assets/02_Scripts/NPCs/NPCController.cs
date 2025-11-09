@@ -8,6 +8,8 @@ public enum NPCState { WalkingToQueue, Looping, InQueue, Served, Leaving }
 [RequireComponent(typeof(NavMeshMovement))]
 public class NPCController : MonoBehaviour
 {
+    [HideInInspector] public Transform drinkPoint; 
+
     [Header("Data")]
     public NPCData data;
     public NPCAnimatorDriver animDriver;
@@ -248,32 +250,6 @@ public class NPCController : MonoBehaviour
             TryJoinQueueOrLoop();
         }
     }
-
-    //private void Leave(bool happy)
-    //{
-    //    if (_state == NPCState.Leaving) return;
-
-    //    Debug.Log($"🚪 [NPC] {name} está abandonando la zona. Felicidad: {happy}");
-    //    UnlockRotation(true);
-    //    Destroy(instanceSliderTimer.gameObject);
-    //    instanceSliderTimer = null;
-    //    _state = NPCState.Leaving;
-    //    view?.ShowWaitTime(0, false);
-
-    //    if (_subscribedSlotFreed && shopQueue != null)
-    //    {
-    //        shopQueue.SlotFreed -= OnSlotFreed;
-    //        _subscribedSlotFreed = false;
-    //    }
-    //    if (shopQueue != null)
-    //    {
-    //        Debug.Log($"🧾 [NPC] {name} informa a ShopQueue que se retira.");
-    //        var queue = shopQueue;
-    //        shopQueue = null;
-    //        queue.SendMessage("ForceLeave", this, SendMessageOptions.DontRequireReceiver);
-    //    }
-    //    StartCoroutine(LeaveRoutine());
-    //}
     private void Leave(bool happy)
     {
         if (_state == NPCState.Leaving) return;
@@ -305,21 +281,41 @@ public class NPCController : MonoBehaviour
         }
 
         FindObjectOfType<CustomOrderUI>()?.OnNPCLeft();
-        // 👉 Si se va feliz, primero beberá y luego se irá caminando
-        if (happy && animDriver)
+        // 👉 Si se va feliz, primero irá al punto de bebida si existe
+        if (happy && animDriver && drinkPoint != null)
+        {
+            StartCoroutine(GoDrinkThenLeave());
+        }
+        else if (happy && animDriver)
         {
             StartCoroutine(PlayDrinkThenLeave());
         }
         else
         {
-            // Si no está feliz, se va directamente
             StartCoroutine(LeaveRoutine());
         }
+
     }
     // Campos de clase
     private SkinnedMeshRenderer _cachedRenderer;
     private bool _keepCutEdge = false;
     private float _desiredCutEdge = 1f;
+    private IEnumerator GoDrinkThenLeave()
+    {
+        Debug.Log($"🥤 [NPC] {name} se dirige al punto de bebida antes de salir.");
+
+        var agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+        if (agent && drinkPoint != null && agent.isOnNavMesh)
+        {
+            agent.isStopped = false;
+            agent.SetDestination(drinkPoint.position);
+
+            while (agent.pathPending || agent.remainingDistance > agent.stoppingDistance)
+                yield return null;
+        }
+
+        yield return PlayDrinkThenLeave();
+    }
 
     private IEnumerator PlayDrinkThenLeave()
     {
