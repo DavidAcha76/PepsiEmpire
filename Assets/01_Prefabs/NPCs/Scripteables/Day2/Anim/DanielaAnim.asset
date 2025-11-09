@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: DanielaAnim
   m_EditorClassIdentifier: 
   baseController: {fileID: 9100000, guid: 5e087beacfbd77e479379ba53607a81c, type: 2}
-  sadIdle: {fileID: -203655887218126122, guid: 107d0e4500ec12449a9402dd12545212, type: 3}
-  sadWalk: {fileID: -203655887218126122, guid: 7fcadb3a931650443bc851d80a90c1c1, type: 3}
+  sadIdle: {fileID: 7400000, guid: 84409a362629948439ccc6f50e96da5c, type: 2}
+  sadWalk: {fileID: 7400000, guid: 454a765757d2b684c8668c072b5c25d6, type: 2}
   happyIdle: {fileID: -203655887218126122, guid: 80f36ee64c021ff44bf8c38ef0e2d2dc, type: 3}
-  happyWalk: {fileID: -203655887218126122, guid: c4f961001a61d7f45970485d6f9fa2ed, type: 3}
-  drinking: {fileID: 0}
+  happyWalk: {fileID: 7400000, guid: b23d9db3772456d4588a948926a77e29, type: 2}
+  drinking: {fileID: 7400000, guid: f3597142596a8564abadb964c87221c1, type: 2}

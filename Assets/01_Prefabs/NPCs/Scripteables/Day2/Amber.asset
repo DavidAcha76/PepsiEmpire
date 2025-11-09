@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameNPC: Amber Lee
   id: 17
-  zone: 2
+  day: 2
   favoriteDrink: Guarana
   drinkPepsi: 0
-  ReputationThreshold: 10

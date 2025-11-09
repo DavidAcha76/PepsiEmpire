@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: AmberAnim
   m_EditorClassIdentifier: 
   baseController: {fileID: 9100000, guid: 5e087beacfbd77e479379ba53607a81c, type: 2}
-  sadIdle: {fileID: -203655887218126122, guid: abc9085f5117dc246b9a4f1de675ebd9, type: 3}
-  sadWalk: {fileID: -203655887218126122, guid: 8fa0f2c4884bf0c409525c143c1c9aa2, type: 3}
+  sadIdle: {fileID: 7400000, guid: 4364adb6c95f77047ba3cd2edd503214, type: 2}
+  sadWalk: {fileID: 7400000, guid: 240a147789da5c84aa59b5d077b9e744, type: 2}
   happyIdle: {fileID: -203655887218126122, guid: 271f76b317dc068459f595ad84a95b1c, type: 3}
-  happyWalk: {fileID: -203655887218126122, guid: 1d078aac6f861674596e2fa88fd15d1c, type: 3}
-  drinking: {fileID: 0}
+  happyWalk: {fileID: 7400000, guid: 1bef7d4b0af515441a8a294fae820558, type: 2}
+  drinking: {fileID: 7400000, guid: fa6b554f3d80da54a8d7ec96c5021003, type: 2}
