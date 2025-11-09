@@ -293,9 +293,40 @@ MonoBehaviour:
   skyboxMorning: {fileID: 2800000, guid: 70ac336d693366f4c973f0763014f193, type: 3}
   skyboxDay: {fileID: 2800000, guid: 035b893c3f0eca748a5bbc9104937035, type: 3}
   skyboxEvening: {fileID: 2800000, guid: f5bc1b0b4c559b24e9c7fd11ee52864d, type: 3}
-  gradMorning:
+  skyboxSunset: {fileID: 2800000, guid: 2aa088e7525444e46b42385b6040724b, type: 3}
+  gradNightToSunr:
     serializedVersion: 2
-    key0: {r: 1, g: 1, b: 1, a: 1}
+    key0: {r: 0.24313726, g: 0.28235295, b: 0.58431375, a: 1}
+    key1: {r: 1, g: 0.54509807, b: 0.23529412, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: -1
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
+  gradSunrToDay:
+    serializedVersion: 2
+    key0: {r: 1, g: 0.54509807, b: 0.23529412, a: 1}
     key1: {r: 1, g: 1, b: 1, a: 1}
     key2: {r: 0, g: 0, b: 0, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
@@ -323,10 +354,10 @@ MonoBehaviour:
     m_ColorSpace: -1
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  gradDay:
+  gradDayToSun:
     serializedVersion: 2
     key0: {r: 1, g: 1, b: 1, a: 1}
-    key1: {r: 1, g: 1, b: 1, a: 1}
+    key1: {r: 1, g: 0.54509807, b: 0.23529412, a: 1}
     key2: {r: 0, g: 0, b: 0, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
@@ -353,10 +384,10 @@ MonoBehaviour:
     m_ColorSpace: -1
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  gradEvening:
+  gradSunToNight:
     serializedVersion: 2
-    key0: {r: 1, g: 1, b: 1, a: 1}
-    key1: {r: 1, g: 1, b: 1, a: 1}
+    key0: {r: 1, g: 0.54509807, b: 0.23529412, a: 1}
+    key1: {r: 0.24313726, g: 0.28235295, b: 0.58431375, a: 1}
     key2: {r: 0, g: 0, b: 0, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
@@ -415,6 +446,7 @@ MonoBehaviour:
   timeManager: {fileID: 2329474}
   npcRespawnManager: {fileID: 1003667937}
   dayTransitionUI: {fileID: 1694880767}
+  mainUI: {fileID: 2042177736}
   dayNumberText: {fileID: 2090582557}
   fadeImage: {fileID: 1237449484}
   maxDays: 5
@@ -20976,6 +21008,7 @@ GameObject:
   - component: {fileID: 290783301}
   - component: {fileID: 290783300}
   - component: {fileID: 290783299}
+  - component: {fileID: 290783302}
   m_Layer: 5
   m_Name: PanelImprove
   m_TagString: Untagged
@@ -21058,6 +21091,103 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 290783297}
   m_CullTransparentMesh: 1
+--- !u!82 &290783302
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 290783297}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1001 &291114501
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25457,6 +25587,8 @@ MonoBehaviour:
   progressContainer: {fileID: 1426557191}
   progressPrefab: {fileID: 8793461852346115001, guid: 4233a340a8b7e6740a6f2b83587c17dd, type: 3}
   upgradeButton: {fileID: 1004460309}
+  audioSource: {fileID: 290783302}
+  upgradeClip: {fileID: 8300000, guid: 4e785cafbf3bb6c4eaaa6f02144c0568, type: 3}
   machine: {fileID: 272185175}
 --- !u!114 &372150187
 MonoBehaviour:
@@ -28934,7 +29066,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: DIA 2
+  m_text: DIA 1
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8eb6d917225d9c7498c27c174ac428b8, type: 2}
   m_sharedMaterial: {fileID: 4086445979472850520, guid: 8eb6d917225d9c7498c27c174ac428b8, type: 2}
@@ -36990,7 +37122,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -57}
+  m_AnchoredPosition: {x: 0, y: -150}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!4 &616545885 stripped
@@ -42734,7 +42866,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1645, y: -69}
+  m_AnchoredPosition: {x: 1645, y: -166}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &667634362
@@ -50336,7 +50468,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -739, y: 928}
+  m_AnchoredPosition: {x: -739, y: 1026}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &730720513
@@ -73018,7 +73150,46 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   npcPrefabs:
+  - {fileID: 3592383230316495659, guid: e6945807ca6d8e64e9c0110cb52c09ad, type: 3}
+  - {fileID: 6443452660339050828, guid: 911d80f6fbd84b14c9d72172e7d56a98, type: 3}
   - {fileID: 735425802172196999, guid: bfceb8cb114815147893d7961d0ddf5d, type: 3}
+  - {fileID: 2076765026811805244, guid: 8b3326e2872c064409071b1cdf043fee, type: 3}
+  - {fileID: 6464984174730647727, guid: b937c7446cb558b45815629836ef3e94, type: 3}
+  - {fileID: 2266263839455590500, guid: f2c2dca6881106d44aaa5cab4e2de784, type: 3}
+  - {fileID: 2360681316679607060, guid: 61824e490004b4541bfe14259e0e757f, type: 3}
+  - {fileID: 5186064016134205431, guid: 79eb238b4ba7b5545bc0de72a74538fd, type: 3}
+  - {fileID: 2883127512540328163, guid: d66dd8e1fe11d114b9d4cec7a2f4ebae, type: 3}
+  - {fileID: 8119642740195697675, guid: 151d91e788ebbd3468a4ff4443404b8a, type: 3}
+  - {fileID: 8993945435528734880, guid: 18cc1567957303141b477d08342e6bf8, type: 3}
+  - {fileID: 8847182895360701113, guid: 219f21753d611a94baa1e478cae2ec62, type: 3}
+  - {fileID: 3370614108530173846, guid: 0d2a73e3b4108df47bc967227b39632e, type: 3}
+  - {fileID: 8668098733310148993, guid: 9e6e41f4cbdbde44a9d26bde708e1b5a, type: 3}
+  - {fileID: 997622551861446324, guid: 05e70a7acd8e2aa43b99744b966aa41e, type: 3}
+  - {fileID: 318496073160314831, guid: 39706e73dc0a428418a1379928442438, type: 3}
+  - {fileID: 2131579113710194285, guid: cb4394147815fe84aaf8ee4e5d3fe135, type: 3}
+  - {fileID: 5794847888998100774, guid: a923d9a4308392e46bcec8b6a1445e34, type: 3}
+  - {fileID: 765067875412647828, guid: 5b42e00fef8fb67428171ef48338c6a0, type: 3}
+  - {fileID: 6659408439739878034, guid: feec4bd49be318846a4bce77aa241409, type: 3}
+  - {fileID: 2431528289162764135, guid: 151a1844bc2953342b9722201b57e336, type: 3}
+  - {fileID: 7272253834477266523, guid: 47be88f62b799124583fb54e766957ea, type: 3}
+  - {fileID: 8267048550487496287, guid: 568bb072985ed8746a3981186808a1a4, type: 3}
+  - {fileID: 4556449889946542043, guid: c0b0df860857c2545b877543b0fd1912, type: 3}
+  - {fileID: 8788437958638782609, guid: dd1d8d6e84fbba54dbd8844d9cf5ac92, type: 3}
+  - {fileID: 1630220830671868011, guid: e099d1e8d1f423e4fb64d804a5c9d993, type: 3}
+  - {fileID: 2881101487433563271, guid: 87156a2bb6a49e442827611daedee1b8, type: 3}
+  - {fileID: 6747527793535944923, guid: 7d70975c317147c498532c6666301ad0, type: 3}
+  - {fileID: 4241589133397080293, guid: bd30a0f5bf44d604999f4c0034732d99, type: 3}
+  - {fileID: 3425953485903997398, guid: e6ba01a6b6582fa41b52fe39619556ee, type: 3}
+  - {fileID: 3673464179598634524, guid: e759c8cbeee794b49a6f2a5926ebecfa, type: 3}
+  - {fileID: 4691067291578213329, guid: e4b165aecbcdbff4b9ead123f751f0a5, type: 3}
+  - {fileID: 4453960717690833375, guid: a4eb486d3a05a76429cf922423dbc9ed, type: 3}
+  - {fileID: 4608932271714837004, guid: 32519e706d31f4d4396431262709307d, type: 3}
+  - {fileID: 1256024715808184444, guid: 30809a09e140c2d4ea55ad28495de034, type: 3}
+  - {fileID: 7497476714336195450, guid: 38145dd973b9d8743b49f68134f914cf, type: 3}
+  - {fileID: 5795725436626312570, guid: e42f28dc5e33af9408d430d09cdcfd2b, type: 3}
+  - {fileID: 6764425227172563310, guid: 7be316034775ed144912dfd3b2a3e31e, type: 3}
+  - {fileID: 619261306791454527, guid: 6687eabb0a7cece4a9dc237371e47c81, type: 3}
+  - {fileID: 5107750290003421097, guid: 967b859bca769ba469c2f0ee43c35097, type: 3}
   spawns:
   - spawnTransform: {fileID: 274279644}
     path: {fileID: 1900720716}
@@ -146502,6 +146673,8 @@ MonoBehaviour:
   progressContainer: {fileID: 1847591742}
   progressPrefab: {fileID: 8793461852346115001, guid: 4233a340a8b7e6740a6f2b83587c17dd, type: 3}
   upgradeButton: {fileID: 741285743}
+  audioSource: {fileID: 290783302}
+  upgradeClip: {fileID: 8300000, guid: 4e785cafbf3bb6c4eaaa6f02144c0568, type: 3}
   machine: {fileID: 1517601816}
 --- !u!114 &1896952360
 MonoBehaviour:
@@ -147048,6 +147221,7 @@ MonoBehaviour:
   holdButton: {fileID: 1203791458}
   panel: {fileID: 1376907907}
   vfxElectricity: {fileID: 915643347}
+  bg: {fileID: 1237449484}
   audioSource_: {fileID: 1909845609}
   elecSound_: {fileID: 8300000, guid: a6fb192c1f152904d868cc4c9129ba33, type: 3}
   musicSource_: {fileID: 1909845610}
@@ -161428,6 +161602,8 @@ MonoBehaviour:
   progressContainer: {fileID: 1678004462}
   progressPrefab: {fileID: 8793461852346115001, guid: 4233a340a8b7e6740a6f2b83587c17dd, type: 3}
   upgradeButton: {fileID: 971168407}
+  audioSource: {fileID: 290783302}
+  upgradeClip: {fileID: 8300000, guid: 4e785cafbf3bb6c4eaaa6f02144c0568, type: 3}
   machine: {fileID: 2019871738}
 --- !u!114 &2079332326
 MonoBehaviour:

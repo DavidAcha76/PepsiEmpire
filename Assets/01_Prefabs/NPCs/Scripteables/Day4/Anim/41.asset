@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 046fc25ae91f0b04fa81ab3e287e732a, type: 3}
   m_Name: 41
   m_EditorClassIdentifier: 
-  baseController: {fileID: 0}
-  sadIdle: {fileID: 0}
-  sadWalk: {fileID: 0}
+  baseController: {fileID: 9100000, guid: 5e087beacfbd77e479379ba53607a81c, type: 2}
+  sadIdle: {fileID: 7400000, guid: b9f0cbe8addbd9343b2ac70e9d607f7e, type: 2}
+  sadWalk: {fileID: 7400000, guid: 010ca5f4d0d68034cb98d0acf5ea4cac, type: 2}
   happyIdle: {fileID: 0}
-  happyWalk: {fileID: 0}
-  drinking: {fileID: 0}
+  happyWalk: {fileID: 7400000, guid: a0e58f609772ab24d92bf6b4c07ef684, type: 2}
+  drinking: {fileID: 7400000, guid: ba55f33a13be2444e810062f23d3dd38, type: 2}

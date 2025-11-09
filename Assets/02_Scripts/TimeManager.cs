@@ -6,10 +6,12 @@ public class TimeManager : MonoBehaviour
     [SerializeField] private Texture2D skyboxMorning;
     [SerializeField] private Texture2D skyboxDay;
     [SerializeField] private Texture2D skyboxEvening;
+    [SerializeField] private Texture2D skyboxSunset;
 
-    [SerializeField] private Gradient gradMorning;
-    [SerializeField] private Gradient gradDay;
-    [SerializeField] private Gradient gradEvening;
+    [SerializeField] private Gradient gradNightToSunr;
+    [SerializeField] private Gradient gradSunrToDay;
+    [SerializeField] private Gradient gradDayToSun;
+    [SerializeField] private Gradient gradSunToNight;
 
     [SerializeField] private Light globalLight;
 
@@ -28,14 +30,14 @@ public class TimeManager : MonoBehaviour
 
     private void Start()
     {
-        hours = 6;
-        minutes = 0;
+        hours = 5;
+        minutes = 59;
         days = 1;
 
         secondsPerMinute = workDayDurationInSeconds / 720f;
 
         RenderSettings.skybox.SetTexture("_Texture1", skyboxMorning);
-        StartCoroutine(LerpLight(gradMorning, 0.5f));
+        //StartCoroutine(LerpLight(gradNightToSunr, 0.5f));
         RenderSettings.skybox.SetFloat("_Blend", 0f);
         RenderSettings.fogColor = globalLight.color;
 
@@ -74,15 +76,25 @@ public class TimeManager : MonoBehaviour
 
     private void OnHoursChange(int value)
     {
-        if (value == 8)
+        if (value == 6)
         {
-            StartCoroutine(LerpSkybox(skyboxMorning, skyboxDay, 5f));
-            StartCoroutine(LerpLight(gradDay, 5f));
+            StartCoroutine(LerpSkybox(skyboxEvening, skyboxMorning, 10f));
+            StartCoroutine(LerpLight(gradNightToSunr, 10f));
         }
-        else if (value == 15)
+        else if (value == 8)
         {
-            StartCoroutine(LerpSkybox(skyboxDay, skyboxEvening, 5f));
-            StartCoroutine(LerpLight(gradEvening, 5f));
+            StartCoroutine(LerpSkybox(skyboxMorning, skyboxDay, 10f));
+            StartCoroutine(LerpLight(gradSunrToDay, 10f));
+        }
+        else if (value == 18)
+        {
+            StartCoroutine(LerpSkybox(skyboxDay, skyboxSunset, 10f));
+            StartCoroutine(LerpLight(gradDayToSun, 10f));
+        }
+        else if (value == 22)
+        {
+            StartCoroutine(LerpSkybox(skyboxSunset, skyboxEvening, 10f));
+            StartCoroutine(LerpLight(gradSunToNight, 10f));
         }
     }
 
@@ -102,8 +114,8 @@ public class TimeManager : MonoBehaviour
         tempSecond = 0;
         isDayActive = true;
 
-        RenderSettings.skybox.SetTexture("_Texture1", skyboxMorning);
-        StartCoroutine(LerpLight(gradMorning, 0.5f));
+        //RenderSettings.skybox.SetTexture("_Texture1", skyboxMorning);
+        //OnHoursChange(hours);
 
         Debug.Log($"[TimeManager] Día {days} iniciado a las 06:00");
     }

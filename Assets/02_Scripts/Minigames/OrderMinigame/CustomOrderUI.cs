@@ -140,8 +140,10 @@ public class CustomOrderUI : MonoBehaviour
 
         if (correcto)
             MoneyController.Instance.AddMoney(15);
+        else
+            LifeSystemManager.Instance.LoseLifeByOrderError();
 
-        currentIndex++;
+            currentIndex++;
         btnClose.interactable = true;
 
         // 🔹 Si aún hay ítems → continuar

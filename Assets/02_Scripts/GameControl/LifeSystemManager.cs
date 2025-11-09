@@ -207,7 +207,6 @@ public class LifeSystemManager : MonoBehaviour
     /// </summary>
 
     public void LoseLife(string reason = "")
-
     {
 
         if (isGameOver || currentLives <= 0) return;

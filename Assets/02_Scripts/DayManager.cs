@@ -9,6 +9,7 @@ public class DayManager : MonoBehaviour
     public TimeManager timeManager;
     public NPCRespawnManager npcRespawnManager;
     public GameObject dayTransitionUI;
+    public GameObject mainUI;
     public TextMeshProUGUI dayNumberText;
     public Image fadeImage;
 
@@ -43,14 +44,16 @@ public class DayManager : MonoBehaviour
 
     IEnumerator ShowFirstDay()
     {
-        yield return new WaitForSeconds(0.5f);
-
+        //yield return new WaitForSeconds(0.5f);
+        mainUI.SetActive(false);
         dayTransitionUI.SetActive(true);
+        
         dayNumberText.text = "DÍA 1";
 
         yield return new WaitForSeconds(transitionDuration);
 
         dayTransitionUI.SetActive(false);
+        mainUI.SetActive(true);
         isFirstDay = false;
     }
 
@@ -78,12 +81,15 @@ public class DayManager : MonoBehaviour
 
         int nextDay = timeManager.GetCurrentDay() + 1;
 
+        mainUI.SetActive(false);
         dayTransitionUI.SetActive(true);
+        
         dayNumberText.text = $"DÍA {nextDay}";
 
         yield return new WaitForSeconds(transitionDuration);
 
         dayTransitionUI.SetActive(false);
+        mainUI.SetActive(true);
 
         timeManager.StartNewDay();
 

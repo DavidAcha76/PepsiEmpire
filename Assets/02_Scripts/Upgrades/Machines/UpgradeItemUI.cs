@@ -16,6 +16,9 @@ public class UpgradeItemUI : MonoBehaviour
     public GameObject progressPrefab;
     public Button upgradeButton;
 
+    public AudioSource audioSource;
+    public AudioClip upgradeClip;
+
     [Header("Referencias de Lógica")]
     public MachineController machine;
 
@@ -74,6 +77,8 @@ public class UpgradeItemUI : MonoBehaviour
 
         // Realiza la mejora
         FactoryUpgradeManager.Instance.UpgradeMachine(machine);
+
+        audioSource.PlayOneShot(upgradeClip);
 
         ToastManager.Instance.ShowSuccess($"{machine.upgradeData.machineName} mejorada a nivel {currentLevel + 1}");
         RefreshUI();

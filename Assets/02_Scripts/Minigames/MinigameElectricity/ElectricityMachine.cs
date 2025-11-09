@@ -22,6 +22,7 @@ public class ElectricityMachine : MonoBehaviour
     public Button holdButton;
     public GameObject panel;
     public GameObject vfxElectricity;
+    public Image bg;
 
     public AudioSource audioSource_;
     public AudioClip elecSound_;
@@ -51,7 +52,7 @@ public class ElectricityMachine : MonoBehaviour
 
     void Start()
     {
-        
+        bg.color = Color.white;
 
         UpdateUI();
         if (holdButton != null)

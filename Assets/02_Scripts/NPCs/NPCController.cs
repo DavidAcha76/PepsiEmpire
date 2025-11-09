@@ -466,6 +466,7 @@ public class NPCController : MonoBehaviour
         {
             Debug.Log($"❌ [NPC] {name} no fue atendido a tiempo y se retira.");
             Leave(false);
+            LifeSystemManager.Instance.LoseLifeByTimeout();
             yield break;
         }
 
