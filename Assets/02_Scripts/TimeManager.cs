@@ -148,4 +148,22 @@ public class TimeManager : MonoBehaviour
     public int Minuto => minutes;
     public int GetCurrentDay() => days;
     public bool IsDayActive() => isDayActive;
+
+    /// <summary>
+    /// Obtiene la hora actual como string formateado (24 horas)
+    /// </summary>
+    public string GetCurrentTimeString()
+    {
+        return string.Format("{0:00}:{1:00}", hours, minutes);
+    }
+
+    /// <summary>
+    /// Obtiene la hora actual como string formateado (12 horas con AM/PM)
+    /// </summary>
+    public string GetCurrentTimeString12Hour()
+    {
+        string period = hours >= 12 ? "PM" : "AM";
+        int displayHours = hours > 12 ? hours - 12 : (hours == 0 ? 12 : hours);
+        return string.Format("{0:00}:{1:00} {2}", displayHours, minutes, period);
+    }
 }

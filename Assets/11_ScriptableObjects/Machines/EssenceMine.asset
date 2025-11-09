@@ -17,28 +17,37 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 8f33a733eaa3850439afecad6dd619d9, type: 3}
   - {fileID: 21300000, guid: c950146bd313ee942811a325c7ae4b98, type: 3}
   maxLevel: 9
-  costs: 0a0000001400000014000000140000001400000014000000140000001400000014000000
+  costs: 0a0000000c0000000e00000010000000120000001400000016000000180000001a000000
   descriptions:
-  - Esta mejora rebaja el tiempo de produccion de esencia 1 segundo
-  - Esta mejora rebaja el tiempo de produccion de esencia 2 segundo
-  - Esta mejora rebaja el tiempo de produccion de esencia 2 segundo
-  - Esta mejora rebaja el tiempo de produccion de esencia 2 segundo
-  - Esta mejora rebaja el tiempo de produccion de esencia 2 segundo
-  - Esta mejora rebaja el tiempo de produccion de esencia 2 segundo
-  - Esta mejora rebaja el tiempo de produccion de esencia 2 segundo
-  - Esta mejora rebaja el tiempo de produccion de esencia 2 segundo
-  - Esta mejora rebaja el tiempo de produccion de esencia 2 segundo
+  - "Mejora la pureza y la cantidad de esencia extra\xEDda, haciendo que cada gota
+    rinda m\xE1s y potencie el sabor original de la Pepsi. 20s"
+  - "Mejora la pureza y la cantidad de esencia extra\xEDda, haciendo que cada gota
+    rinda m\xE1s y potencie el sabor original de la Pepsi. 19s"
+  - "Mejora la pureza y la cantidad de esencia extra\xEDda, haciendo que cada gota
+    rinda m\xE1s y potencie el sabor original de la Pepsi. 18s"
+  - "Mejora la pureza y la cantidad de esencia extra\xEDda, haciendo que cada gota
+    rinda m\xE1s y potencie el sabor original de la Pepsi. 15s"
+  - "Mejora la pureza y la cantidad de esencia extra\xEDda, haciendo que cada gota
+    rinda m\xE1s y potencie el sabor original de la Pepsi. 14s"
+  - "Mejora la pureza y la cantidad de esencia extra\xEDda, haciendo que cada gota
+    rinda m\xE1s y potencie el sabor original de la Pepsi. 13s"
+  - "Mejora la pureza y la cantidad de esencia extra\xEDda, haciendo que cada gota
+    rinda m\xE1s y potencie el sabor original de la Pepsi. 10s"
+  - "Mejora la pureza y la cantidad de esencia extra\xEDda, haciendo que cada gota
+    rinda m\xE1s y potencie el sabor original de la Pepsi. 9s"
+  - "Mejora la pureza y la cantidad de esencia extra\xEDda, haciendo que cada gota
+    rinda m\xE1s y potencie el sabor original de la Pepsi. 8s"
   machinePrefabs:
   - {fileID: 5034137555933079637, guid: c4e3f35d8fc9fad4b92df0c50465a9fb, type: 3}
   - {fileID: 5858653573659431413, guid: af8a9546e497c6a4184c399ea49daf79, type: 3}
   - {fileID: 7837301807700606255, guid: f3d5cf9c2a8c7c84aa8dd0937541f243, type: 3}
   newValue:
+  - 20
+  - 19
+  - 18
+  - 15
+  - 14
+  - 13
   - 10
   - 9
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
+  - 8
