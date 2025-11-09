@@ -270,6 +270,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2329475}
   - component: {fileID: 2329474}
+  - component: {fileID: 2329476}
   m_Layer: 0
   m_Name: TimeManager
   m_TagString: Untagged
@@ -289,43 +290,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ebde500f2ddb4c459105cd4b184b39a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skyboxNight: {fileID: 2800000, guid: f5bc1b0b4c559b24e9c7fd11ee52864d, type: 3}
-  skyboxSunrise: {fileID: 2800000, guid: 70ac336d693366f4c973f0763014f193, type: 3}
+  skyboxMorning: {fileID: 2800000, guid: 70ac336d693366f4c973f0763014f193, type: 3}
   skyboxDay: {fileID: 2800000, guid: 035b893c3f0eca748a5bbc9104937035, type: 3}
-  skyboxSunset: {fileID: 2800000, guid: 2aa088e7525444e46b42385b6040724b, type: 3}
-  gradNightToSunrise:
+  skyboxEvening: {fileID: 2800000, guid: f5bc1b0b4c559b24e9c7fd11ee52864d, type: 3}
+  gradMorning:
     serializedVersion: 2
-    key0: {r: 0.24313726, g: 0.28235295, b: 0.58431375, a: 1}
-    key1: {r: 1, g: 0.54509807, b: 0.23529412, a: 1}
-    key2: {r: 0, g: 0, b: 0, a: 0}
-    key3: {r: 0, g: 0, b: 0, a: 0}
-    key4: {r: 0, g: 0, b: 0, a: 0}
-    key5: {r: 0, g: 0, b: 0, a: 0}
-    key6: {r: 0, g: 0, b: 0, a: 0}
-    key7: {r: 0, g: 0, b: 0, a: 0}
-    ctime0: 0
-    ctime1: 65535
-    ctime2: 0
-    ctime3: 0
-    ctime4: 0
-    ctime5: 0
-    ctime6: 0
-    ctime7: 0
-    atime0: 0
-    atime1: 65535
-    atime2: 0
-    atime3: 0
-    atime4: 0
-    atime5: 0
-    atime6: 0
-    atime7: 0
-    m_Mode: 0
-    m_ColorSpace: -1
-    m_NumColorKeys: 2
-    m_NumAlphaKeys: 2
-  gradSunriseToDay:
-    serializedVersion: 2
-    key0: {r: 1, g: 0.54509807, b: 0.23529412, a: 1}
+    key0: {r: 1, g: 1, b: 1, a: 1}
     key1: {r: 1, g: 1, b: 1, a: 1}
     key2: {r: 0, g: 0, b: 0, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
@@ -353,10 +323,10 @@ MonoBehaviour:
     m_ColorSpace: -1
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  gradDayToSunset:
+  gradDay:
     serializedVersion: 2
     key0: {r: 1, g: 1, b: 1, a: 1}
-    key1: {r: 1, g: 0.54509807, b: 0.23529412, a: 1}
+    key1: {r: 1, g: 1, b: 1, a: 1}
     key2: {r: 0, g: 0, b: 0, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
@@ -383,10 +353,10 @@ MonoBehaviour:
     m_ColorSpace: -1
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  gradSunsetToNight:
+  gradEvening:
     serializedVersion: 2
-    key0: {r: 1, g: 0.54509807, b: 0.23529412, a: 1}
-    key1: {r: 0.24313726, g: 0.28235295, b: 0.58431375, a: 1}
+    key0: {r: 1, g: 1, b: 1, a: 1}
+    key1: {r: 1, g: 1, b: 1, a: 1}
     key2: {r: 0, g: 0, b: 0, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
@@ -414,6 +384,7 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   globalLight: {fileID: 990172824}
+  workDayDurationInSeconds: 360
 --- !u!4 &2329475
 Transform:
   m_ObjectHideFlags: 0
@@ -429,6 +400,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2329476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2329473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddfe498a340331b47bd1e4f0af67a4d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeManager: {fileID: 2329474}
+  npcRespawnManager: {fileID: 1003667937}
+  dayTransitionUI: {fileID: 1694880767}
+  dayNumberText: {fileID: 2090582557}
+  fadeImage: {fileID: 1237449484}
+  maxDays: 5
+  transitionDuration: 3
 --- !u!1 &3279705
 GameObject:
   m_ObjectHideFlags: 0
@@ -24143,6 +24133,71 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.3886757, y: 5.913066, z: 0.47326756}
   m_Center: {x: 0, y: -0.35757208, z: -0.0019254684}
+--- !u!1 &340055904
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 340055906}
+  - component: {fileID: 340055905}
+  m_Layer: 0
+  m_Name: LifeManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &340055905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 340055904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd7c7477d2a706148a5d73c45c8e98f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heartImages:
+  - {fileID: 1143601475}
+  - {fileID: 1170995422}
+  - {fileID: 1896228975}
+  - {fileID: 723028603}
+  - {fileID: 162601552}
+  heartFullSprite: {fileID: 21300000, guid: 62a6f530541477d41aaac7a124bd04a4, type: 3}
+  heartEmptySprite: {fileID: 21300000, guid: 1c0bca92f12ad374694e062de2cf3062, type: 3}
+  maxLives: 5
+  currentLives: 5
+  useAnimation: 1
+  animationDuration: 0.3
+  OnLifeLost:
+    m_PersistentCalls:
+      m_Calls: []
+  OnLivesChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnGameOver:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!4 &340055906
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 340055904}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 891.43085, y: 480.52567, z: -161.7673}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &343172305
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -73271,7 +73326,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1021100821}
   m_Layer: 5
-  m_Name: Money
+  m_Name: Time
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -164184,7 +164239,7 @@ GameObject:
   - component: {fileID: 2090582558}
   - component: {fileID: 2090582557}
   m_Layer: 5
-  m_Name: MoneyAmount
+  m_Name: TimeDate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -164229,7 +164284,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 100
+  m_text: 0000
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8eb6d917225d9c7498c27c174ac428b8, type: 2}
   m_sharedMaterial: {fileID: 4086445979472850520, guid: 8eb6d917225d9c7498c27c174ac428b8, type: 2}
@@ -178637,3 +178692,4 @@ SceneRoots:
   - {fileID: 1003667936}
   - {fileID: 536823306}
   - {fileID: 1025638646}
+  - {fileID: 340055906}
